@@ -157,18 +157,70 @@ html[lang="uz"] .logo__img--uz{display:block}
 section{position:relative}
 
 /* FEAR */
-.fear{padding:64px 16px;background:var(--orange)}
-.fear .display{margin-bottom:32px;color:var(--ink)}
-.fear .accent{color:var(--paper)}
-.fear__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.fear__card{
+.fear{padding:80px 16px;background:var(--orange)}
+.fear__head{margin-bottom:40px;max-width:920px}
+.fear__kicker{
+  display:inline-block;padding:8px 16px;border-radius:999px;
   background:var(--ink);color:var(--paper);
-  border-radius:24px;padding:28px;
-  display:flex;flex-direction:column;gap:18px;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  margin-bottom:20px;
 }
-.fear__bad{font-size:14px;color:#888;padding-bottom:18px;border-bottom:1px dashed rgba(255,255,255,.15);line-height:1.5}
-.fear__good{font-size:15px;color:var(--paper);line-height:1.55}
-.fear__good span{color:#ccc}
+.fear__title{
+  font-family:'Unbounded';font-weight:700;
+  font-size:clamp(32px,5vw,64px);line-height:1.02;letter-spacing:-.025em;
+  color:var(--ink);
+}
+.fear__title .accent{color:var(--paper);display:block;margin-top:6px}
+
+.fear__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fear__card{
+  position:relative;
+  background:var(--ink);color:var(--paper);
+  border-radius:24px;padding:32px 28px 28px;
+  display:flex;flex-direction:column;gap:20px;
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.fear__card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.25)}
+.fear__num{
+  position:absolute;top:24px;right:28px;
+  font-family:'Unbounded';font-weight:700;font-size:14px;
+  color:rgba(255,255,255,.25);letter-spacing:.02em;
+}
+
+.fear__bad{
+  display:flex;gap:12px;align-items:flex-start;
+  font-size:15px;color:#bbb;line-height:1.45;font-weight:500;
+  padding-bottom:20px;border-bottom:1px dashed rgba(255,255,255,.12);
+}
+.fear__x{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;
+  background:rgba(255,80,80,.15);color:#ff6b6b;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:18px;line-height:1;font-weight:300;
+}
+
+.fear__good{
+  display:flex;gap:12px;align-items:flex-start;
+  font-size:15px;color:var(--paper);line-height:1.55;
+}
+.fear__good b{color:var(--orange);font-weight:700}
+.fear__check{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;
+  background:var(--orange);color:var(--ink);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:14px;line-height:1;font-weight:800;
+}
+
+/* Accent middle card */
+.fear__card--accent{
+  background:var(--paper);color:var(--ink);
+}
+.fear__card--accent .fear__num{color:rgba(0,0,0,.25)}
+.fear__card--accent .fear__bad{color:#666;border-bottom-color:rgba(0,0,0,.12)}
+.fear__card--accent .fear__x{background:rgba(255,60,60,.15);color:#dc3545}
+.fear__card--accent .fear__good{color:var(--ink)}
+.fear__card--accent .fear__good b{color:var(--orange-dark)}
+.fear__card--accent .fear__check{background:var(--ink);color:var(--orange)}
 
 /* BENEFITS */
 .benefits{padding:64px 16px;background:var(--ink);color:var(--paper)}
@@ -580,8 +632,14 @@ body.modal-open{overflow:hidden}
   .display{font-size:clamp(28px,7vw,42px);line-height:1.05}
   .display.sm{font-size:clamp(22px,5.5vw,32px);line-height:1.1}
 
-  .fear__card{padding:24px;border-radius:20px}
-  .fear__bad,.fear__good{font-size:14px}
+  .fear__head{margin-bottom:28px}
+  .fear__kicker{font-size:10px;padding:6px 12px;margin-bottom:14px}
+  .fear__title{font-size:clamp(26px,7vw,36px)}
+  .fear__card{padding:24px 22px 22px;border-radius:20px;gap:16px}
+  .fear__num{top:18px;right:22px;font-size:12px}
+  .fear__bad,.fear__good{font-size:14px;gap:10px}
+  .fear__x,.fear__check{width:24px;height:24px;font-size:12px}
+  .fear__x{font-size:16px}
 
   .benefits__list li{padding:18px 0;font-size:15px;gap:14px;flex-direction:column}
   .benefits__num{font-size:13px;min-width:auto}

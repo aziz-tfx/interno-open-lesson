@@ -10,8 +10,9 @@ const dict = {
     "trust.t1":"8 лет на рынке","trust.t2":"2400+ выпускников","trust.t3":"Куратор-практик","trust.t4":"3 города Узбекистана",
     "mc.label":"Ведёт открытый урок","mc.name":"Асад Халимов","mc.role":"Старший куратор · 7+ лет в дизайне",
 
-    "fear.title":"Думаете «Это не для меня, я не творческий, не разбираюсь в компьютерах»?",
-    "fear.title2":"Открытый урок создан именно для вас.",
+    "fear.kicker":"3 страха, которые останавливают 90% людей",
+    "fear.title":"«Это не для меня».",
+    "fear.title2":"Закроем все 3 страха<br/>за 1 вечер.",
     "fear.q1":"«У меня нет художественного образования»",
     "fear.a1":"78% наших выпускников пришли без художки. Дизайн интерьера — это логика и инструменты, а не рисование от руки.",
     "fear.q2":"«Я не разбираюсь в программах»",
@@ -152,8 +153,9 @@ const dict = {
     "trust.t1":"Bozorda 8 yil","trust.t2":"2400+ bitiruvchi","trust.t3":"Amaliyotchi mentor","trust.t4":"O‘zbekistonning 3 shahri",
     "mc.label":"Ochiq darsni o‘tkazadi","mc.name":"Asad Halimov","mc.role":"Bosh mentor · 7+ yil dizaynda",
 
-    "fear.title":"«Bu men uchun emas, men ijodkor emasman, kompyuterda yaxshi emasman» deb o‘ylayapsizmi?",
-    "fear.title2":"Ochiq dars aynan siz uchun yaratilgan.",
+    "fear.kicker":"90%ni to‘xtatadigan 3 ta qo‘rquv",
+    "fear.title":"«Bu men uchun emas».",
+    "fear.title2":"Bir oqshomda 3 qo‘rquvni<br/>yopib beramiz.",
     "fear.q1":"«Menda badiiy ta’lim yo‘q»",
     "fear.a1":"Bitiruvchilarimizning 78%i badiiy ta’limsiz keldi. Interyer dizayni — bu mantiq va vositalar, qo‘lda chizish emas.",
     "fear.q2":"«Men dasturlarda yaxshi emasman»",
