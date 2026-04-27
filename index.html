@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>INTERNO School — Открытый урок по дизайну интерьера</title>
+<meta name="description" content="Бесплатный открытый урок по дизайну интерьера в INTERNO School. Ташкент. Регистрация открыта." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="logo" href="#">
+      <span class="logo__mark">◉</span>
+      <span class="logo__text">INTERNO<span class="muted">.school</span></span>
+    </a>
+    <nav class="nav__links">
+      <a href="#about" data-i18n="nav.about">О школе</a>
+      <a href="#lesson" data-i18n="nav.lesson">Урок</a>
+      <a href="#program" data-i18n="nav.program">Программа</a>
+      <a href="#mentor" data-i18n="nav.mentor">Спикер</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+    </nav>
+    <div class="nav__right">
+      <div class="lang">
+        <button class="lang__btn is-active" data-lang="ru">RU</button>
+        <button class="lang__btn" data-lang="uz">UZ</button>
+      </div>
+      <a href="#cta" class="btn btn--primary" data-i18n="nav.signup">Записаться</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__content">
+    <div class="hero__badge">
+      <span class="dot"></span>
+      <span data-i18n="hero.badge">Бесплатный открытый урок · Ташкент</span>
+    </div>
+    <h1 class="hero__title">
+      <span data-i18n="hero.title1">Раскрой свой стиль</span><br/>
+      <span data-i18n="hero.title2">в дизайне интерьера</span>
+    </h1>
+    <p class="hero__subtitle" data-i18n="hero.subtitle">
+      Один вечер, который изменит твоё представление о профессии. Покажем, как создаются интерьеры мечты — от идеи до 3D-визуализации.
+    </p>
+    <div class="hero__actions">
+      <a href="#cta" class="btn btn--primary btn--lg">
+        <span data-i18n="hero.cta">Записаться бесплатно</span>
+        <span class="arrow">↗</span>
+      </a>
+      <a href="#program" class="btn btn--ghost btn--lg" data-i18n="hero.cta2">Программа урока</a>
+    </div>
+  </div>
+
+  <!-- floating event card -->
+  <aside class="event-card">
+    <div class="event-card__top">
+      <div class="event-card__img"></div>
+      <div class="event-card__info">
+        <div class="event-card__label" data-i18n="event.label">Открытый урок</div>
+        <div class="event-card__title" data-i18n="event.title">Дизайн интерьера с нуля</div>
+        <div class="event-card__price">FREE</div>
+      </div>
+    </div>
+    <div class="event-card__note" data-i18n="event.note">
+      Получи персональную консультацию по будущей профессии и портфолио.
+      <button class="event-card__plus">+</button>
+    </div>
+  </aside>
+
+  <div class="hero__pager">
+    <span>01</span>
+    <div class="hero__line"></div>
+    <span>04</span>
+  </div>
+
+  <div class="hero__nav">
+    <button class="circle">←</button>
+    <button class="circle">→</button>
+  </div>
+</section>
+
+<!-- ===== STRIP CARDS ===== -->
+<section class="strip">
+  <div class="strip__card">
+    <div class="strip__icon">✦</div>
+    <div class="strip__text">
+      <div class="muted small" data-i18n="strip1.kicker">Создай уникальный проект</div>
+      <div class="strip__title" data-i18n="strip1.title">Спроектируй свой первый интерьер</div>
+    </div>
+    <button class="circle dashed">↗</button>
+  </div>
+
+  <div class="strip__card strip__card--accent">
+    <div class="strip__title small" data-i18n="strip2.title">Ученики, которые выбирают нас</div>
+    <div class="avatars">
+      <span class="avatar"></span>
+      <span class="avatar"></span>
+      <span class="avatar"></span>
+      <span class="avatar avatar--more">+1.5k</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT / TYPES ===== -->
+<section class="types" id="program">
+  <div class="types__head">
+    <h2 class="display">
+      <span data-i18n="types.title1">Что разберём</span>
+      <button class="circle big">→</button>
+      <a href="#cta" class="btn btn--primary" data-i18n="types.shop">Записаться ↗</a>
+      <br/>
+      <span class="emoji">✺</span>
+      <span data-i18n="types.title2">на уроке</span>
+    </h2>
+    <p class="types__desc" data-i18n="types.desc">
+      За 2 часа ты узнаешь, как работают профессиональные дизайнеры интерьера: от первой встречи с клиентом до сдачи готового проекта. Реальные кейсы, инструменты и пошаговая методология INTERNO.
+    </p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab is-active" data-i18n="tabs.all">Всё</button>
+    <button class="tab" data-i18n="tabs.t1">Стили</button>
+    <button class="tab" data-i18n="tabs.t2">Планировка</button>
+    <button class="tab" data-i18n="tabs.t3">3D</button>
+    <button class="tab" data-i18n="tabs.t4">Карьера</button>
+  </div>
+
+  <div class="cards">
+    <article class="card">
+      <button class="card__arrow">↗</button>
+      <button class="card__heart">♡</button>
+      <div class="card__img card__img--1"></div>
+      <div class="card__tags">
+        <span class="tag tag--sale" data-i18n="card1.tag1">Топ</span>
+        <span class="tag" data-i18n="card1.tag2">Стиль</span>
+      </div>
+      <div class="card__title" data-i18n="card1.title">Минимализм и Modern</div>
+      <div class="card__desc" data-i18n="card1.desc">Разберём актуальные стили 2026 года и как их применять в реальных проектах…</div>
+      <div class="card__bottom">
+        <div class="card__price"><span class="big">Модуль 1</span></div>
+        <div class="card__rating">★ 4.95</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <button class="card__arrow">↗</button>
+      <button class="card__heart">♡</button>
+      <div class="card__img card__img--2"></div>
+      <div class="card__tags">
+        <span class="tag tag--new" data-i18n="card2.tag1">Новое</span>
+        <span class="tag" data-i18n="card2.tag2">Планировка</span>
+      </div>
+      <div class="card__title" data-i18n="card2.title">Эргономика пространства</div>
+      <div class="card__desc" data-i18n="card2.desc">Как из 40 м² сделать просторную квартиру: законы зонирования и эргономики…</div>
+      <div class="card__bottom">
+        <div class="card__price"><span class="big">Модуль 2</span></div>
+        <div class="card__rating">★ 4.89</div>
+      </div>
+    </article>
+
+    <article class="card card--feature">
+      <div class="card__best" data-i18n="card3.best">Best</div>
+      <div class="card__cat" data-i18n="card3.cat">3D-визуализация</div>
+      <div class="card__title big" data-i18n="card3.title">Render за один вечер</div>
+      <div class="card__img card__img--3"></div>
+      <a href="#cta" class="card__more">
+        <span data-i18n="card3.more">Подробнее</span> <span>→</span>
+      </a>
+    </article>
+
+    <article class="card">
+      <button class="card__arrow">↗</button>
+      <button class="card__heart">♡</button>
+      <div class="card__img card__img--4"></div>
+      <div class="card__tags">
+        <span class="tag tag--rec" data-i18n="card4.tag1">Совет</span>
+        <span class="tag" data-i18n="card4.tag2">Карьера</span>
+      </div>
+      <div class="card__title" data-i18n="card4.title">Как зарабатывать дизайном</div>
+      <div class="card__desc" data-i18n="card4.desc">Сколько стоит проект, как искать клиентов и где работают наши выпускники…</div>
+      <div class="card__bottom">
+        <div class="card__price"><span class="big">Модуль 4</span></div>
+        <div class="card__rating">★ 5.00</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="cards__pager">
+    <span>1/4</span>
+    <div class="cards__nav">
+      <button class="circle">←</button>
+      <button class="circle">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS / COVETED ===== -->
+<section class="coveted" id="about">
+  <h2 class="display">
+    <span data-i18n="cov.title1">Наши</span>
+    <span class="pill"><span data-i18n="cov.pillBig">студенты</span></span>
+    <span class="dots">●●●</span>
+    <br/>
+    <span class="arrow-line">⌁→</span>
+    <span data-i18n="cov.title2">меняют рынок интерьера</span>
+  </h2>
+
+  <div class="cov__grid">
+    <div class="cov__stat">
+      <div class="cov__icon">✦</div>
+      <button class="card__arrow">↗</button>
+      <div class="cov__num">3.500+</div>
+      <hr class="cov__hr"/>
+      <div class="cov__avatars">
+        <span class="avatar"></span>
+        <span class="avatar"></span>
+        <span class="avatar"></span>
+      </div>
+      <p class="cov__desc" data-i18n="cov.desc">
+        За 6 лет мы выпустили более <u>3 500 дизайнеров интерьера</u>, которые работают в Ташкенте, Дубае, Москве и Алматы. Наша программа построена на реальных проектах и обновляется каждый сезон.
+      </p>
+    </div>
+
+    <div class="cov__feature">
+      <p class="cov__lead" data-i18n="cov.lead">
+        Получи место в первом ряду новой индустрии: личные истории выпускников, разбор кейсов и портфолио, которое выделит тебя на рынке.
+      </p>
+
+      <div class="chips">
+        <button class="chip is-active" data-i18n="chip.hot">Хит</button>
+        <button class="chip" data-i18n="chip.best">Лучшее</button>
+        <button class="chip" data-i18n="chip.new">Новое</button>
+        <button class="chip" data-i18n="chip.rec">Совет</button>
+        <a href="#cta" class="chips__all" data-i18n="chip.all">Все →</a>
+      </div>
+
+      <article class="big-card">
+        <button class="card__arrow">↗</button>
+        <div class="big-card__img"></div>
+        <div class="big-card__body">
+          <h3 class="big-card__title" data-i18n="big.title">Открытый урок · 2 часа · бесплатно</h3>
+          <p class="big-card__desc" data-i18n="big.desc">
+            Этот вечер даст тебе ясность: подходит ли тебе профессия, с чего начать и как за 6 месяцев выйти на первые заказы.
+          </p>
+          <div class="big-card__bottom">
+            <div class="avatars">
+              <span class="avatar"></span>
+              <span class="avatar"></span>
+              <span class="avatar avatar--more">+1.1k</span>
+            </div>
+            <div class="card__rating">★ 4.97</div>
+          </div>
+        </div>
+      </article>
+
+      <div class="side-labels">
+        <div class="side-label">↑ <span data-i18n="side1">Спикер — лид-дизайнер</span></div>
+        <div class="side-label">↑ <span data-i18n="side2">Сертификат участника</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MENTOR ===== -->
+<section class="mentor" id="mentor">
+  <div class="mentor__photo"></div>
+  <div class="mentor__info">
+    <div class="muted small" data-i18n="mentor.kicker">Спикер открытого урока</div>
+    <h2 class="mentor__name">Madina Karimova</h2>
+    <p class="mentor__role" data-i18n="mentor.role">Lead Interior Designer · INTERNO School · 8+ лет опыта</p>
+    <ul class="mentor__list">
+      <li data-i18n="mentor.l1">— Более 120 реализованных проектов в Узбекистане и ОАЭ</li>
+      <li data-i18n="mentor.l2">— Ментор 600+ студентов, преподаёт с 2021 года</li>
+      <li data-i18n="mentor.l3">— Спикер Tashkent Design Week и Cosmoscow</li>
+    </ul>
+    <a href="#cta" class="btn btn--primary btn--lg">
+      <span data-i18n="mentor.cta">Забронировать место</span> <span class="arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== CTA / FORM ===== -->
+<section class="cta" id="cta">
+  <div class="cta__inner">
+    <div class="cta__left">
+      <h2 class="display sm">
+        <span data-i18n="cta.title">Запишись на открытый урок</span>
+        <span class="emoji">✺</span>
+      </h2>
+      <p class="cta__lead" data-i18n="cta.lead">
+        Оставь номер — отправим время, локацию и подарок участника. Мест ограничено.
+      </p>
+      <ul class="cta__bullets">
+        <li data-i18n="cta.b1">✓ 2 часа практики и Q&A</li>
+        <li data-i18n="cta.b2">✓ Гайд «Как стать дизайнером за 6 месяцев»</li>
+        <li data-i18n="cta.b3">✓ Скидка 20% на основной курс</li>
+      </ul>
+    </div>
+    <form class="cta__form" id="form">
+      <label>
+        <span data-i18n="form.name">Имя</span>
+        <input type="text" required placeholder="Aziz" />
+      </label>
+      <label>
+        <span data-i18n="form.phone">Телефон</span>
+        <input type="tel" required placeholder="+998 90 000 00 00" />
+      </label>
+      <label>
+        <span data-i18n="form.lang">Язык урока</span>
+        <select>
+          <option data-i18n="form.opt1">Русский</option>
+          <option data-i18n="form.opt2">Узбекский</option>
+        </select>
+      </label>
+      <button type="submit" class="btn btn--primary btn--lg btn--block">
+        <span data-i18n="form.submit">Записаться бесплатно</span> <span class="arrow">↗</span>
+      </button>
+      <p class="cta__small" data-i18n="form.policy">Нажимая кнопку, ты соглашаешься с политикой конфиденциальности.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <h2 class="display sm" data-i18n="faq.title">Частые вопросы</h2>
+  <div class="faq__list">
+    <details class="faq__item" open>
+      <summary data-i18n="faq.q1">Урок действительно бесплатный?</summary>
+      <p data-i18n="faq.a1">Да, открытый урок проходит бесплатно. Нужно только зарегистрироваться заранее, чтобы мы забронировали для тебя место.</p>
+    </details>
+    <details class="faq__item">
+      <summary data-i18n="faq.q2">Нужно ли уметь рисовать?</summary>
+      <p data-i18n="faq.a2">Нет. Профессия дизайнера интерьера — это про композицию, материалы и работу с клиентом. Всему остальному научим.</p>
+    </details>
+    <details class="faq__item">
+      <summary data-i18n="faq.q3">Где проходит урок?</summary>
+      <p data-i18n="faq.a3">Офлайн — в кампусе INTERNO School в Ташкенте. Также есть онлайн-трансляция для других городов.</p>
+    </details>
+    <details class="faq__item">
+      <summary data-i18n="faq.q4">Можно прийти с другом?</summary>
+      <p data-i18n="faq.a4">Конечно. Просто запишите каждого участника отдельно через форму выше.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__top">
+    <div class="logo">
+      <span class="logo__mark">◉</span>
+      <span class="logo__text">INTERNO<span class="muted">.school</span></span>
+    </div>
+    <div class="footer__links">
+      <a href="#">Instagram</a>
+      <a href="#">Telegram</a>
+      <a href="#">YouTube</a>
+      <a href="tel:+998900000000">+998 90 000 00 00</a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 INTERNO School</span>
+    <span data-i18n="footer.addr">Ташкент, ул. Шахрисабз, 16</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
