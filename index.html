@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>INTERNO School — Открытый урок по дизайну интерьера</title>
-<meta name="description" content="Бесплатный открытый урок по дизайну интерьера в INTERNO School. Ташкент. Регистрация открыта." />
+<title>Открытый урок по дизайну интерьера · INTERNO School · Ташкент / Самарканд / Фергана</title>
+<meta name="description" content="Бесплатный открытый урок INTERNO School. Сделайте свой первый проект в Revit за 1 час. Куратор Асад Халимов · 7+ лет в дизайне." />
+<meta property="og:title" content="Открытый урок по дизайну интерьера — INTERNO School" />
+<meta property="og:description" content="За 1 час — первый проект в Revit + 3 подарка в подарок." />
+<meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -20,23 +23,28 @@
       <span class="logo__text">INTERNO<span class="muted">.school</span></span>
     </a>
     <nav class="nav__links">
-      <a href="#about" data-i18n="nav.about">О школе</a>
-      <a href="#lesson" data-i18n="nav.lesson">Урок</a>
+      <a href="#fear" data-i18n="nav.fear">Подойдёт?</a>
       <a href="#program" data-i18n="nav.program">Программа</a>
       <a href="#mentor" data-i18n="nav.mentor">Спикер</a>
+      <a href="#cases" data-i18n="nav.cases">Кейсы</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
     <div class="nav__right">
+      <select class="city-select" id="citySelect" aria-label="Город">
+        <option value="tsh">Ташкент</option>
+        <option value="smr">Самарканд</option>
+        <option value="frg">Фергана</option>
+      </select>
       <div class="lang">
         <button class="lang__btn is-active" data-lang="ru">RU</button>
         <button class="lang__btn" data-lang="uz">UZ</button>
       </div>
-      <a href="#cta" class="btn btn--primary" data-i18n="nav.signup">Записаться</a>
+      <a href="#cta" class="btn btn--primary nav__cta" data-i18n="nav.signup">Записаться</a>
     </div>
   </div>
 </header>
 
-<!-- ===== HERO ===== -->
+<!-- ===== BLOCK 1: HERO ===== -->
 <section class="hero">
   <div class="hero__bg"></div>
   <div class="hero__overlay"></div>
@@ -44,335 +52,483 @@
   <div class="hero__content">
     <div class="hero__badge">
       <span class="dot"></span>
-      <span data-i18n="hero.badge">Бесплатный открытый урок · Ташкент</span>
+      <span><span data-i18n="hero.eyebrow">Открытый урок</span> · <span class="city-name">Ташкент</span> · <span data-i18n="hero.date">15 мая, 19:00</span></span>
     </div>
     <h1 class="hero__title">
-      <span data-i18n="hero.title1">Раскрой свой стиль</span><br/>
-      <span data-i18n="hero.title2">в дизайне интерьера</span>
+      <span data-i18n="hero.title1">Попробуйте профессию</span><br/>
+      <span data-i18n="hero.title2">дизайнера интерьера</span><br/>
+      <span data-i18n="hero.title3">за 1 вечер. <em>Бесплатно.</em></span>
     </h1>
     <p class="hero__subtitle" data-i18n="hero.subtitle">
-      Один вечер, который изменит твоё представление о профессии. Покажем, как создаются интерьеры мечты — от идеи до 3D-визуализации.
+      Создадите свой первый проект в Revit, поймёте подходит ли вам профессия, и получите путеводитель + чек-лист в подарок.
     </p>
+
+    <div class="trust-chips">
+      <span class="trust-chip" data-i18n="trust.t1">8 лет на рынке</span>
+      <span class="trust-chip" data-i18n="trust.t2">2400+ выпускников</span>
+      <span class="trust-chip" data-i18n="trust.t3">Куратор-практик</span>
+      <span class="trust-chip" data-i18n="trust.t4">3 города Узбекистана</span>
+    </div>
+
     <div class="hero__actions">
       <a href="#cta" class="btn btn--primary btn--lg">
         <span data-i18n="hero.cta">Записаться бесплатно</span>
-        <span class="arrow">↗︎</span>
+        <span class="arrow"></span>
       </a>
       <a href="#program" class="btn btn--ghost btn--lg" data-i18n="hero.cta2">Программа урока</a>
     </div>
+    <p class="hero__microcopy" data-i18n="hero.micro">🔒 Без спама. Звоним только чтобы подтвердить место.</p>
   </div>
 
-  <!-- floating event card -->
-  <aside class="event-card">
-    <div class="event-card__top">
-      <div class="event-card__img"></div>
-      <div class="event-card__info">
-        <div class="event-card__label" data-i18n="event.label">Открытый урок</div>
-        <div class="event-card__title" data-i18n="event.title">Дизайн интерьера с нуля</div>
-        <div class="event-card__price">FREE</div>
-      </div>
-    </div>
-    <div class="event-card__note" data-i18n="event.note">
-      Получи персональную консультацию по будущей профессии и портфолио.
-      <button class="event-card__plus">+</button>
+  <aside class="mentor-card">
+    <div class="mentor-card__photo"></div>
+    <div class="mentor-card__body">
+      <div class="mentor-card__label" data-i18n="mc.label">Ведёт открытый урок</div>
+      <div class="mentor-card__name">Асад Халимов</div>
+      <div class="mentor-card__role" data-i18n="mc.role">Старший куратор · 7+ лет в дизайне</div>
     </div>
   </aside>
-
-  <div class="hero__pager">
-    <span>01</span>
-    <div class="hero__line"></div>
-    <span>04</span>
-  </div>
-
-  <div class="hero__nav">
-    <button class="circle">←</button>
-    <button class="circle">→</button>
-  </div>
 </section>
 
-<!-- ===== STRIP CARDS ===== -->
-<section class="strip">
-  <div class="strip__card">
-    <div class="strip__icon">✦</div>
-    <div class="strip__text">
-      <div class="muted small" data-i18n="strip1.kicker">Создай уникальный проект</div>
-      <div class="strip__title" data-i18n="strip1.title">Спроектируй свой первый интерьер</div>
-    </div>
-    <button class="circle dashed">↗︎</button>
-  </div>
-
-  <div class="strip__card strip__card--accent">
-    <div class="strip__title small" data-i18n="strip2.title">Ученики, которые выбирают нас</div>
-    <div class="avatars">
-      <span class="avatar"></span>
-      <span class="avatar"></span>
-      <span class="avatar"></span>
-      <span class="avatar avatar--more">+1.5k</span>
-    </div>
-  </div>
-</section>
-
-<!-- ===== ABOUT / TYPES ===== -->
-<section class="types" id="program">
-  <div class="types__head">
-    <h2 class="display">
-      <span data-i18n="types.title1">Что разберём</span>
-      <button class="circle big">→</button>
-      <a href="#cta" class="btn btn--primary" data-i18n="types.shop">Записаться ↗︎</a>
-      <br/>
-      <span class="emoji">✺</span>
-      <span data-i18n="types.title2">на уроке</span>
+<!-- ===== BLOCK 2: CLOSING FEAR ===== -->
+<section class="fear" id="fear">
+  <div class="container">
+    <h2 class="display sm">
+      <span data-i18n="fear.title">Думаете «Это не для меня, я не творческий, не разбираюсь в компьютерах»?</span><br/>
+      <span class="accent" data-i18n="fear.title2">Открытый урок создан именно для вас.</span>
     </h2>
-    <p class="types__desc" data-i18n="types.desc">
-      За 2 часа ты узнаешь, как работают профессиональные дизайнеры интерьера: от первой встречи с клиентом до сдачи готового проекта. Реальные кейсы, инструменты и пошаговая методология INTERNO.
-    </p>
-  </div>
 
-  <div class="tabs">
-    <button class="tab is-active" data-i18n="tabs.all">Всё</button>
-    <button class="tab" data-i18n="tabs.t1">Стили</button>
-    <button class="tab" data-i18n="tabs.t2">Планировка</button>
-    <button class="tab" data-i18n="tabs.t3">3D</button>
-    <button class="tab" data-i18n="tabs.t4">Карьера</button>
-  </div>
-
-  <div class="cards">
-    <article class="card">
-      <button class="card__arrow">↗︎</button>
-      <button class="card__heart">♡</button>
-      <div class="card__img card__img--1"></div>
-      <div class="card__tags">
-        <span class="tag tag--sale" data-i18n="card1.tag1">Топ</span>
-        <span class="tag" data-i18n="card1.tag2">Стиль</span>
-      </div>
-      <div class="card__title" data-i18n="card1.title">Минимализм и Modern</div>
-      <div class="card__desc" data-i18n="card1.desc">Разберём актуальные стили 2026 года и как их применять в реальных проектах…</div>
-      <div class="card__bottom">
-        <div class="card__price"><span class="big">Модуль 1</span></div>
-        <div class="card__rating">★ 4.95</div>
-      </div>
-    </article>
-
-    <article class="card">
-      <button class="card__arrow">↗︎</button>
-      <button class="card__heart">♡</button>
-      <div class="card__img card__img--2"></div>
-      <div class="card__tags">
-        <span class="tag tag--new" data-i18n="card2.tag1">Новое</span>
-        <span class="tag" data-i18n="card2.tag2">Планировка</span>
-      </div>
-      <div class="card__title" data-i18n="card2.title">Эргономика пространства</div>
-      <div class="card__desc" data-i18n="card2.desc">Как из 40 м² сделать просторную квартиру: законы зонирования и эргономики…</div>
-      <div class="card__bottom">
-        <div class="card__price"><span class="big">Модуль 2</span></div>
-        <div class="card__rating">★ 4.89</div>
-      </div>
-    </article>
-
-    <article class="card card--feature">
-      <div class="card__best" data-i18n="card3.best">Best</div>
-      <div class="card__cat" data-i18n="card3.cat">3D-визуализация</div>
-      <div class="card__title big" data-i18n="card3.title">Render за один вечер</div>
-      <div class="card__img card__img--3"></div>
-      <a href="#cta" class="card__more">
-        <span data-i18n="card3.more">Подробнее</span> <span>→</span>
-      </a>
-    </article>
-
-    <article class="card">
-      <button class="card__arrow">↗︎</button>
-      <button class="card__heart">♡</button>
-      <div class="card__img card__img--4"></div>
-      <div class="card__tags">
-        <span class="tag tag--rec" data-i18n="card4.tag1">Совет</span>
-        <span class="tag" data-i18n="card4.tag2">Карьера</span>
-      </div>
-      <div class="card__title" data-i18n="card4.title">Как зарабатывать дизайном</div>
-      <div class="card__desc" data-i18n="card4.desc">Сколько стоит проект, как искать клиентов и где работают наши выпускники…</div>
-      <div class="card__bottom">
-        <div class="card__price"><span class="big">Модуль 4</span></div>
-        <div class="card__rating">★ 5.00</div>
-      </div>
-    </article>
-  </div>
-
-  <div class="cards__pager">
-    <span>1/4</span>
-    <div class="cards__nav">
-      <button class="circle">←</button>
-      <button class="circle">→</button>
+    <div class="fear__grid">
+      <article class="fear__card">
+        <div class="fear__bad">❌ <span data-i18n="fear.q1">«У меня нет художественного образования»</span></div>
+        <div class="fear__good">✓ <span data-i18n="fear.a1">78% наших выпускников пришли без художки. Дизайн интерьера — это логика и инструменты, а не рисование от руки.</span></div>
+      </article>
+      <article class="fear__card">
+        <div class="fear__bad">❌ <span data-i18n="fear.q2">«Я не разбираюсь в программах»</span></div>
+        <div class="fear__good">✓ <span data-i18n="fear.a2">За 1 час открытого урока вы сделаете свой первый проект в Revit. Куратор покажет каждый шаг.</span></div>
+      </article>
+      <article class="fear__card">
+        <div class="fear__bad">❌ <span data-i18n="fear.q3">«Уже не мой возраст»</span></div>
+        <div class="fear__good">✓ <span data-i18n="fear.a3">Среди студентов и в 19, и в 42. Самой старшей выпускнице 51 — она зарабатывает $1200 в месяц.</span></div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ===== STATS / COVETED ===== -->
-<section class="coveted" id="about">
-  <h2 class="display">
-    <span data-i18n="cov.title1">Наши</span>
-    <span class="pill"><span data-i18n="cov.pillBig">студенты</span></span>
-    <span class="dots">●●●</span>
-    <br/>
-    <span class="arrow-line">⌁→</span>
-    <span data-i18n="cov.title2">меняют рынок интерьера</span>
-  </h2>
+<!-- ===== BLOCK 3: WHAT YOU'LL GET ===== -->
+<section class="benefits" id="lesson">
+  <div class="container">
+    <h2 class="display"><span data-i18n="ben.title">За 1 час на открытом уроке</span> <span class="accent">↓</span></h2>
 
-  <div class="cov__grid">
-    <div class="cov__stat">
-      <div class="cov__icon">✦</div>
-      <button class="card__arrow">↗︎</button>
-      <div class="cov__num">3.500+</div>
-      <hr class="cov__hr"/>
-      <div class="cov__avatars">
-        <span class="avatar"></span>
-        <span class="avatar"></span>
-        <span class="avatar"></span>
-      </div>
-      <p class="cov__desc" data-i18n="cov.desc">
-        За 6 лет мы выпустили более <u>3 500 дизайнеров интерьера</u>, которые работают в Ташкенте, Дубае, Москве и Алматы. Наша программа построена на реальных проектах и обновляется каждый сезон.
-      </p>
+    <ol class="benefits__list">
+      <li><span class="benefits__num">01</span><span data-i18n="ben.b1">Сделаете свой первый проект планировки квартиры в Revit (унесёте в портфолио)</span></li>
+      <li><span class="benefits__num">02</span><span data-i18n="ben.b2">Поймёте подходит ли вам профессия — без воды и общих фраз</span></li>
+      <li><span class="benefits__num">03</span><span data-i18n="ben.b3">Узнаете сколько реально зарабатывают начинающие дизайнеры в Узбекистане в 2026</span></li>
+      <li><span class="benefits__num">04</span><span data-i18n="ben.b4">Получите пошаговый план: как за 6 месяцев выйти на свой первый заказ</span></li>
+      <li><span class="benefits__num">05</span><span data-i18n="ben.b5">Зададите все вопросы куратору лично или в Zoom — для онлайн-формата</span></li>
+    </ol>
+
+    <p class="benefits__foot" data-i18n="ben.foot">И ВСЕ присутствующие получают 3 подарка ↓</p>
+  </div>
+</section>
+
+<!-- ===== BLOCK 4: GIFTS ===== -->
+<section class="gifts">
+  <div class="container">
+    <h2 class="display sm"><span data-i18n="gift.title">Подарки за регистрацию</span></h2>
+    <div class="gifts__grid">
+      <article class="gift">
+        <div class="gift__icon">🎁</div>
+        <div class="gift__num" data-i18n="gift.l1">ПОДАРОК 1</div>
+        <h3 class="gift__title" data-i18n="gift.t1">PDF-гайд «Путеводитель по профессии дизайнера интерьера в Узбекистане 2026»</h3>
+        <p class="gift__desc" data-i18n="gift.d1">32 страницы практики: рынок, инструменты, цены, портфолио.</p>
+      </article>
+      <article class="gift">
+        <div class="gift__icon">📋</div>
+        <div class="gift__num" data-i18n="gift.l2">ПОДАРОК 2</div>
+        <h3 class="gift__title" data-i18n="gift.t2">Чек-лист «Как найти первых 5 клиентов за 30 дней»</h3>
+        <p class="gift__desc" data-i18n="gift.d2">12 шагов от первого профиля в Instagram до подписания договора.</p>
+      </article>
+      <article class="gift gift--accent">
+        <div class="gift__icon">🎟</div>
+        <div class="gift__num" data-i18n="gift.l3">ПОДАРОК 3</div>
+        <h3 class="gift__title" data-i18n="gift.t3">Промокод на скидку 20% на основной курс</h3>
+        <p class="gift__desc" data-i18n="gift.d3">Действует 7 дней после открытого урока.</p>
+      </article>
+    </div>
+    <p class="gifts__note" data-i18n="gift.note">Все подарки придут на WhatsApp в течение 5 минут после регистрации.</p>
+    <a href="#cta" class="btn btn--primary btn--lg btn--center"><span data-i18n="gift.cta">Получить подарки и записаться</span> <span class="arrow"></span></a>
+  </div>
+</section>
+
+<!-- ===== BLOCK 5: QUIZ ===== -->
+<section class="quiz" id="quiz">
+  <div class="container">
+    <div class="quiz__head">
+      <h2 class="display sm"><span data-i18n="quiz.title">Подходит ли вам профессия?</span> <span class="emoji">✺</span></h2>
+      <p class="quiz__lead" data-i18n="quiz.lead">5 коротких вопросов · 30 секунд · персональный вердикт от куратора</p>
     </div>
 
-    <div class="cov__feature">
-      <p class="cov__lead" data-i18n="cov.lead">
-        Получи место в первом ряду новой индустрии: личные истории выпускников, разбор кейсов и портфолио, которое выделит тебя на рынке.
-      </p>
+    <div class="quiz__box" id="quizBox">
+      <div class="quiz__progress"><div class="quiz__bar" id="quizBar"></div></div>
+      <div class="quiz__counter"><span id="quizStep">1</span>/5</div>
 
-      <div class="chips">
-        <button class="chip is-active" data-i18n="chip.hot">Хит</button>
-        <button class="chip" data-i18n="chip.best">Лучшее</button>
-        <button class="chip" data-i18n="chip.new">Новое</button>
-        <button class="chip" data-i18n="chip.rec">Совет</button>
-        <a href="#cta" class="chips__all" data-i18n="chip.all">Все →</a>
+      <div class="quiz__step is-active" data-step="1">
+        <h3 class="quiz__q" data-i18n="q1.t">Вам нравится наблюдать, как меняются интерьеры в реалити-шоу или на YouTube?</h3>
+        <div class="quiz__opts">
+          <button class="quiz__opt" data-score="1" data-i18n="q1.a1">Да, очень</button>
+          <button class="quiz__opt" data-score="1" data-i18n="q1.a2">Иногда</button>
+          <button class="quiz__opt" data-score="0" data-i18n="q1.a3">Нет</button>
+        </div>
       </div>
 
-      <article class="big-card">
-        <button class="card__arrow">↗︎</button>
-        <div class="big-card__img"></div>
-        <div class="big-card__body">
-          <h3 class="big-card__title" data-i18n="big.title">Открытый урок · 2 часа · бесплатно</h3>
-          <p class="big-card__desc" data-i18n="big.desc">
-            Этот вечер даст тебе ясность: подходит ли тебе профессия, с чего начать и как за 6 месяцев выйти на первые заказы.
-          </p>
-          <div class="big-card__bottom">
-            <div class="avatars">
-              <span class="avatar"></span>
-              <span class="avatar"></span>
-              <span class="avatar avatar--more">+1.1k</span>
-            </div>
-            <div class="card__rating">★ 4.97</div>
-          </div>
+      <div class="quiz__step" data-step="2">
+        <h3 class="quiz__q" data-i18n="q2.t">Что вас больше привлекает в профессии?</h3>
+        <div class="quiz__opts">
+          <button class="quiz__opt" data-score="1" data-i18n="q2.a1">Творчество и самовыражение</button>
+          <button class="quiz__opt" data-score="1" data-i18n="q2.a2">Стабильный доход</button>
+          <button class="quiz__opt" data-score="1" data-i18n="q2.a3">Работа удалённо</button>
+          <button class="quiz__opt" data-score="1" data-i18n="q2.a4">Всё вместе</button>
+        </div>
+      </div>
+
+      <div class="quiz__step" data-step="3">
+        <h3 class="quiz__q" data-i18n="q3.t">Сколько времени готовы уделять обучению?</h3>
+        <div class="quiz__opts">
+          <button class="quiz__opt" data-score="1" data-i18n="q3.a1">1–2 часа в день</button>
+          <button class="quiz__opt" data-score="1" data-i18n="q3.a2">3–4 часа в день</button>
+          <button class="quiz__opt" data-score="0" data-i18n="q3.a3">Только по выходным</button>
+        </div>
+      </div>
+
+      <div class="quiz__step" data-step="4">
+        <h3 class="quiz__q" data-i18n="q4.t">Какой результат хотите получить через 6 месяцев?</h3>
+        <div class="quiz__opts">
+          <button class="quiz__opt" data-score="1" data-i18n="q4.a1">Первый клиент и доход</button>
+          <button class="quiz__opt" data-score="1" data-i18n="q4.a2">Новая профессия и портфолио</button>
+          <button class="quiz__opt" data-score="0" data-i18n="q4.a3">Просто разобраться, моё ли это</button>
+        </div>
+      </div>
+
+      <div class="quiz__step" data-step="5">
+        <h3 class="quiz__q" data-i18n="q5.t">В каком городе вы находитесь?</h3>
+        <div class="quiz__opts">
+          <button class="quiz__opt" data-score="1" data-city="tsh">Ташкент</button>
+          <button class="quiz__opt" data-score="1" data-city="smr">Самарканд</button>
+          <button class="quiz__opt" data-score="1" data-city="frg">Фергана</button>
+          <button class="quiz__opt" data-score="0" data-i18n="q5.a4">Другой город</button>
+        </div>
+      </div>
+
+      <div class="quiz__step quiz__final" data-step="final">
+        <div class="quiz__verdict" id="quizVerdict"></div>
+        <form class="quiz__form" id="quizForm">
+          <label><span data-i18n="form.name">Имя</span><input type="text" name="name" required placeholder="Aziz" /></label>
+          <label><span data-i18n="form.phone">Телефон</span><input type="tel" name="phone" required placeholder="+998 (90) 000-00-00" /></label>
+          <button type="submit" class="btn btn--primary btn--lg btn--block"><span data-i18n="form.submit">Записаться на урок</span> <span class="arrow"></span></button>
+        </form>
+        <button class="quiz__back" id="quizRestart" data-i18n="quiz.restart">← Пройти заново</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOCK 6: SPEAKER ===== -->
+<section class="mentor" id="mentor">
+  <div class="container mentor__inner">
+    <div class="mentor__photo"></div>
+    <div class="mentor__info">
+      <div class="muted small" data-i18n="m.kicker">Спикер открытого урока</div>
+      <h2 class="mentor__name">Асад Халимов</h2>
+      <p class="mentor__role" data-i18n="m.role">Старший куратор курса «Дизайн интерьера» в INTERNO School</p>
+      <ul class="mentor__list">
+        <li data-i18n="m.l1">7+ лет практики в дизайне жилых и коммерческих интерьеров</li>
+        <li data-i18n="m.l2">120+ реализованных проектов в Ташкенте, Самарканде, Алматы</li>
+        <li data-i18n="m.l3">Обучил 800+ студентов — 60% работают в профессии</li>
+        <li data-i18n="m.l4">Эксперт по Revit и AutoCAD</li>
+      </ul>
+      <blockquote class="mentor__quote" data-i18n="m.quote">
+        «На открытом уроке я не буду продавать вам курс. Моя задача — за час показать вам реальную работу дизайнера. Если зацепит — будем учиться. Если нет — у вас останется первый проект в Revit и понимание, куда двигаться дальше.»
+      </blockquote>
+      <div class="mentor__actions">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--ghost" data-i18n="m.ig">Instagram куратора →</a>
+        <a href="#cta" class="btn btn--primary"><span data-i18n="m.cta">Записаться к Асаду</span> <span class="arrow"></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOCK 7: SALARIES ===== -->
+<section class="salary">
+  <div class="container">
+    <h2 class="display sm"><span data-i18n="sal.title">Сколько вы будете зарабатывать после курса</span></h2>
+    <p class="muted" data-i18n="sal.lead">Цифры — на основе вакансий HeadHunter UZ, Glassdoor и Upwork (апрель 2026).</p>
+
+    <div class="salary__grid">
+      <article class="salary__card">
+        <div class="salary__lvl">Junior</div>
+        <div class="salary__period" data-i18n="sal.j">0–6 месяцев</div>
+        <div class="salary__row"><span data-i18n="sal.uz">В Узбекистане</span><b>$400–700</b></div>
+        <div class="salary__row"><span data-i18n="sal.rem">Удалёнка / зарубеж</span><b>$600–1200</b></div>
+      </article>
+      <article class="salary__card salary__card--mid">
+        <div class="salary__lvl">Middle</div>
+        <div class="salary__period" data-i18n="sal.m">6–18 месяцев</div>
+        <div class="salary__row"><span data-i18n="sal.uz">В Узбекистане</span><b>$800–1500</b></div>
+        <div class="salary__row"><span data-i18n="sal.rem">Удалёнка / зарубеж</span><b>$1500–2500</b></div>
+      </article>
+      <article class="salary__card salary__card--sr">
+        <div class="salary__lvl">Senior</div>
+        <div class="salary__period" data-i18n="sal.s">1.5+ лет</div>
+        <div class="salary__row"><span data-i18n="sal.uz">В Узбекистане</span><b>$1500–3000+</b></div>
+        <div class="salary__row"><span data-i18n="sal.rem">Удалёнка / зарубеж</span><b>$3000–6000+</b></div>
+      </article>
+    </div>
+    <a href="#cta" class="btn btn--primary btn--lg btn--center"><span data-i18n="sal.cta">Хочу так же — записаться</span> <span class="arrow"></span></a>
+  </div>
+</section>
+
+<!-- ===== BLOCK 8: CASES ===== -->
+<section class="cases" id="cases">
+  <div class="container">
+    <h2 class="display"><span data-i18n="case.title">Студенты уже зарабатывают.</span> <span class="accent" data-i18n="case.title2">Реальные люди, реальные деньги.</span></h2>
+
+    <div class="cases__grid">
+      <article class="case-card">
+        <div class="case-card__photo case-card__photo--1"></div>
+        <div class="case-card__body">
+          <div class="case-card__name">Алёна Е., 24 · Ташкент</div>
+          <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c1.b">продавец в магазине</span></div>
+          <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c1.a">$1000/мес как фриланс-дизайнер</span></div>
+          <div class="case-card__time" data-i18n="c1.t">5 месяцев после курса</div>
+          <p class="case-card__quote" data-i18n="c1.q">«Думала не смогу, но Асад так разложил всё по полочкам, что после открытого урока поняла — это моё»</p>
+          <a href="#" class="case-card__ig">Instagram →</a>
         </div>
       </article>
 
-      <div class="side-labels">
-        <div class="side-label">↑ <span data-i18n="side1">Спикер — лид-дизайнер</span></div>
-        <div class="side-label">↑ <span data-i18n="side2">Сертификат участника</span></div>
+      <article class="case-card">
+        <div class="case-card__photo case-card__photo--2"></div>
+        <div class="case-card__body">
+          <div class="case-card__name">Жасур Р., 28 · Самарканд</div>
+          <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c2.b">менеджер в банке</span></div>
+          <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c2.a">$1500/мес + 4 проекта в работе</span></div>
+          <div class="case-card__time" data-i18n="c2.t">6 месяцев после курса</div>
+          <p class="case-card__quote" data-i18n="c2.q">«Думал поздно менять профессию в 28. Оказалось — самое время.»</p>
+          <a href="#" class="case-card__ig">Instagram →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-card__photo case-card__photo--3"></div>
+        <div class="case-card__body">
+          <div class="case-card__name">Карина В., 22 · Ташкент</div>
+          <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c3.b">студентка медфака</span></div>
+          <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c3.a">$800 на удалёнке + диплом</span></div>
+          <div class="case-card__time" data-i18n="c3.t">4 месяца после курса</div>
+          <p class="case-card__quote" data-i18n="c3.q">«Совмещаю с учёбой — теперь не зависну от родителей.»</p>
+          <a href="#" class="case-card__ig">Instagram →</a>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-card__photo case-card__photo--4"></div>
+        <div class="case-card__body">
+          <div class="case-card__name">Регина К., 31 · Фергана</div>
+          <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c4.b">в декрете, без дохода</span></div>
+          <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c4.a">$900/мес из дома</span></div>
+          <div class="case-card__time" data-i18n="c4.t">7 месяцев после курса</div>
+          <p class="case-card__quote" data-i18n="c4.q">«Ребёнок спит — я работаю. Это и есть моя свобода.»</p>
+          <a href="#" class="case-card__ig">Instagram →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOCK 9: WORKS GALLERY ===== -->
+<section class="works">
+  <div class="container">
+    <h2 class="display sm"><span data-i18n="works.title">Работы выпускников</span></h2>
+    <p class="muted" data-i18n="works.lead">Все проекты сделаны студентами на 4-м месяце обучения.</p>
+
+    <div class="works__grid">
+      <figure class="work work--1"><figcaption>Алёна Е. · 1-комн. квартира · Ташкент</figcaption></figure>
+      <figure class="work work--2"><figcaption>Жасур Р. · студия 32м² · Самарканд</figcaption></figure>
+      <figure class="work work--3"><figcaption>Карина В. · 3-комн. · Ташкент</figcaption></figure>
+      <figure class="work work--4"><figcaption>Регина К. · детская комната · Фергана</figcaption></figure>
+      <figure class="work work--5"><figcaption>Ашур Х. · кухня-гостиная · Ташкент</figcaption></figure>
+      <figure class="work work--6"><figcaption>Анелия М. · спальня в стиле Japandi · Самарканд</figcaption></figure>
+    </div>
+
+    <a href="#cta" class="btn btn--primary btn--lg btn--center"><span data-i18n="works.cta">Хочу так же — записаться</span> <span class="arrow"></span></a>
+  </div>
+</section>
+
+<!-- ===== BLOCK 10: PROGRAM TIMELINE ===== -->
+<section class="program" id="program">
+  <div class="container">
+    <h2 class="display sm"><span data-i18n="prog.title">Программа открытого урока</span> <span class="muted">· 60 мин</span></h2>
+
+    <ol class="timeline">
+      <li><span class="timeline__time">0–10</span><div><b data-i18n="t1.t">Знакомство и обзор профессии</b><p data-i18n="t1.d">Куратор расскажет о рынке Узбекистана в 2026 — куда идёт спрос и сколько платят.</p></div></li>
+      <li><span class="timeline__time">10–25</span><div><b data-i18n="t2.t">Установка Revit и обзор интерфейса</b><p data-i18n="t2.d">Работаете на своём ноутбуке или нашем — мы обеспечим место.</p></div></li>
+      <li><span class="timeline__time">25–50</span><div><b data-i18n="t3.t">Создаём планировку квартиры с нуля</b><p data-i18n="t3.d">Под руководством куратора. Унесёте готовый файл в портфолио.</p></div></li>
+      <li><span class="timeline__time">50–55</span><div><b data-i18n="t4.t">Сколько ждать первого заказа</b><p data-i18n="t4.d">Разбор: где искать клиентов и какие цены ставить новичку.</p></div></li>
+      <li><span class="timeline__time">55–60</span><div><b data-i18n="t5.t">Q&amp;A — задаёте любые вопросы</b><p data-i18n="t5.d">Лично или через Zoom — для онлайн-формата.</p></div></li>
+    </ol>
+
+    <p class="program__note" data-i18n="prog.note">📌 Возьмите ноутбук — Revit установим вместе. Если ноутбука нет — обеспечим компьютер на месте.</p>
+  </div>
+</section>
+
+<!-- ===== BLOCK 11: WHY INTERNO ===== -->
+<section class="why">
+  <div class="container">
+    <h2 class="display sm"><span data-i18n="why.title">Почему именно INTERNO</span></h2>
+    <div class="why__grid">
+      <div class="why__card"><div class="why__num">8</div><div class="why__lbl" data-i18n="why.l1">лет на рынке · с 2018 года</div></div>
+      <div class="why__card"><div class="why__num">2400+</div><div class="why__lbl" data-i18n="why.l2">выпускников — крупнейшая школа дизайна в Узбекистане</div></div>
+      <div class="why__card"><div class="why__num">60%</div><div class="why__lbl" data-i18n="why.l3">выпускников работают в профессии — проверяем по соцсетям</div></div>
+      <div class="why__card"><div class="why__num">3</div><div class="why__lbl" data-i18n="why.l4">города — Ташкент, Самарканд, Фергана</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOCK 12: FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="container">
+    <h2 class="display sm" data-i18n="faq.title">Частые вопросы</h2>
+    <div class="faq__list">
+      <details class="faq__item" open>
+        <summary data-i18n="faq.q1">Урок реально бесплатный? Будете продавать курс?</summary>
+        <p data-i18n="faq.a1">Да, бесплатно. Продавать никто не будет — но если зацепит, расскажем как поступить на основной курс.</p>
+      </details>
+      <details class="faq__item">
+        <summary data-i18n="faq.q2">А если я ничего не понимаю в дизайне и компьютерах?</summary>
+        <p data-i18n="faq.a2">Урок построен с нуля. Куратор разберёт каждый шаг.</p>
+      </details>
+      <details class="faq__item">
+        <summary data-i18n="faq.q3">Сколько стоит основной курс?</summary>
+        <p data-i18n="faq.a3">Зависит от формата и города. Точную стоимость и рассрочку расскажем на уроке.</p>
+      </details>
+      <details class="faq__item">
+        <summary data-i18n="faq.q4">Я живу в Самарканде/Фергане. Как мне попасть?</summary>
+        <p data-i18n="faq.a4">Открытые уроки проводятся во всех 3 городах. Адрес в вашем городе пришлём при записи.</p>
+      </details>
+      <details class="faq__item">
+        <summary data-i18n="faq.q5">Сколько длится основной курс?</summary>
+        <p data-i18n="faq.a5">6 месяцев. 2 раза в неделю по 2 часа.</p>
+      </details>
+      <details class="faq__item">
+        <summary data-i18n="faq.q6">Дадите ли диплом?</summary>
+        <p data-i18n="faq.a6">Да, выдаём сертификат с QR-кодом, который проверяется на нашем сайте.</p>
+      </details>
+      <details class="faq__item">
+        <summary data-i18n="faq.q7">Что если я запишусь и не приду?</summary>
+        <p data-i18n="faq.a7">Просто напишите нам — перенесём на следующий урок. Без проблем.</p>
+      </details>
+      <details class="faq__item">
+        <summary data-i18n="faq.q8">Помогаете ли с трудоустройством?</summary>
+        <p data-i18n="faq.a8">Да, у нас есть карьерный центр. Помогаем собрать портфолио и найти первых клиентов.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOCK 13: FINAL FORM ===== -->
+<section class="cta" id="cta">
+  <div class="container">
+    <div class="cta__inner">
+      <div class="cta__left">
+        <h2 class="display sm">
+          <span data-i18n="cta.title">Места заканчиваются</span>
+          <span class="emoji">⚡</span>
+        </h2>
+        <div class="countdown" id="countdown">
+          <div class="countdown__cell"><span id="cdDays">05</span><small data-i18n="cd.d">дней</small></div>
+          <div class="countdown__cell"><span id="cdHours">23</span><small data-i18n="cd.h">часов</small></div>
+          <div class="countdown__cell"><span id="cdMin">14</span><small data-i18n="cd.m">мин</small></div>
+          <div class="countdown__cell"><span id="cdSec">32</span><small data-i18n="cd.s">сек</small></div>
+        </div>
+
+        <div class="progress">
+          <div class="progress__bar"><div class="progress__fill" style="width:72%"></div></div>
+          <div class="progress__lbl"><b>18</b> <span data-i18n="prog.of">из</span> <b>25</b> <span data-i18n="prog.spots">мест занято</span></div>
+        </div>
+
+        <ul class="cta__bullets">
+          <li data-i18n="cta.b1">✓ 1 час практики в Revit + Q&A</li>
+          <li data-i18n="cta.b2">✓ PDF-гайд + чек-лист в подарок</li>
+          <li data-i18n="cta.b3">✓ Скидка 20% на основной курс</li>
+        </ul>
+      </div>
+
+      <form class="cta__form" id="form">
+        <label><span data-i18n="form.name">Имя</span><input type="text" name="name" required placeholder="Aziz" /></label>
+        <label><span data-i18n="form.phone">Телефон</span><input type="tel" name="phone" required placeholder="+998 (90) 000-00-00" /></label>
+        <label><span data-i18n="form.city">Город</span>
+          <select name="city">
+            <option value="tsh">Ташкент</option>
+            <option value="smr">Самарканд</option>
+            <option value="frg">Фергана</option>
+          </select>
+        </label>
+        <label><span data-i18n="form.lang">Язык</span>
+          <select name="lang">
+            <option value="ru" data-i18n="form.opt1">Русский</option>
+            <option value="uz" data-i18n="form.opt2">Узбекский</option>
+          </select>
+        </label>
+        <label class="cta__check">
+          <input type="checkbox" required />
+          <span data-i18n="form.consent">Согласен на обработку персональных данных</span>
+        </label>
+        <button type="submit" class="btn btn--primary btn--lg btn--block"><span data-i18n="form.submit">Записаться на урок</span> <span class="arrow"></span></button>
+        <p class="cta__small" data-i18n="form.policy">Звоним только для подтверждения. Не спамим. Можно отписаться в любой момент.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOCK 14: FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div class="logo"><span class="logo__mark">◉</span><span class="logo__text">INTERNO<span class="muted">.school</span></span></div>
+        <p class="muted small" data-i18n="ftr.about">Школа дизайна интерьера №1 в Узбекистане. С 2018 года.</p>
+      </div>
+      <div class="footer__col">
+        <h4 data-i18n="ftr.contact">Контакты</h4>
+        <a href="tel:+998900000000">+998 90 000 00 00</a>
+        <a href="mailto:hello@interno.school">hello@interno.school</a>
+      </div>
+      <div class="footer__col">
+        <h4 data-i18n="ftr.cities">Адреса</h4>
+        <p>Ташкент · ул. Шахрисабз, 16</p>
+        <p>Самарканд · ул. Регистан, 5</p>
+        <p>Фергана · ул. Мустакиллик, 22</p>
+      </div>
+      <div class="footer__col">
+        <h4 data-i18n="ftr.social">Соцсети</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Telegram</a>
+        <a href="#">YouTube</a>
+        <a href="#">TikTok</a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ===== MENTOR ===== -->
-<section class="mentor" id="mentor">
-  <div class="mentor__photo"></div>
-  <div class="mentor__info">
-    <div class="muted small" data-i18n="mentor.kicker">Спикер открытого урока</div>
-    <h2 class="mentor__name">Madina Karimova</h2>
-    <p class="mentor__role" data-i18n="mentor.role">Lead Interior Designer · INTERNO School · 8+ лет опыта</p>
-    <ul class="mentor__list">
-      <li data-i18n="mentor.l1">— Более 120 реализованных проектов в Узбекистане и ОАЭ</li>
-      <li data-i18n="mentor.l2">— Ментор 600+ студентов, преподаёт с 2021 года</li>
-      <li data-i18n="mentor.l3">— Спикер Tashkent Design Week и Cosmoscow</li>
-    </ul>
-    <a href="#cta" class="btn btn--primary btn--lg">
-      <span data-i18n="mentor.cta">Забронировать место</span> <span class="arrow">↗︎</span>
-    </a>
-  </div>
-</section>
-
-<!-- ===== CTA / FORM ===== -->
-<section class="cta" id="cta">
-  <div class="cta__inner">
-    <div class="cta__left">
-      <h2 class="display sm">
-        <span data-i18n="cta.title">Запишись на открытый урок</span>
-        <span class="emoji">✺</span>
-      </h2>
-      <p class="cta__lead" data-i18n="cta.lead">
-        Оставь номер — отправим время, локацию и подарок участника. Мест ограничено.
-      </p>
-      <ul class="cta__bullets">
-        <li data-i18n="cta.b1">✓ 2 часа практики и Q&A</li>
-        <li data-i18n="cta.b2">✓ Гайд «Как стать дизайнером за 6 месяцев»</li>
-        <li data-i18n="cta.b3">✓ Скидка 20% на основной курс</li>
-      </ul>
+    <div class="footer__bottom">
+      <span>© 2026 INTERNO School</span>
+      <a href="#" data-i18n="ftr.privacy">Политика конфиденциальности</a>
     </div>
-    <form class="cta__form" id="form">
-      <label>
-        <span data-i18n="form.name">Имя</span>
-        <input type="text" required placeholder="Aziz" />
-      </label>
-      <label>
-        <span data-i18n="form.phone">Телефон</span>
-        <input type="tel" required placeholder="+998 90 000 00 00" />
-      </label>
-      <label>
-        <span data-i18n="form.lang">Язык урока</span>
-        <select>
-          <option data-i18n="form.opt1">Русский</option>
-          <option data-i18n="form.opt2">Узбекский</option>
-        </select>
-      </label>
-      <button type="submit" class="btn btn--primary btn--lg btn--block">
-        <span data-i18n="form.submit">Записаться бесплатно</span> <span class="arrow">↗︎</span>
-      </button>
-      <p class="cta__small" data-i18n="form.policy">Нажимая кнопку, ты соглашаешься с политикой конфиденциальности.</p>
-    </form>
-  </div>
-</section>
-
-<!-- ===== FAQ ===== -->
-<section class="faq" id="faq">
-  <h2 class="display sm" data-i18n="faq.title">Частые вопросы</h2>
-  <div class="faq__list">
-    <details class="faq__item" open>
-      <summary data-i18n="faq.q1">Урок действительно бесплатный?</summary>
-      <p data-i18n="faq.a1">Да, открытый урок проходит бесплатно. Нужно только зарегистрироваться заранее, чтобы мы забронировали для тебя место.</p>
-    </details>
-    <details class="faq__item">
-      <summary data-i18n="faq.q2">Нужно ли уметь рисовать?</summary>
-      <p data-i18n="faq.a2">Нет. Профессия дизайнера интерьера — это про композицию, материалы и работу с клиентом. Всему остальному научим.</p>
-    </details>
-    <details class="faq__item">
-      <summary data-i18n="faq.q3">Где проходит урок?</summary>
-      <p data-i18n="faq.a3">Офлайн — в кампусе INTERNO School в Ташкенте. Также есть онлайн-трансляция для других городов.</p>
-    </details>
-    <details class="faq__item">
-      <summary data-i18n="faq.q4">Можно прийти с другом?</summary>
-      <p data-i18n="faq.a4">Конечно. Просто запишите каждого участника отдельно через форму выше.</p>
-    </details>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="footer__top">
-    <div class="logo">
-      <span class="logo__mark">◉</span>
-      <span class="logo__text">INTERNO<span class="muted">.school</span></span>
-    </div>
-    <div class="footer__links">
-      <a href="#">Instagram</a>
-      <a href="#">Telegram</a>
-      <a href="#">YouTube</a>
-      <a href="tel:+998900000000">+998 90 000 00 00</a>
-    </div>
-  </div>
-  <div class="footer__bottom">
-    <span>© 2026 INTERNO School</span>
-    <span data-i18n="footer.addr">Ташкент, ул. Шахрисабз, 16</span>
   </div>
 </footer>
+
+<!-- ===== STICKY MOBILE CTA ===== -->
+<a href="#cta" class="sticky-cta">
+  <span data-i18n="sticky.text">Записаться бесплатно</span>
+  <span class="arrow"></span>
+</a>
 
 <script src="script.js"></script>
 </body>

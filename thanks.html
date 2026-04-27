@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Спасибо! Вы записаны · INTERNO School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+.thanks{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+.thanks__inner{max-width:720px;width:100%;text-align:center}
+.thanks__icon{font-size:72px;margin-bottom:20px}
+.thanks__title{font-family:'Unbounded';font-weight:600;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:16px;letter-spacing:-.02em}
+.thanks__lead{color:#bbb;font-size:16px;line-height:1.6;margin-bottom:36px}
+.steps{display:flex;flex-direction:column;gap:12px;margin-bottom:36px;text-align:left}
+.step{
+  display:flex;gap:16px;align-items:flex-start;
+  background:var(--bg2);border:1px solid var(--line);
+  border-radius:16px;padding:20px;
+}
+.step__num{
+  font-family:'Unbounded';font-weight:700;font-size:20px;
+  color:var(--accent);min-width:32px;
+}
+.step b{display:block;font-size:15px;margin-bottom:4px}
+.step p{font-size:13px;color:#bbb;line-height:1.5}
+.step a{color:var(--accent)}
+.thanks__share{
+  background:var(--accent);color:#111;
+  border-radius:20px;padding:24px;margin-bottom:24px;
+}
+.thanks__share h3{font-family:'Unbounded';font-weight:600;font-size:18px;margin-bottom:8px}
+.thanks__share p{font-size:13px;margin-bottom:16px}
+.thanks__share .btn{background:#111;color:var(--accent)}
+.thanks__home{display:inline-block;margin-top:24px;color:#888;font-size:13px}
+.thanks__home:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav__inner">
+    <a class="logo" href="index.html">
+      <span class="logo__mark">◉</span>
+      <span class="logo__text">INTERNO<span class="muted">.school</span></span>
+    </a>
+  </div>
+</header>
+
+<main class="thanks">
+  <div class="thanks__inner">
+    <div class="thanks__icon">🎉</div>
+    <h1 class="thanks__title">Готово! Вы записаны на открытый урок</h1>
+    <p class="thanks__lead">15 мая, 19:00 · Ташкент, ул. Шахрисабз, 16. Менеджер позвонит в течение 15 минут для подтверждения.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">1</div>
+        <div>
+          <b>В течение 15 минут вам позвонит менеджер</b>
+          <p>Подтвердит место и расскажет детали — на каком ноутбуке работать, как добраться.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <div>
+          <b>Сохраните дату в календаре</b>
+          <p><a href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Открытый+урок+INTERNO&dates=20260515T190000/20260515T200000&location=Ташкент,+ул.+Шахрисабз,+16" target="_blank">Добавить в Google Calendar →</a></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <div>
+          <b>Подпишитесь на наш Telegram-канал</b>
+          <p>Там детали, напоминание за день и доступ к закрытым материалам куратора. <a href="https://t.me/internoschool" target="_blank">@internoschool →</a></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">4</div>
+        <div>
+          <b>Скачайте PDF-гайд (подарок №1)</b>
+          <p><a href="#" download>Путеводитель по профессии 2026 (PDF, 32 стр.) →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="thanks__share">
+      <h3>Приходите вместе с подругой</h3>
+      <p>Поделитесь ссылкой — двое всегда веселее. Plus, у подруги тоже будут все 3 подарка.</p>
+      <a href="https://wa.me/?text=Записалась%20на%20бесплатный%20открытый%20урок%20по%20дизайну%20интерьера%20в%20INTERNO%20School.%20Приходи%20со%20мной!%20https://interno-school.vercel.app" target="_blank" class="btn btn--lg">
+        Поделиться в WhatsApp →
+      </a>
+    </div>
+
+    <a href="index.html" class="thanks__home">← На главную</a>
+  </div>
+</main>
+
+<script>
+// Pixel events
+if(window.fbq) window.fbq('track','CompleteRegistration');
+</script>
+</body>
+</html>
