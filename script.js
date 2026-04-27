@@ -133,6 +133,14 @@ const dict = {
     "ftr.contact":"Контакты","ftr.cities":"Адреса","ftr.social":"Соцсети",
     "ftr.privacy":"Политика конфиденциальности",
     "sticky.text":"Записаться бесплатно",
+    "strip.text":"Готовы попробовать профессию за 1 вечер?",
+    "strip.btn":"Записаться на открытый урок",
+    "modal.eyebrow":"Бесплатный открытый урок",
+    "modal.title":"Запишитесь на ближайший урок",
+    "modal.lead":"Менеджер свяжется с вами в течение 15 минут — подтвердит место, дату и время.",
+    "modal.b1":"✓ 1 час практики в Revit + Q&A",
+    "modal.b2":"✓ PDF-гайд + чек-лист в подарок",
+    "modal.b3":"✓ Скидка 20% на основной курс",
   },
   uz: {
     "nav.fear":"To‘g‘ri keladimi?","nav.program":"Dastur","nav.mentor":"Spiker","nav.cases":"Keyslar","nav.faq":"Savollar","nav.signup":"Yozilish",
@@ -266,6 +274,14 @@ const dict = {
     "ftr.contact":"Kontaktlar","ftr.cities":"Manzillar","ftr.social":"Ijtimoiy tarmoqlar",
     "ftr.privacy":"Maxfiylik siyosati",
     "sticky.text":"Bepul yozilish",
+    "strip.text":"Kasbni bir oqshomda sinab ko‘rishga tayyormisiz?",
+    "strip.btn":"Ochiq darsga yozilish",
+    "modal.eyebrow":"Bepul ochiq dars",
+    "modal.title":"Yaqin darsga yozilish",
+    "modal.lead":"Menejer 15 daqiqa ichida bog‘lanadi — joy, sana va vaqtni tasdiqlaydi.",
+    "modal.b1":"✓ 1 soat Revit amaliyoti + Q&A",
+    "modal.b2":"✓ Sovg‘aga PDF qo‘llanma + chek-list",
+    "modal.b3":"✓ Asosiy kursga 20% chegirma",
   }
 };
 
@@ -413,6 +429,33 @@ function handleForm(form){
 }
 handleForm(document.getElementById('form'));
 handleForm(document.getElementById('quizForm'));
+handleForm(document.getElementById('modalForm'));
+
+// ===== MODAL =====
+const modal = document.getElementById('signupModal');
+function openModal(){
+  if(!modal) return;
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden','false');
+  document.body.classList.add('modal-open');
+  setTimeout(()=>modal.querySelector('input[name="name"]')?.focus(),300);
+}
+function closeModal(){
+  if(!modal) return;
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('modal-open');
+}
+document.addEventListener('click', e=>{
+  if(e.target.closest('[data-modal="signup"]')){
+    e.preventDefault(); openModal();
+  } else if(e.target.closest('[data-modal-close]')){
+    closeModal();
+  }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape' && modal?.classList.contains('is-open')) closeModal();
+});
 
 // ===== SMOOTH HIDE STICKY ON FORM IN VIEW =====
 const ctaSection = document.getElementById('cta');
