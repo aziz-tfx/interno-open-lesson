@@ -270,6 +270,28 @@ section{position:relative}
 .mentor__actions .btn--ghost:hover{background:var(--paper);color:var(--ink)}
 .mentor__actions .btn--primary{background:var(--orange);color:var(--ink)}
 
+/* PRACTICE VIDEOS */
+.practice{padding:64px 16px;background:var(--orange)}
+.practice .display{margin-bottom:32px;color:var(--ink);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.practice .display .muted{color:rgba(0,0,0,.55);text-transform:none;letter-spacing:.02em;font-weight:500}
+.practice__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.practice-card{
+  background:var(--ink);color:var(--paper);
+  border-radius:24px;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.practice-card__video{
+  width:100%;height:auto;aspect-ratio:16/10;
+  display:block;background:#000;object-fit:cover;
+}
+.practice-card__body{padding:22px 24px}
+.practice-card__tag{
+  display:inline-block;font-size:11px;color:var(--orange);
+  letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:10px;
+}
+.practice-card__title{font-family:'Unbounded';font-weight:600;font-size:20px;line-height:1.2;margin-bottom:8px;color:var(--paper)}
+.practice-card__desc{font-size:14px;color:#aaa;line-height:1.5}
+
 /* SALARY */
 .salary{padding:64px 16px;background:var(--ink);color:var(--paper)}
 .salary .display{color:var(--paper);margin-bottom:8px}
@@ -488,6 +510,12 @@ section{position:relative}
   .salary__card{padding:24px;border-radius:20px}
   .salary__lvl{font-size:22px}
   .salary__row b{font-size:15px}
+
+  .practice__grid{grid-template-columns:1fr}
+  .practice-card{border-radius:18px}
+  .practice-card__body{padding:18px 20px}
+  .practice-card__title{font-size:17px}
+  .practice-card__desc{font-size:13px}
 
   .case-card{grid-template-columns:1fr;border-radius:20px}
   .case-card__photo{height:200px}

@@ -63,6 +63,13 @@ const dict = {
     "m.quote":"«На открытом уроке я не буду продавать вам курс. Моя задача — за час показать вам реальную работу дизайнера. Если зацепит — будем учиться. Если нет — у вас останется первый проект в Revit и понимание, куда двигаться дальше.»",
     "m.ig":"Instagram куратора →","m.cta":"Записаться к Асаду",
 
+    "prac.title":"Как проходит обучение",
+    "prac.lead":"реальные кадры с урока и выезда на замер",
+    "prac.t1":"Открытый урок","prac.h1":"Изнутри урока в Revit",
+    "prac.d1":"Куратор показывает каждый шаг — от запуска программы до готовой планировки квартиры.",
+    "prac.t2":"Практика на объекте","prac.h2":"Выезд на замер с куратором",
+    "prac.d2":"Студенты выезжают на реальный объект — учатся снимать размеры и фиксировать особенности помещения.",
+
     "sal.title":"Сколько вы будете зарабатывать после курса",
     "sal.lead":"Цифры — на основе вакансий HeadHunter UZ, Glassdoor и Upwork (апрель 2026).",
     "sal.j":"0–6 месяцев","sal.m":"6–18 месяцев","sal.s":"1.5+ лет",
@@ -189,6 +196,13 @@ const dict = {
     "m.l4":"Revit va AutoCAD bo‘yicha ekspert",
     "m.quote":"«Ochiq darsda men sizga kurs sotmayman. Mening vazifam — bir soatda dizayner ishini ko‘rsatish. Yoqsa — birga o‘qiymiz. Yoqmasa — sizda Revitdagi birinchi loyiha qoladi.»",
     "m.ig":"Mentor Instagram →","m.cta":"Asadga yozilish",
+
+    "prac.title":"O‘qish qanday o‘tadi",
+    "prac.lead":"darsdan va o‘lchovga chiqishdan haqiqiy kadrlar",
+    "prac.t1":"Ochiq dars","prac.h1":"Revitdagi darsning ichida",
+    "prac.d1":"Mentor har bir qadamni ko‘rsatadi — dasturni ishga tushirishdan kvartira rejasigacha.",
+    "prac.t2":"Obyektda amaliyot","prac.h2":"Mentor bilan o‘lchov olish",
+    "prac.d2":"Talabalar haqiqiy obyektga chiqadi — o‘lchov olish va xona xususiyatlarini qayd etishni o‘rganadi.",
 
     "sal.title":"Kursdan keyin qancha topasiz",
     "sal.lead":"Raqamlar — HeadHunter UZ, Glassdoor va Upwork vakansiyalari asosida (aprel 2026).",
