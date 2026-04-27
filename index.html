@@ -137,19 +137,19 @@
     <h2 class="display sm"><span data-i18n="gift.title">Подарки за регистрацию</span></h2>
     <div class="gifts__grid">
       <article class="gift">
-        <div class="gift__icon">🎁</div>
+        <img class="gift__icon" src="icons/guide.png" alt="" loading="lazy" />
         <div class="gift__num" data-i18n="gift.l1">ПОДАРОК 1</div>
         <h3 class="gift__title" data-i18n="gift.t1">PDF-гайд «Путеводитель по профессии дизайнера интерьера в Узбекистане 2026»</h3>
         <p class="gift__desc" data-i18n="gift.d1">32 страницы практики: рынок, инструменты, цены, портфолио.</p>
       </article>
       <article class="gift">
-        <div class="gift__icon">📋</div>
+        <img class="gift__icon" src="icons/checklist.png" alt="" loading="lazy" />
         <div class="gift__num" data-i18n="gift.l2">ПОДАРОК 2</div>
         <h3 class="gift__title" data-i18n="gift.t2">Чек-лист «Как найти первых 5 клиентов за 30 дней»</h3>
         <p class="gift__desc" data-i18n="gift.d2">12 шагов от первого профиля в Instagram до подписания договора.</p>
       </article>
       <article class="gift gift--accent">
-        <div class="gift__icon">🎟</div>
+        <img class="gift__icon" src="icons/coupon.png" alt="" loading="lazy" />
         <div class="gift__num" data-i18n="gift.l3">ПОДАРОК 3</div>
         <h3 class="gift__title" data-i18n="gift.t3">Промокод на скидку 20% на основной курс</h3>
         <p class="gift__desc" data-i18n="gift.d3">Действует 7 дней после открытого урока.</p>
@@ -399,7 +399,10 @@
 <!-- ===== BLOCK 10: PROGRAM TIMELINE ===== -->
 <section class="program" id="program">
   <div class="container">
-    <h2 class="display sm"><span data-i18n="prog.title">Программа открытого урока</span> <span class="muted">· 60 мин</span></h2>
+    <div class="program__head">
+      <h2 class="display sm"><span data-i18n="prog.title">Программа открытого урока</span> <span class="muted">· 60 мин</span></h2>
+      <img class="program__ico" src="icons/stopwatch.png" alt="" loading="lazy" />
+    </div>
 
     <ol class="timeline">
       <li><span class="timeline__time">0–10</span><div><b data-i18n="t1.t">Знакомство и обзор профессии</b><p data-i18n="t1.d">Куратор расскажет о рынке Узбекистана в 2026 — куда идёт спрос и сколько платят.</p></div></li>
@@ -418,10 +421,26 @@
   <div class="container">
     <h2 class="display sm"><span data-i18n="why.title">Почему именно INTERNO</span></h2>
     <div class="why__grid">
-      <div class="why__card"><div class="why__num">8</div><div class="why__lbl" data-i18n="why.l1">лет на рынке · с 2018 года</div></div>
-      <div class="why__card"><div class="why__num">2400+</div><div class="why__lbl" data-i18n="why.l2">выпускников — крупнейшая школа дизайна в Узбекистане</div></div>
-      <div class="why__card"><div class="why__num">60%</div><div class="why__lbl" data-i18n="why.l3">выпускников работают в профессии — проверяем по соцсетям</div></div>
-      <div class="why__card"><div class="why__num">3</div><div class="why__lbl" data-i18n="why.l4">города — Ташкент, Самарканд, Фергана</div></div>
+      <div class="why__card">
+        <img class="why__ico" src="icons/calendar.png" alt="" loading="lazy" />
+        <div class="why__num">8</div>
+        <div class="why__lbl" data-i18n="why.l1">лет на рынке · с 2018 года</div>
+      </div>
+      <div class="why__card">
+        <img class="why__ico" src="icons/trophy.png" alt="" loading="lazy" />
+        <div class="why__num">2400+</div>
+        <div class="why__lbl" data-i18n="why.l2">выпускников — крупнейшая школа дизайна в Узбекистане</div>
+      </div>
+      <div class="why__card">
+        <img class="why__ico" src="icons/coins.png" alt="" loading="lazy" />
+        <div class="why__num">60%</div>
+        <div class="why__lbl" data-i18n="why.l3">выпускников работают в профессии — проверяем по соцсетям</div>
+      </div>
+      <div class="why__card">
+        <img class="why__ico" src="icons/pin.png" alt="" loading="lazy" />
+        <div class="why__num">3</div>
+        <div class="why__lbl" data-i18n="why.l4">города — Ташкент, Самарканд, Фергана</div>
+      </div>
     </div>
   </div>
 </section>
