@@ -74,11 +74,12 @@ em{font-style:normal;color:var(--orange);font-weight:inherit}
 /* NAV */
 .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(247,107,43,.85)}
 .nav__inner{max-width:1280px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:14px}
-.logo{display:flex;align-items:center;height:36px}
+.logo{display:flex;align-items:center;height:52px}
 .logo__img{height:100%;width:auto;filter:brightness(0)}
 .logo__img--uz{display:none}
 html[lang="uz"] .logo__img--ru{display:none}
 html[lang="uz"] .logo__img--uz{display:block}
+.footer .logo{height:64px}
 .footer .logo__img{filter:brightness(0)}
 .nav__links{display:flex;gap:22px;font-size:13px;flex:1;justify-content:center;font-weight:500;color:var(--ink)}
 .nav__links a:hover{opacity:.6}
@@ -101,9 +102,14 @@ html[lang="uz"] .logo__img--uz{display:block}
 .hero__bg,.hero__overlay{display:none}
 .hero__content{
   background:var(--ink);color:var(--paper);
-  border-radius:32px;padding:48px 40px;
+  border-radius:32px;
   position:relative;max-width:none;overflow:hidden;
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
+  gap:32px;
+  padding:48px;
+  align-items:stretch;
 }
+.hero__main{display:flex;flex-direction:column;justify-content:center;min-width:0}
 .hero__badge{
   display:inline-flex;align-items:center;gap:8px;
   padding:8px 14px;border-radius:999px;
@@ -138,18 +144,23 @@ html[lang="uz"] .logo__img--uz{display:block}
 .hero__microcopy{margin-top:18px;font-size:12px;color:#888}
 
 .mentor-card{
-  position:absolute;top:48px;right:48px;width:240px;
-  background:var(--panel);border-radius:20px;padding:14px;
-  border:1px solid var(--line);
+  position:relative;width:100%;height:100%;min-height:480px;
+  border-radius:24px;overflow:hidden;
+  background:var(--panel);
 }
 .mentor-card__photo{
-  height:160px;border-radius:14px;
-  background:url('https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80') center/cover;
-  margin-bottom:14px;
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80') center/cover;
 }
-.mentor-card__label{font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px;font-weight:600}
-.mentor-card__name{font-family:'Unbounded';font-weight:700;font-size:16px;margin-bottom:2px;color:var(--paper)}
-.mentor-card__role{font-size:11px;color:#aaa;line-height:1.4}
+.mentor-card__overlay{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:24px;
+  background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.7) 50%,transparent 100%);
+  display:flex;flex-direction:column;gap:4px;
+}
+.mentor-card__label{font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.12em;font-weight:700;margin-bottom:6px}
+.mentor-card__name{font-family:'Unbounded';font-weight:700;font-size:24px;color:var(--paper);letter-spacing:-.01em;line-height:1.1}
+.mentor-card__role{font-size:12px;color:#ccc;line-height:1.4;margin-top:2px}
 
 section{position:relative}
 
@@ -455,9 +466,8 @@ section{position:relative}
 @media (max-width:980px){
   .nav__links{display:none}
   .hero{padding:12px 8px 8px}
-  .hero__content{padding:32px 24px;border-radius:24px}
-  .mentor-card{position:static;width:auto;margin-top:32px}
-  .mentor-card__photo{height:160px}
+  .hero__content{padding:32px 24px;border-radius:24px;grid-template-columns:1fr;gap:24px}
+  .mentor-card{min-height:280px}
   .fear__grid,.gifts__grid,.salary__grid{grid-template-columns:1fr}
   .cases__grid{grid-template-columns:1fr}
   .works__grid{grid-template-columns:repeat(2,1fr)}
@@ -474,7 +484,10 @@ section{position:relative}
   .city-select{padding:6px 24px 6px 10px;font-size:11px;background-position:right 8px center}
 
   .hero{padding:8px}
-  .hero__content{padding:24px 18px;border-radius:20px;overflow:hidden}
+  .hero__content{padding:24px 18px;border-radius:20px;overflow:hidden;gap:18px}
+  .mentor-card{min-height:240px;border-radius:18px}
+  .mentor-card__overlay{padding:18px}
+  .mentor-card__name{font-size:18px}
   .hero__badge{margin-bottom:18px;font-size:10px;padding:6px 12px}
   .hero__title{font-size:clamp(28px,7.5vw,44px);margin-bottom:14px;letter-spacing:-.02em;line-height:1.05}
   .hero__subtitle{font-size:14px;margin-bottom:18px}

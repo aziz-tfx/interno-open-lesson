@@ -2,13 +2,13 @@
 const dict = {
   ru: {
     "nav.fear":"Подойдёт?","nav.program":"Программа","nav.mentor":"Спикер","nav.cases":"Кейсы","nav.faq":"FAQ","nav.signup":"Записаться",
-    "hero.eyebrow":"Открытый урок","hero.date":"15 мая, 19:00",
+    "hero.eyebrow":"Бесплатный открытый урок",
     "hero.title1":"Попробуйте профессию","hero.title2":"дизайнера интерьера","hero.title3":"за 1 вечер. <em>Бесплатно.</em>",
     "hero.subtitle":"Создадите свой первый проект в Revit, поймёте подходит ли вам профессия, и получите путеводитель + чек-лист в подарок.",
     "hero.cta":"Записаться бесплатно","hero.cta2":"Программа урока",
-    "hero.micro":"🔒 Без спама. Звоним только чтобы подтвердить место.",
+    "hero.micro":"🔒 Без спама. Дату и время согласуем при подтверждении.",
     "trust.t1":"8 лет на рынке","trust.t2":"2400+ выпускников","trust.t3":"Куратор-практик","trust.t4":"3 города Узбекистана",
-    "mc.label":"Ведёт открытый урок","mc.role":"Старший куратор · 7+ лет в дизайне",
+    "mc.label":"Ведёт открытый урок","mc.name":"Асад Халимов","mc.role":"Старший куратор · 7+ лет в дизайне",
 
     "fear.title":"Думаете «Это не для меня, я не творческий, не разбираюсь в компьютерах»?",
     "fear.title2":"Открытый урок создан именно для вас.",
@@ -136,13 +136,13 @@ const dict = {
   },
   uz: {
     "nav.fear":"To‘g‘ri keladimi?","nav.program":"Dastur","nav.mentor":"Spiker","nav.cases":"Keyslar","nav.faq":"Savollar","nav.signup":"Yozilish",
-    "hero.eyebrow":"Ochiq dars","hero.date":"15-may, 19:00",
+    "hero.eyebrow":"Bepul ochiq dars",
     "hero.title1":"Interyer dizayneri kasbini","hero.title2":"bir oqshomda sinab ko‘ring.","hero.title3":"<em>Bepul.</em>",
     "hero.subtitle":"Revitda birinchi loyihangizni yaratasiz, kasb sizga to‘g‘ri kelishini tushunasiz va sovg‘a sifatida qo‘llanma + chek-list olasiz.",
     "hero.cta":"Bepul yozilish","hero.cta2":"Dars dasturi",
-    "hero.micro":"🔒 Spam yo‘q. Faqat joyni tasdiqlash uchun qo‘ng‘iroq qilamiz.",
+    "hero.micro":"🔒 Spam yo‘q. Sana va vaqtni tasdiqlashda kelishamiz.",
     "trust.t1":"Bozorda 8 yil","trust.t2":"2400+ bitiruvchi","trust.t3":"Amaliyotchi mentor","trust.t4":"O‘zbekistonning 3 shahri",
-    "mc.label":"Ochiq darsni o‘tkazadi","mc.role":"Bosh mentor · 7+ yil dizaynda",
+    "mc.label":"Ochiq darsni o‘tkazadi","mc.name":"Asad Halimov","mc.role":"Bosh mentor · 7+ yil dizaynda",
 
     "fear.title":"«Bu men uchun emas, men ijodkor emasman, kompyuterda yaxshi emasman» deb o‘ylayapsizmi?",
     "fear.title2":"Ochiq dars aynan siz uchun yaratilgan.",
