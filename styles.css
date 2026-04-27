@@ -74,9 +74,12 @@ em{font-style:normal;color:var(--orange);font-weight:inherit}
 /* NAV */
 .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(247,107,43,.85)}
 .nav__inner{max-width:1280px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:14px}
-.logo{display:flex;align-items:center;gap:8px;font-family:'Unbounded';font-weight:700;font-size:16px;color:var(--ink)}
-.logo__mark{color:var(--ink);font-size:18px}
-.logo .muted{color:rgba(0,0,0,.5)}
+.logo{display:flex;align-items:center;height:36px}
+.logo__img{height:100%;width:auto;filter:brightness(0)}
+.logo__img--uz{display:none}
+html[lang="uz"] .logo__img--ru{display:none}
+html[lang="uz"] .logo__img--uz{display:block}
+.footer .logo__img{filter:brightness(0)}
 .nav__links{display:flex;gap:22px;font-size:13px;flex:1;justify-content:center;font-weight:500;color:var(--ink)}
 .nav__links a:hover{opacity:.6}
 .nav__right{display:flex;align-items:center;gap:8px;margin-left:auto}
