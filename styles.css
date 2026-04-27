@@ -35,6 +35,36 @@ ul{list-style:none}
 .small{font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 .container{max-width:1280px;margin:0 auto;padding:0 16px;width:100%}
 
+/* ===== LIQUID GLASS (works on dark/colorful backgrounds) ===== */
+.liquid-glass{
+  background:rgba(255,255,255,.04);
+  background-blend-mode:luminosity;
+  backdrop-filter:blur(12px) saturate(140%);
+  -webkit-backdrop-filter:blur(12px) saturate(140%);
+  border:none;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.12);
+  position:relative;
+  overflow:hidden;
+}
+.liquid-glass::before{
+  content:'';
+  position:absolute;inset:0;border-radius:inherit;
+  padding:1.4px;
+  background:linear-gradient(180deg,
+    rgba(255,255,255,.5) 0%,
+    rgba(255,255,255,.18) 20%,
+    rgba(255,255,255,0) 40%,
+    rgba(255,255,255,0) 60%,
+    rgba(255,255,255,.18) 80%,
+    rgba(255,255,255,.5) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+  z-index:1;
+}
+.liquid-glass > *{position:relative;z-index:2}
+
 .display{
   font-family:'Unbounded',sans-serif;
   font-weight:700;
@@ -112,12 +142,12 @@ html[lang="uz"] .logo__img--uz{display:block}
 .hero__main{display:flex;flex-direction:column;justify-content:center;min-width:0}
 .hero__badge{
   display:inline-flex;align-items:center;gap:8px;
-  padding:8px 14px;border-radius:999px;
-  background:rgba(255,255,255,.08);color:var(--paper);
-  border:1px solid var(--line);
+  padding:10px 16px;border-radius:999px;
+  color:var(--paper);
   font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   margin-bottom:32px;font-weight:500;
 }
+.hero__badge:not(.liquid-glass){background:rgba(255,255,255,.08);border:1px solid var(--line)}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange)}
 .hero__title{
   font-family:'Unbounded',sans-serif;font-weight:700;
@@ -131,10 +161,10 @@ html[lang="uz"] .logo__img--uz{display:block}
 .trust-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
 .trust-chip{
   display:inline-flex;align-items:center;gap:6px;
-  padding:6px 12px;border-radius:999px;
-  background:var(--panel2);border:1px solid var(--line);
-  font-size:11px;color:#ccc;letter-spacing:.02em;
+  padding:8px 14px;border-radius:999px;
+  font-size:11px;color:#e6e6e6;letter-spacing:.02em;
 }
+.trust-chip:not(.liquid-glass){background:var(--panel2);border:1px solid var(--line)}
 .trust-chip::before{content:"●";color:var(--orange);font-size:8px}
 .hero__actions{display:flex;gap:10px;flex-wrap:wrap}
 .hero__actions .btn--primary{background:var(--orange);color:var(--ink);font-weight:700}
@@ -538,13 +568,17 @@ img.gift__icon{font-size:0}
 }
 .modal__panel{
   position:relative;z-index:1;
-  background:var(--ink);color:var(--paper);
+  background:rgba(22,22,22,.7);color:var(--paper);
   border-radius:24px;padding:36px;
   max-width:480px;width:100%;
   max-height:calc(100vh - 40px);overflow-y:auto;
-  border:1px solid var(--line);
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
   animation:modalSlideUp .3s cubic-bezier(.2,.8,.3,1);
+}
+.modal__panel.liquid-glass{
+  background:rgba(22,22,22,.55);
+  backdrop-filter:blur(28px) saturate(160%);
+  -webkit-backdrop-filter:blur(28px) saturate(160%);
 }
 @keyframes modalSlideUp{from{transform:translateY(20px) scale(.96);opacity:0}to{transform:none;opacity:1}}
 .modal__close{
