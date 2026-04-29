@@ -217,29 +217,33 @@ html[lang="uz"] .logo__img--uz{display:block}
 
 .float-item{
   position:absolute;
-  width:clamp(60px,8vw,110px);
-  filter:drop-shadow(0 12px 24px rgba(0,0,0,.35));
+  filter:drop-shadow(0 16px 28px rgba(0,0,0,.35));
   will-change:transform;
   --px:0px;--py:0px;
   transform:translate(var(--px),var(--py));
 }
-.float-item svg{width:100%;height:auto;display:block;will-change:transform}
+.float-item img{width:100%;height:auto;display:block;will-change:transform;user-select:none;-webkit-user-drag:none}
 
-/* Position each item */
-.float-item--chair{right:18%;top:42%;width:clamp(110px,15vw,180px)}
-.float-item--chair svg{animation:floatA 7s ease-in-out infinite}
-.float-item--lamp{right:55%;top:18%;width:clamp(80px,11vw,140px)}
-.float-item--lamp svg{animation:floatB 6s ease-in-out infinite -1s}
-.float-item--plant{right:8%;top:8%}
-.float-item--plant svg{animation:floatC 8s ease-in-out infinite -2s}
-.float-item--frame{left:8%;top:22%;width:clamp(70px,9vw,110px)}
-.float-item--frame svg{animation:floatA 9s ease-in-out infinite -3s;transform:rotate(-8deg)}
-.float-item--ruler{right:5%;bottom:14%;width:clamp(80px,10vw,130px)}
-.float-item--ruler svg{animation:floatB 7.5s ease-in-out infinite -.5s}
-.float-item--cup{left:14%;bottom:18%;width:clamp(58px,7vw,88px)}
-.float-item--cup svg{animation:floatC 6.5s ease-in-out infinite -1.5s}
-.float-item--pencil{left:38%;bottom:30%;width:clamp(70px,9vw,120px)}
-.float-item--pencil svg{animation:floatA 5.5s ease-in-out infinite -2.5s}
+/* Position & size each item */
+.float-item--chair  {left:6%;  top:32%; width:clamp(110px,14vw,170px); z-index:3}
+.float-item--lamp   {left:42%; top:5%;  width:clamp(80px,10vw,128px); z-index:2}
+.float-item--plant  {right:4%; top:4%;  width:clamp(80px,10vw,128px); z-index:4}
+.float-item--frame  {right:30%;top:32%; width:clamp(75px,9vw,118px); z-index:3}
+.float-item--table  {right:6%; top:40%; width:clamp(85px,10vw,130px); z-index:3}
+.float-item--cup    {left:30%; top:48%; width:clamp(60px,7vw,92px);  z-index:5}
+.float-item--pillow {left:14%; bottom:6%;width:clamp(75px,9vw,115px); z-index:4}
+.float-item--rug    {left:42%; bottom:8%;width:clamp(95px,12vw,150px);z-index:2}
+.float-item--pencil {right:6%; bottom:8%;width:clamp(70px,9vw,115px); z-index:5}
+
+.float-item--chair  img{animation:floatA 7s   ease-in-out infinite}
+.float-item--lamp   img{animation:floatB 6s   ease-in-out infinite -1s}
+.float-item--plant  img{animation:floatC 8s   ease-in-out infinite -2s}
+.float-item--frame  img{animation:floatA 9s   ease-in-out infinite -3s}
+.float-item--table  img{animation:floatB 7.5s ease-in-out infinite -.5s}
+.float-item--cup    img{animation:floatC 6.5s ease-in-out infinite -1.5s}
+.float-item--pillow img{animation:floatA 8.5s ease-in-out infinite -4s}
+.float-item--rug    img{animation:floatB 7s   ease-in-out infinite -2.5s}
+.float-item--pencil img{animation:floatC 5.5s ease-in-out infinite -3.5s}
 
 @keyframes floatA{
   0%,100%{transform:translate(0,0) rotate(0deg)}
@@ -259,7 +263,7 @@ html[lang="uz"] .logo__img--uz{display:block}
 .hero-visual.is-parallax .float-item{transition:transform .35s cubic-bezier(.2,.8,.3,1)}
 
 @media (prefers-reduced-motion:reduce){
-  .float-item svg,.hero-visual__glow{animation:none !important}
+  .float-item img,.hero-visual__glow{animation:none !important}
 }
 
 section{position:relative}
