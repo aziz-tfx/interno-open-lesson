@@ -687,8 +687,9 @@ body.modal-open{overflow:hidden}
   .hero{padding:12px 8px 8px}
   .hero__content{padding:32px 24px 320px;border-radius:24px;min-height:auto}
   .hero-visual{
-    right:0;bottom:0;top:auto;
-    width:min(420px,75vw);height:300px;
+    right:0;bottom:0;top:auto;left:0;
+    width:100%;height:300px;
+    justify-content:center;
   }
   .fear__grid,.gifts__grid,.salary__grid{grid-template-columns:1fr}
   .cases__grid{grid-template-columns:1fr}
@@ -707,7 +708,7 @@ body.modal-open{overflow:hidden}
 
   .hero{padding:8px}
   .hero__content{padding:22px 18px 250px;border-radius:20px;overflow:hidden}
-  .hero-visual{width:min(360px,90vw);right:0;bottom:0;height:240px;left:auto}
+  .hero-visual{width:100%;right:0;bottom:0;height:280px;left:0;justify-content:center;padding:0 18px}
   .hero__badge{margin-bottom:18px;font-size:10px;padding:6px 12px}
   .hero__title{font-size:clamp(28px,7.5vw,44px);margin-bottom:14px;letter-spacing:-.02em;line-height:1.05}
   .hero__subtitle{font-size:14px;margin-bottom:18px}
