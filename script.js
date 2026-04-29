@@ -459,6 +459,28 @@ document.addEventListener('keydown', e=>{
   if(e.key==='Escape' && modal?.classList.contains('is-open')) closeModal();
 });
 
+// ===== HERO PARALLAX (mouse-follow on decor items) =====
+const heroVisual = document.getElementById('heroVisual');
+if(heroVisual && window.matchMedia('(hover:hover) and (min-width:980px)').matches){
+  const items = heroVisual.querySelectorAll('.float-item');
+  heroVisual.classList.add('is-parallax');
+  let rect = heroVisual.getBoundingClientRect();
+  window.addEventListener('resize', ()=>{ rect = heroVisual.getBoundingClientRect(); });
+  document.addEventListener('mousemove', e=>{
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top + rect.height/2;
+    const dx = (e.clientX - cx) / window.innerWidth;
+    const dy = (e.clientY - cy) / window.innerHeight;
+    items.forEach(it=>{
+      const depth = parseFloat(it.dataset.depth || '.5');
+      const tx = dx * depth * 30;
+      const ty = dy * depth * 22;
+      it.style.setProperty('--px', tx + 'px');
+      it.style.setProperty('--py', ty + 'px');
+    });
+  });
+}
+
 // ===== SMOOTH HIDE STICKY ON FORM IN VIEW =====
 const ctaSection = document.getElementById('cta');
 const sticky = document.querySelector('.sticky-cta');
