@@ -491,7 +491,32 @@ img.gift__icon{font-size:0}
 .case-card__after b{color:var(--orange)}
 .case-card__time{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:600}
 .case-card__quote{font-size:12px;color:#bbb;line-height:1.5;font-style:italic;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
-.case-card__ig{font-size:12px;color:var(--orange);margin-top:8px;font-weight:700;letter-spacing:.02em}
+.case-card__ig{font-size:12px;color:var(--orange);margin-top:8px;font-weight:700;letter-spacing:.02em;text-decoration:none;display:inline-block}
+.case-card__ig:hover{text-decoration:underline}
+
+/* REVIEWS TELEGRAM CTA */
+.reviews-tg{
+  display:flex;align-items:center;gap:18px;
+  margin-top:32px;padding:22px 26px;
+  background:linear-gradient(135deg,#229ED9 0%,#1c8bbf 100%);
+  border-radius:22px;color:#fff;text-decoration:none;
+  transition:transform .25s ease,box-shadow .25s ease;
+  box-shadow:0 14px 32px rgba(34,158,217,.25);
+}
+.reviews-tg:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(34,158,217,.35)}
+.reviews-tg__icon{
+  flex:0 0 56px;width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+}
+.reviews-tg__body{flex:1;min-width:0}
+.reviews-tg__title{font-family:'Unbounded';font-weight:700;font-size:17px;letter-spacing:-.01em;margin-bottom:4px}
+.reviews-tg__sub{font-size:13px;color:rgba(255,255,255,.85);line-height:1.4}
+.reviews-tg__cta{
+  flex:0 0 auto;font-weight:700;font-size:13px;letter-spacing:.02em;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
 
 /* WORKS */
 .works{padding:64px 16px;background:var(--ink);color:var(--paper)}
@@ -759,6 +784,8 @@ body.modal-open{overflow:hidden}
 
   .case-card{grid-template-columns:1fr;border-radius:20px}
   .case-card__photo{height:200px}
+  .reviews-tg{flex-direction:column;align-items:flex-start;text-align:left;padding:20px;gap:14px}
+  .reviews-tg__cta{align-self:stretch;justify-content:center;padding:10px 14px;background:rgba(255,255,255,.15);border-radius:12px}
   .case-card__body{padding:20px}
   .case-card__name{font-size:14px}
 
