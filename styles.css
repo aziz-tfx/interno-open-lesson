@@ -199,10 +199,24 @@ html[lang="uz"] .logo__img--uz{display:block}
 
 .hero-visual{
   position:absolute;
-  right:24px;bottom:24px;top:24px;
-  width:clamp(280px,32vw,460px);
+  right:0;bottom:0;top:0;
+  width:clamp(380px,46vw,720px);
   z-index:1;
   pointer-events:none;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.hero-scene{
+  width:100%;height:auto;max-height:100%;
+  object-fit:contain;object-position:center bottom;
+  filter:drop-shadow(0 30px 60px rgba(0,0,0,.5));
+  animation:sceneFloat 8s ease-in-out infinite;
+  transform-origin:center bottom;
+  --px:0px;--py:0px;
+  transform:translate(var(--px),var(--py));
+}
+@keyframes sceneFloat{
+  0%,100%{transform:translate(var(--px,0),calc(var(--py,0px) - 0px))}
+  50%{transform:translate(var(--px,0),calc(var(--py,0px) - 8px))}
 }
 .hero-visual__glow{
   position:absolute;inset:10%;
@@ -215,55 +229,10 @@ html[lang="uz"] .logo__img--uz{display:block}
   50%{opacity:1;transform:scale(1.1)}
 }
 
-.float-item{
-  position:absolute;
-  filter:drop-shadow(0 16px 28px rgba(0,0,0,.35));
-  will-change:transform;
-  --px:0px;--py:0px;
-  transform:translate(var(--px),var(--py));
-}
-.float-item img{width:100%;height:auto;display:block;will-change:transform;user-select:none;-webkit-user-drag:none}
-
-/* Position & size each item */
-.float-item--chair  {left:6%;  top:32%; width:clamp(110px,14vw,170px); z-index:3}
-.float-item--lamp   {left:42%; top:5%;  width:clamp(80px,10vw,128px); z-index:2}
-.float-item--plant  {right:4%; top:4%;  width:clamp(80px,10vw,128px); z-index:4}
-.float-item--frame  {right:30%;top:32%; width:clamp(75px,9vw,118px); z-index:3}
-.float-item--table  {right:6%; top:40%; width:clamp(85px,10vw,130px); z-index:3}
-.float-item--cup    {left:30%; top:48%; width:clamp(60px,7vw,92px);  z-index:5}
-.float-item--pillow {left:14%; bottom:6%;width:clamp(75px,9vw,115px); z-index:4}
-.float-item--rug    {left:42%; bottom:8%;width:clamp(95px,12vw,150px);z-index:2}
-.float-item--pencil {right:6%; bottom:8%;width:clamp(70px,9vw,115px); z-index:5}
-
-.float-item--chair  img{animation:floatA 7s   ease-in-out infinite}
-.float-item--lamp   img{animation:floatB 6s   ease-in-out infinite -1s}
-.float-item--plant  img{animation:floatC 8s   ease-in-out infinite -2s}
-.float-item--frame  img{animation:floatA 9s   ease-in-out infinite -3s}
-.float-item--table  img{animation:floatB 7.5s ease-in-out infinite -.5s}
-.float-item--cup    img{animation:floatC 6.5s ease-in-out infinite -1.5s}
-.float-item--pillow img{animation:floatA 8.5s ease-in-out infinite -4s}
-.float-item--rug    img{animation:floatB 7s   ease-in-out infinite -2.5s}
-.float-item--pencil img{animation:floatC 5.5s ease-in-out infinite -3.5s}
-
-@keyframes floatA{
-  0%,100%{transform:translate(0,0) rotate(0deg)}
-  33%{transform:translate(-6px,-12px) rotate(-3deg)}
-  66%{transform:translate(8px,-6px) rotate(2deg)}
-}
-@keyframes floatB{
-  0%,100%{transform:translate(0,0) rotate(0deg)}
-  50%{transform:translate(0,-14px) rotate(4deg)}
-}
-@keyframes floatC{
-  0%,100%{transform:translate(0,0) rotate(0deg)}
-  25%{transform:translate(6px,-8px) rotate(2deg)}
-  75%{transform:translate(-8px,4px) rotate(-3deg)}
-}
-
-.hero-visual.is-parallax .float-item{transition:transform .35s cubic-bezier(.2,.8,.3,1)}
+.hero-visual.is-parallax .hero-scene{transition:transform .4s cubic-bezier(.2,.8,.3,1)}
 
 @media (prefers-reduced-motion:reduce){
-  .float-item img,.hero-visual__glow{animation:none !important}
+  .hero-scene,.hero-visual__glow{animation:none !important}
 }
 
 section{position:relative}
@@ -713,10 +682,10 @@ body.modal-open{overflow:hidden}
 @media (max-width:980px){
   .nav__links{display:none}
   .hero{padding:12px 8px 8px}
-  .hero__content{padding:32px 24px 280px;border-radius:24px;min-height:auto}
+  .hero__content{padding:32px 24px 320px;border-radius:24px;min-height:auto}
   .hero-visual{
-    right:8px;bottom:8px;top:auto;
-    width:min(320px,60vw);height:280px;
+    right:0;bottom:0;top:auto;
+    width:min(420px,75vw);height:300px;
   }
   .fear__grid,.gifts__grid,.salary__grid{grid-template-columns:1fr}
   .cases__grid{grid-template-columns:1fr}
@@ -734,8 +703,8 @@ body.modal-open{overflow:hidden}
   .city-select{padding:6px 24px 6px 10px;font-size:11px;background-position:right 8px center}
 
   .hero{padding:8px}
-  .hero__content{padding:22px 18px 230px;border-radius:20px;overflow:hidden}
-  .hero-visual{width:min(280px,72vw);right:0;bottom:0;height:230px}
+  .hero__content{padding:22px 18px 250px;border-radius:20px;overflow:hidden}
+  .hero-visual{width:min(360px,90vw);right:0;bottom:0;height:240px;left:auto}
   .hero__badge{margin-bottom:18px;font-size:10px;padding:6px 12px}
   .hero__title{font-size:clamp(28px,7.5vw,44px);margin-bottom:14px;letter-spacing:-.02em;line-height:1.05}
   .hero__subtitle{font-size:14px;margin-bottom:18px}

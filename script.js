@@ -459,10 +459,10 @@ document.addEventListener('keydown', e=>{
   if(e.key==='Escape' && modal?.classList.contains('is-open')) closeModal();
 });
 
-// ===== HERO PARALLAX (mouse-follow on decor items) =====
+// ===== HERO PARALLAX (subtle mouse-follow on scene) =====
 const heroVisual = document.getElementById('heroVisual');
 if(heroVisual && window.matchMedia('(hover:hover) and (min-width:980px)').matches){
-  const items = heroVisual.querySelectorAll('.float-item');
+  const scene = heroVisual.querySelector('.hero-scene');
   heroVisual.classList.add('is-parallax');
   let rect = heroVisual.getBoundingClientRect();
   window.addEventListener('resize', ()=>{ rect = heroVisual.getBoundingClientRect(); });
@@ -471,13 +471,10 @@ if(heroVisual && window.matchMedia('(hover:hover) and (min-width:980px)').matche
     const cy = rect.top + rect.height/2;
     const dx = (e.clientX - cx) / window.innerWidth;
     const dy = (e.clientY - cy) / window.innerHeight;
-    items.forEach(it=>{
-      const depth = parseFloat(it.dataset.depth || '.5');
-      const tx = dx * depth * 30;
-      const ty = dy * depth * 22;
-      it.style.setProperty('--px', tx + 'px');
-      it.style.setProperty('--py', ty + 'px');
-    });
+    if(scene){
+      scene.style.setProperty('--px', (dx * 22) + 'px');
+      scene.style.setProperty('--py', (dy * 16) + 'px');
+    }
   });
 }
 
