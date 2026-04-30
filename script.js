@@ -440,6 +440,7 @@ function openModal(){
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden','false');
   document.body.classList.add('modal-open');
+  if(window.fbq) window.fbq('track','InitiateCheckout');
   setTimeout(()=>modal.querySelector('input[name="name"]')?.focus(),300);
 }
 function closeModal(){
