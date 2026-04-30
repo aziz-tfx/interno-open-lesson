@@ -430,13 +430,25 @@ const AMOCRM_FORM = {
   },
 };
 const CITY_LABEL = { tsh:'Ташкент', smr:'Самарканд', frg:'Фергана' };
+const LANG_LABEL = { ru:'Русский', uz:'Oʻzbek' };
 
-function buildAmoNote(form){
-  const parts = [];
-  const city = form.elements.city?.value;
-  if(city) parts.push(`Город: ${CITY_LABEL[city] || city}`);
-  parts.push(`Источник: ${form.id || 'form'}`);
-  parts.push(`URL: ${location.href}`);
+function detectLeadMeta(form){
+  const cityCode = form.elements.city?.value || localStorage.getItem('interno_city') || 'tsh';
+  const langCode = (form.elements.lang?.value) || document.documentElement.lang || localStorage.getItem('interno_lang') || 'ru';
+  return {
+    cityCode, langCode,
+    cityLabel: CITY_LABEL[cityCode] || cityCode,
+    langLabel: LANG_LABEL[langCode] || langCode,
+  };
+}
+
+function buildAmoNote(form, meta){
+  const parts = [
+    `🏙 Город: ${meta.cityLabel}   ·   🗣 Язык: ${meta.langLabel}`,
+    '—',
+    `Источник: ${form.id || 'form'}`,
+    `URL: ${location.href}`,
+  ];
   if(document.referrer) parts.push(`Referrer: ${document.referrer}`);
   const utm = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
     .map(k => { const v = new URLSearchParams(location.search).get(k); return v ? `${k}=${v}` : null; })
@@ -446,6 +458,7 @@ function buildAmoNote(form){
 }
 
 async function sendToAmo(form){
+  const meta = detectLeadMeta(form);
   const fd = new FormData();
   fd.append('form_id', AMOCRM_FORM.form_id);
   fd.append('hash', AMOCRM_FORM.hash);
@@ -454,7 +467,12 @@ async function sendToAmo(form){
   const phone = form.elements.phone?.value?.trim();
   if(name)  fd.append(AMOCRM_FORM.fields.name, name);
   if(phone) fd.append(AMOCRM_FORM.fields.phone, phone);
-  fd.append(AMOCRM_FORM.fields.note, buildAmoNote(form));
+  fd.append(AMOCRM_FORM.fields.note, buildAmoNote(form, meta));
+  // Tags — sent both as legacy comma-separated and array form so amoCRM picks
+  // up whichever shape its form ingester supports. Fallback is the note above.
+  const tagList = [meta.cityLabel, `Язык: ${meta.langLabel}`, `Форма: ${form.id || 'unknown'}`];
+  fd.append('tags', tagList.join(','));
+  tagList.forEach(t => fd.append('tags[]', t));
   try {
     await fetch(AMOCRM_FORM.endpoint, { method:'POST', body:fd, mode:'no-cors', credentials:'omit' });
   } catch(err) { console.warn('amoCRM submit failed', err); }
