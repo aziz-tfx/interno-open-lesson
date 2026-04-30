@@ -419,13 +419,52 @@ document.querySelectorAll('input[type="tel"]').forEach(maskPhone);
 // FAQ already works via <details>
 
 // ===== FORMS =====
+const AMOCRM_FORM = {
+  endpoint: 'https://forms.amocrm.ru/queue/add',
+  form_id: '1705506',
+  hash: '37df3dcc789078355483c5cbdb3fe57b',
+  fields: {
+    name: 'fields[name_1]',
+    phone: 'fields[875427_1][1182433]',
+    note: 'fields[note_2]',
+  },
+};
+const CITY_LABEL = { tsh:'Ташкент', smr:'Самарканд', frg:'Фергана' };
+
+function buildAmoNote(form){
+  const parts = [];
+  const city = form.elements.city?.value;
+  if(city) parts.push(`Город: ${CITY_LABEL[city] || city}`);
+  parts.push(`Источник: ${form.id || 'form'}`);
+  parts.push(`URL: ${location.href}`);
+  if(document.referrer) parts.push(`Referrer: ${document.referrer}`);
+  const utm = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+    .map(k => { const v = new URLSearchParams(location.search).get(k); return v ? `${k}=${v}` : null; })
+    .filter(Boolean);
+  if(utm.length) parts.push(utm.join(' · '));
+  return parts.join('\n');
+}
+
+async function sendToAmo(form){
+  const fd = new FormData();
+  fd.append('form_id', AMOCRM_FORM.form_id);
+  fd.append('hash', AMOCRM_FORM.hash);
+  fd.append('user_origin', '');
+  const name = form.elements.name?.value?.trim();
+  const phone = form.elements.phone?.value?.trim();
+  if(name)  fd.append(AMOCRM_FORM.fields.name, name);
+  if(phone) fd.append(AMOCRM_FORM.fields.phone, phone);
+  fd.append(AMOCRM_FORM.fields.note, buildAmoNote(form));
+  try {
+    await fetch(AMOCRM_FORM.endpoint, { method:'POST', body:fd, mode:'no-cors', credentials:'omit' });
+  } catch(err) { console.warn('amoCRM submit failed', err); }
+}
+
 function handleForm(form){
-  form?.addEventListener('submit',e=>{
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
-    const lang = document.documentElement.lang;
-    // Pixel event placeholder
     if(window.fbq) window.fbq('track','Lead');
-    // Mock success — replace with redirect to /thanks
+    await sendToAmo(form);
     window.location.href = 'thanks.html';
   });
 }
