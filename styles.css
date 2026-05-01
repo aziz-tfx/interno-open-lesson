@@ -402,7 +402,7 @@ img.gift__icon{font-size:0}
 }
 .mentor__photo{
   height:520px;border-radius:24px;
-  background:url('https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=900&q=80') center/cover;
+  background:url('mentor-asad.jpg') 50% 18%/cover no-repeat #1a1a1a;
 }
 .mentor__info{display:flex;flex-direction:column;gap:18px}
 .mentor__info .small{color:var(--orange)}
