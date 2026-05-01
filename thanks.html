@@ -6,8 +6,11 @@
 <title>Спасибо! Вы записаны · INTERNO School</title>
 <meta name="description" content="Вы записаны на бесплатный открытый урок INTERNO School. Менеджер свяжется с вами в течение 15 минут." />
 <meta name="robots" content="noindex" />
+<link rel="canonical" href="https://interno.school/thanks.html" />
+<link rel="icon" type="image/svg+xml" href="logo-ru.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://connect.facebook.net" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 
@@ -21,9 +24,25 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '4251277901808457');
-fbq('track', 'PageView');
-fbq('track', 'CompleteRegistration');
+(function(){
+  var ph = '', fn = '', eid = '';
+  try {
+    ph  = sessionStorage.getItem('interno_last_lead_ph') || '';
+    fn  = sessionStorage.getItem('interno_last_lead_fn') || '';
+    eid = sessionStorage.getItem('interno_last_lead_eid') || '';
+  } catch(_){}
+  var advanced = { country: 'uz' };
+  if(ph) advanced.ph = ph;
+  if(fn) advanced.fn = fn;
+  fbq('init', '4251277901808457', advanced);
+  fbq('track', 'PageView');
+  fbq('track', 'CompleteRegistration', {
+    content_name: 'open_lesson',
+    currency: 'USD',
+    value: 1,
+    status: true,
+  }, eid ? { eventID: eid + '_cr' } : undefined);
+})();
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"

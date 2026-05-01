@@ -357,8 +357,13 @@ function goQuizStep(n){
   }
 }
 
+let quizStarted = false;
 document.querySelectorAll('.quiz__opt').forEach(opt=>{
   opt.addEventListener('click',()=>{
+    if(!quizStarted){
+      quizStarted = true;
+      if(window.fbq) window.fbq('trackCustom','QuizStart');
+    }
     quizScore += parseInt(opt.dataset.score||'0');
     if(opt.dataset.city){
       localStorage.setItem('interno_city', opt.dataset.city);
@@ -370,6 +375,7 @@ document.querySelectorAll('.quiz__opt').forEach(opt=>{
       goQuizStep(quizStep);
     } else {
       goQuizStep('final');
+      if(window.fbq) window.fbq('trackCustom','QuizComplete', { score: quizScore });
     }
   });
 });
@@ -478,10 +484,39 @@ async function sendToAmo(form){
   } catch(err) { console.warn('amoCRM submit failed', err); }
 }
 
+function normalizePhone(raw){
+  if(!raw) return '';
+  let v = raw.replace(/\D/g,'');
+  if(v.startsWith('00')) v = v.slice(2);
+  if(!v.startsWith('998') && v.length === 9) v = '998' + v;
+  return v;
+}
+
+function genEventId(){
+  return 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2,10);
+}
+
 function handleForm(form){
   form?.addEventListener('submit', async e => {
     e.preventDefault();
-    if(window.fbq) window.fbq('track','Lead');
+    const meta = detectLeadMeta(form);
+    const phone = normalizePhone(form.elements.phone?.value);
+    const name = (form.elements.name?.value || '').trim().toLowerCase();
+    const eventId = genEventId();
+    sessionStorage.setItem('interno_last_lead_eid', eventId);
+    sessionStorage.setItem('interno_last_lead_ph', phone);
+    sessionStorage.setItem('interno_last_lead_fn', name);
+
+    if(window.fbq){
+      // Re-init with Advanced Matching parameters (fbq hashes them client-side)
+      try { window.fbq('init', '4251277901808457', { ph: phone, fn: name, ct: meta.cityLabel, country: 'uz' }); } catch(_){}
+      window.fbq('track','Lead', {
+        content_name: 'open_lesson',
+        content_category: meta.cityLabel,
+        currency: 'USD',
+        value: 1,
+      }, { eventID: eventId });
+    }
     await sendToAmo(form);
     window.location.href = 'thanks.html';
   });
@@ -497,7 +532,11 @@ function openModal(){
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden','false');
   document.body.classList.add('modal-open');
-  if(window.fbq) window.fbq('track','InitiateCheckout');
+  if(window.fbq) window.fbq('track','InitiateCheckout', {
+    content_name: 'open_lesson_modal',
+    currency: 'USD',
+    value: 1,
+  });
   setTimeout(()=>modal.querySelector('input[name="name"]')?.focus(),300);
 }
 function closeModal(){
@@ -548,3 +587,71 @@ if(ctaSection && sticky){
   },{threshold:.2});
   io.observe(ctaSection);
 }
+
+// ===== PRACTICE VIDEOS: click-to-play (replace poster with native video) =====
+document.querySelectorAll('.practice-card__player').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const src = btn.dataset.videoSrc;
+    if(!src) return;
+    const video = document.createElement('video');
+    video.className = 'practice-card__video';
+    video.src = src;
+    video.controls = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    btn.replaceWith(video);
+    video.play().catch(()=>{});
+    if(window.fbq) window.fbq('trackCustom','VideoPlay', { src: src.split('/').pop() });
+  }, { once:true });
+});
+
+// ===== META PIXEL: ViewContent on key sections (fires once per section) =====
+(function(){
+  const targets = document.querySelectorAll('[data-viewcontent]');
+  if(!targets.length || !('IntersectionObserver' in window)) return;
+  const seen = new Set();
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(!en.isIntersecting) return;
+      const key = en.target.dataset.viewcontent;
+      if(seen.has(key)) return;
+      seen.add(key);
+      if(window.fbq) window.fbq('track','ViewContent', {
+        content_name: key,
+        content_category: 'landing_section',
+      });
+    });
+  },{threshold:.5});
+  targets.forEach(t=>io.observe(t));
+})();
+
+// ===== META PIXEL: Scroll depth (25/50/75/90) =====
+(function(){
+  const marks = [25,50,75,90];
+  const fired = new Set();
+  let ticking = false;
+  function check(){
+    ticking = false;
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop || document.body.scrollTop);
+    const max = (h.scrollHeight - h.clientHeight) || 1;
+    const pct = Math.round((scrolled / max) * 100);
+    marks.forEach(m=>{
+      if(pct >= m && !fired.has(m)){
+        fired.add(m);
+        if(window.fbq) window.fbq('trackCustom','ScrollDepth', { percent: m });
+      }
+    });
+  }
+  window.addEventListener('scroll', ()=>{
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(check);
+  }, { passive:true });
+})();
+
+// ===== META PIXEL: Time-on-page milestone (30s) — engagement signal =====
+setTimeout(()=>{
+  if(window.fbq) window.fbq('trackCustom','EngagedSession', { seconds: 30 });
+}, 30000);
