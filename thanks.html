@@ -295,7 +295,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <div class="thanks__meta">
         <span data-i18n="meta1">📅 <b>Ближайший урок:</b> 15 мая, 19:00</span>
         <span class="thanks__meta-dot"></span>
-        <span data-i18n="meta2">📍 Ташкент · ул. Шахрисабз, 16</span>
+        <span data-i18n="meta2" id="metaAddr">📍 Ташкент · Мирзо-Улугбекский р-н, ул. Хирмонтепа, 34Б (м. Буюк Ипак Йули)</span>
       </div>
     </div>
 
@@ -312,7 +312,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
         <div class="step__body">
           <div class="step__title" data-i18n="s2t">Сохраните дату в календаре</div>
           <div class="step__hint">
-            <a href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Открытый+урок+INTERNO+School&dates=20260515T190000/20260515T200000&location=Ташкент,+ул.+Шахрисабз,+16&details=Бесплатный+открытый+урок+по+дизайну+интерьера" target="_blank" rel="noopener" data-i18n="s2h">Добавить в Google Calendar →</a>
+            <a id="calLink" href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Открытый+урок+INTERNO+School&dates=20260515T190000/20260515T200000&location=Ташкент,+Мирзо-Улугбекский+р-н,+ул.+Хирмонтепа,+34Б&details=Бесплатный+открытый+урок+по+дизайну+интерьера" target="_blank" rel="noopener" data-i18n="s2h">Добавить в Google Calendar →</a>
           </div>
         </div>
       </li>
@@ -363,10 +363,33 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 
 <script>
 (function(){
-  var lang = 'ru';
-  try { lang = localStorage.getItem('interno_lang') || 'ru'; } catch(_){}
-  var qs = new URLSearchParams(location.search).get('lang');
-  if(qs === 'uz' || qs === 'ru') lang = qs;
+  var lang = 'ru', city = 'tsh';
+  try { lang = localStorage.getItem('interno_lang') || 'ru'; city = localStorage.getItem('interno_city') || 'tsh'; } catch(_){}
+  var qsP = new URLSearchParams(location.search);
+  var qsLang = qsP.get('lang'); if(qsLang === 'uz' || qsLang === 'ru') lang = qsLang;
+  var qsCity = qsP.get('city'); if(qsCity === 'tsh' || qsCity === 'smr' || qsCity === 'frg') city = qsCity;
+
+  var ADDR = {
+    ru: {
+      tsh: 'Ташкент · Мирзо-Улугбекский р-н, ул. Хирмонтепа, 34Б (м. Буюк Ипак Йули)',
+      smr: 'Самарканд · ул. Давлатабад',
+      frg: 'Фергана · ул. Комус, 40'
+    },
+    uz: {
+      tsh: 'Toshkent · Mirzo Ulugʻbek tumani, Xirmontepa koʻchasi, 34B (Buyuk Ipak Yoʻli metrosi)',
+      smr: 'Samarqand · Davlatobod koʻchasi',
+      frg: 'Fargʻona · Komus koʻchasi, 40'
+    }
+  };
+  var addr = (ADDR[lang] && ADDR[lang][city]) || ADDR.ru.tsh;
+  var addrEl = document.getElementById('metaAddr');
+  if(addrEl) addrEl.innerHTML = '📍 ' + addr;
+  var calEl = document.getElementById('calLink');
+  if(calEl){
+    var calLoc = (ADDR.ru[city] || ADDR.ru.tsh).replace(' · ', ', ');
+    calEl.href = 'https://calendar.google.com/calendar/u/0/r/eventedit?text=' + encodeURIComponent('Открытый урок INTERNO School') + '&dates=20260515T190000/20260515T200000&location=' + encodeURIComponent(calLoc) + '&details=' + encodeURIComponent('Бесплатный открытый урок по дизайну интерьера');
+  }
+
   if(lang !== 'uz') return;
 
   document.documentElement.lang = 'uz';
@@ -378,7 +401,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
     title: 'Tayyor! Siz <em>ochiq darsga</em><br/>yozildingiz',
     lead: 'Menejer <b>15 daqiqa</b> ichida qoʻngʻiroq qilib joyni tasdiqlaydi va sizning shahringizdagi dars sanasi va vaqtini kelishadi.',
     meta1: '📅 <b>Eng yaqin dars:</b> 15-may, 19:00',
-    meta2: '📍 Toshkent · Shahrisabz koʻchasi, 16',
+    meta2: '📍 ' + addr,
     s1t: 'Telefonni oling — 15 daqiqa ichida qoʻngʻiroq qilamiz <span class="step__pill">hozir</span>',
     s1p: 'hozir',
     s1h: 'Joyni tasdiqlaymiz, qanday borishni va qaysi noutbukni olib kelishni aytamiz (yoki oʻzimiz beramiz).',
