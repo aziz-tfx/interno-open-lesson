@@ -326,6 +326,13 @@ if(citySel){
   });
 }
 
+// URL overrides for ad targeting (?lang=uz, ?city=smr)
+const _urlParams = new URLSearchParams(location.search);
+const _qLang = _urlParams.get('lang');
+if(_qLang === 'ru' || _qLang === 'uz') localStorage.setItem('interno_lang', _qLang);
+const _qCity = _urlParams.get('city');
+if(_qCity === 'tsh' || _qCity === 'smr' || _qCity === 'frg') localStorage.setItem('interno_city', _qCity);
+
 // Init lang
 applyLang(localStorage.getItem('interno_lang') || 'ru');
 
