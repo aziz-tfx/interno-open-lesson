@@ -126,7 +126,7 @@ em{font-style:normal;color:var(--orange);font-weight:inherit}
 .logo__img{height:100%;width:auto;filter:brightness(0)}
 .logo__img--uz{display:none}
 html[lang="uz"] .logo__img--ru{display:none}
-html[lang="uz"] .logo__img--uz{display:block;transform:scale(1.45);transform-origin:left center}
+html[lang="uz"] .logo__img--uz{display:block}
 .footer .logo{height:64px}
 .footer .logo__img{filter:brightness(0)}
 .nav__links{display:flex;gap:22px;font-size:13px;flex:1;justify-content:center;font-weight:500;color:var(--ink)}
