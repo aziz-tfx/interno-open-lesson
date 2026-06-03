@@ -502,6 +502,37 @@ async function sendToAmo(form){
   } catch(err) { console.warn('amoCRM submit failed', err); }
 }
 
+// Send the same lead to our Telegram notifier (Vercel serverless function).
+// Runs in parallel with amoCRM — failure here must not break the user flow.
+async function sendToTelegram(form){
+  const meta = detectLeadMeta(form);
+  const name = form.elements.name?.value?.trim() || '';
+  const phone = form.elements.phone?.value?.trim() || '';
+  const utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+    .forEach(k => {
+      const v = new URLSearchParams(location.search).get(k);
+      if (v) utm[k] = v;
+    });
+  const payload = {
+    name, phone,
+    city: meta.cityLabel,
+    lang: meta.langLabel,
+    source: form.id || 'form',
+    url: location.href,
+    referrer: document.referrer || '',
+    utm,
+  };
+  try {
+    await fetch('/api/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true, // survive page navigation to thanks.html
+    });
+  } catch(err) { console.warn('telegram notify failed', err); }
+}
+
 function normalizePhone(raw){
   if(!raw) return '';
   let v = raw.replace(/\D/g,'');
@@ -535,7 +566,9 @@ function handleForm(form){
         value: 1,
       }, { eventID: eventId });
     }
-    await sendToAmo(form);
+    // Fire amoCRM + Telegram in parallel; navigate as soon as both settle.
+    // keepalive on the TG fetch ensures it survives the redirect even if slow.
+    await Promise.allSettled([ sendToAmo(form), sendToTelegram(form) ]);
     window.location.href = 'thanks.html';
   });
 }
