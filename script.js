@@ -482,7 +482,14 @@ async function sendToAmo(form){
   fd.append('user_origin', '');
   const name = form.elements.name?.value?.trim();
   const phone = form.elements.phone?.value?.trim();
-  if(name)  fd.append(AMOCRM_FORM.fields.name, name);
+  // Append city + lang to the name so the resulting deal title in amoCRM
+  // contains the city (used by triggers to auto-assign a city manager).
+  // Format: "Гузал · Самарканд · UZ"
+  const langTag = (meta.langCode || 'ru').toUpperCase();
+  const nameWithMeta = name
+    ? `${name} · ${meta.cityLabel} · ${langTag}`
+    : `${meta.cityLabel} · ${langTag}`;
+  fd.append(AMOCRM_FORM.fields.name, nameWithMeta);
   if(phone) fd.append(AMOCRM_FORM.fields.phone, phone);
   fd.append(AMOCRM_FORM.fields.note, buildAmoNote(form, meta));
   // Tags — sent both as legacy comma-separated and array form so amoCRM picks
