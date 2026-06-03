@@ -310,6 +310,14 @@ function applyLang(lang){
     });
     sel.value = city;
   }
+  // Sync ALL city selects inside forms (modal, cta-form, quiz) so submitted
+  // value matches the city detected from URL/localStorage/header switcher.
+  document.querySelectorAll('form select[name="city"]').forEach(s=>{
+    [...s.options].forEach(o=>{
+      if(cityNames[lang][o.value]) o.textContent = cityNames[lang][o.value];
+    });
+    if([...s.options].some(o=>o.value===city)) s.value = city;
+  });
   localStorage.setItem('interno_lang', lang);
 }
 
