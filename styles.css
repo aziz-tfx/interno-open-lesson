@@ -759,7 +759,12 @@ body.modal-open{overflow:hidden}
   font-weight:700;font-size:15px;
   align-items:center;justify-content:center;gap:8px;
   box-shadow:0 10px 30px rgba(0,0,0,.4);
+  /* hidden until the user scrolls past the first viewport (JS: .is-visible) */
+  opacity:0;transform:translateY(calc(100% + 16px));pointer-events:none;
+  transition:opacity .3s ease,transform .3s ease;
 }
+.sticky-cta.is-visible{opacity:1;transform:none;pointer-events:auto}
+body.modal-open .sticky-cta{opacity:0;transform:translateY(calc(100% + 16px));pointer-events:none}
 
 /* legacy hidden */
 .hero__pager,.hero__nav,.hero__line,.strip,.types,.coveted,.tabs,.cards,.cards__pager,.event-card,.side-labels{display:none !important}
@@ -897,3 +902,52 @@ body.modal-open{overflow:hidden}
   .countdown__cell span{font-size:16px}
   .countdown__cell small{font-size:8px}
 }
+
+/* ===== NEXT LESSON LINE (hero + forms) ===== */
+.lesson-next{
+  font-size:13px;color:var(--orange);font-weight:600;letter-spacing:.02em;
+}
+.lesson-next:empty{display:none}
+.hero__lesson{margin:-8px 0 24px}
+.lesson-next--form{
+  text-transform:none;letter-spacing:.02em;
+  padding:10px 14px;border-radius:12px;
+  background:rgba(247,107,43,.1);
+}
+.lesson-next--modal{margin-top:10px}
+
+/* ===== HERO SOCIAL PROOF LINE ===== */
+.hero__social{
+  margin-top:16px;font-size:12px;color:#bbb;
+  letter-spacing:.03em;font-weight:500;
+}
+
+/* ===== PHONE FIELD (+998 fixed prefix, 9-digit mask) ===== */
+.phone-field{
+  display:flex;align-items:center;
+  background:var(--paper);border-radius:14px;
+}
+.phone-field__prefix{
+  padding:14px 6px 14px 18px;
+  color:var(--ink);font-size:15px;line-height:1.5;font-weight:600;
+  user-select:none;
+}
+.phone-field input[type="tel"]{
+  flex:1;min-width:0;
+  background:transparent;border:none;box-shadow:none;
+  padding:14px 18px 14px 4px;border-radius:0 14px 14px 0;
+  color:var(--ink);font-size:15px;font-family:inherit;outline:none;
+}
+.phone-field input[type="tel"]:focus{box-shadow:none}
+.phone-field:focus-within{box-shadow:0 0 0 2px var(--orange)}
+.phone-error{
+  display:none;
+  font-size:12px;color:#ff6b6b;font-weight:500;
+  text-transform:none;letter-spacing:0;
+}
+label.has-error .phone-field{box-shadow:0 0 0 2px #ff6b6b}
+label.has-error .phone-error{display:block}
+
+/* ===== FOOTER: address of the selected city is highlighted ===== */
+.footer__col p[data-addr]{opacity:.5;transition:opacity .2s ease}
+.footer__col p[data-addr].is-active{opacity:1;font-weight:600}
