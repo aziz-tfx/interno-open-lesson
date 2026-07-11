@@ -21,10 +21,474 @@
 <meta name="twitter:title" content="Открытый урок по дизайну интерьера — INTERNO School" />
 <meta name="twitter:description" content="За 1 час — первый проект в Revit + 3 подарка в подарок." />
 <meta name="twitter:image" content="https://interno.school/icons/hero-scene.webp" />
+
+<!-- ===== BOOT + I18N =====
+     Inlined in <head> so ?lang=uz|ru and ?city=tsh|smr|fer apply synchronously,
+     before the hero is painted (no flash of Russian text on ?lang=uz).
+     Order: URL param → localStorage → navigator.language → default uz. -->
+<script>
+// Next open lesson — single source of truth for hero line, forms and countdown.
+// Countdown target is date+time in Tashkent (UTC+5).
+window.NEXT_LESSON = { date: '2026-07-17', time: '19:00', seatsLeft: 7, seatsTotal: 25 };
+
+const dict = {
+  ru: {
+    "nav.fear":"Подойдёт?","nav.program":"Программа","nav.mentor":"Спикер","nav.cases":"Кейсы","nav.faq":"FAQ","nav.signup":"Записаться",
+    "nav.cityAria":"Город",
+    "hero.eyebrow":"Бесплатный открытый урок",
+    "hero.title1":"Попробуйте профессию","hero.title2":"дизайнера интерьера","hero.title3":"за 1 вечер. <em>Бесплатно.</em>",
+    "hero.subtitle":"Создадите свой первый проект в Revit, поймёте подходит ли вам профессия, и получите путеводитель + чек-лист в подарок.",
+    "hero.cta":"Записаться бесплатно","hero.cta2":"Программа урока",
+    "hero.social":"2400+ выпускников · 8 лет · 60% в профессии",
+    "hero.micro":"🔒 Без спама. Дату и время согласуем при подтверждении.",
+    "hero.alt":"3D композиция дизайнерского интерьера",
+    "trust.t1":"8 лет на рынке","trust.t2":"2400+ выпускников","trust.t3":"Куратор-практик","trust.t4":"3 города Узбекистана",
+    "mc.label":"Ведёт открытый урок","mc.name":"Асад Халимов","mc.role":"Старший куратор · 7+ лет в дизайне",
+
+    "fear.kicker":"3 страха, которые останавливают 90% людей",
+    "fear.title":"«Это не для меня».",
+    "fear.title2":"Закроем все 3 страха<br/>за 1 вечер.",
+    "fear.q1":"«У меня нет художественного образования»",
+    "fear.a1":"<b>78%</b> наших выпускников пришли без художки. Дизайн интерьера — это логика и инструменты, а не рисование от руки.",
+    "fear.q2":"«Я не разбираюсь в программах»",
+    "fear.a2":"За <b>1 час</b> открытого урока вы сделаете свой первый проект в Revit. Куратор покажет каждый шаг.",
+    "fear.q3":"«Уже не мой возраст»",
+    "fear.a3":"Среди студентов и в 19, и в 42. Самой старшей выпускнице <b>51</b> — она зарабатывает $1200 в месяц.",
+
+    "ben.title":"За 1 час на открытом уроке",
+    "ben.b1":"Сделаете свой первый проект планировки квартиры в Revit (унесёте в портфолио)",
+    "ben.b2":"Поймёте подходит ли вам профессия — без воды и общих фраз",
+    "ben.b3":"Узнаете сколько реально зарабатывают начинающие дизайнеры в Узбекистане в 2026",
+    "ben.b4":"Получите пошаговый план: как за 6 месяцев выйти на свой первый заказ",
+    "ben.b5":"Зададите все вопросы куратору лично или в Zoom — для онлайн-формата",
+    "ben.foot":"И ВСЕ присутствующие получают 3 подарка ↓",
+
+    "gift.title":"Подарки за регистрацию",
+    "gift.l1":"ПОДАРОК 1","gift.l2":"ПОДАРОК 2","gift.l3":"ПОДАРОК 3",
+    "gift.t1":"PDF-гайд «Путеводитель по профессии дизайнера интерьера в Узбекистане 2026»",
+    "gift.d1":"32 страницы практики: рынок, инструменты, цены, портфолио.",
+    "gift.t2":"Чек-лист «Как найти первых 5 клиентов за 30 дней»",
+    "gift.d2":"12 шагов от первого профиля в Instagram до подписания договора.",
+    "gift.t3":"Промокод на скидку 20% на основной курс",
+    "gift.d3":"Действует 7 дней после открытого урока.",
+    "gift.note":"Все подарки придут на WhatsApp в течение 5 минут после регистрации.",
+    "gift.cta":"Получить подарки и записаться",
+
+    "quiz.title":"Подходит ли вам профессия?",
+    "quiz.lead":"5 коротких вопросов · 30 секунд · персональный вердикт от куратора",
+    "quiz.restart":"← Пройти заново",
+    "q1.t":"Вам нравится наблюдать, как меняются интерьеры в реалити-шоу или на YouTube?",
+    "q1.a1":"Да, очень","q1.a2":"Иногда","q1.a3":"Нет",
+    "q2.t":"Что вас больше привлекает в профессии?",
+    "q2.a1":"Творчество и самовыражение","q2.a2":"Стабильный доход","q2.a3":"Работа удалённо","q2.a4":"Всё вместе",
+    "q3.t":"Сколько времени готовы уделять обучению?",
+    "q3.a1":"1–2 часа в день","q3.a2":"3–4 часа в день","q3.a3":"Только по выходным",
+    "q4.t":"Какой результат хотите получить через 6 месяцев?",
+    "q4.a1":"Первый клиент и доход","q4.a2":"Новая профессия и портфолио","q4.a3":"Просто разобраться, моё ли это",
+    "q5.t":"В каком городе вы находитесь?",
+    "q5.a1":"Ташкент","q5.a2":"Самарканд","q5.a3":"Фергана","q5.a4":"Другой город",
+    "verdict.high":"<b>Отличный результат:</b> по вашим ответам профессия дизайнера интерьера подходит вам — приходите на бесплатный урок и убедитесь на практике.",
+    "verdict.mid":"<b>Хороший потенциал:</b> у вас есть интерес и мотивация — открытый урок поможет окончательно понять, ваше ли это.",
+    "verdict.low":"<b>Вы пока сомневаетесь</b> — бесплатный урок ни к чему не обязывает и поможет принять решение.",
+
+    "m.kicker":"Спикер открытого урока",
+    "m.role":"Старший куратор курса «Дизайн интерьера» в INTERNO School",
+    "m.l1":"7+ лет практики в дизайне жилых и коммерческих интерьеров",
+    "m.l2":"120+ реализованных проектов в Ташкенте, Самарканде, Алматы",
+    "m.l3":"Обучил 800+ студентов — 60% работают в профессии",
+    "m.l4":"Эксперт по Revit и AutoCAD",
+    "m.quote":"«На открытом уроке я не буду продавать вам курс. Моя задача — за час показать вам реальную работу дизайнера. Если зацепит — будем учиться. Если нет — у вас останется первый проект в Revit и понимание, куда двигаться дальше.»",
+    "m.ig":"Instagram куратора →","m.cta":"Записаться к Асаду",
+
+    "prac.title":"Как проходит обучение",
+    "prac.lead":"реальные кадры с урока и выезда на замер",
+    "prac.t1":"Открытый урок","prac.h1":"Изнутри урока в Revit",
+    "prac.d1":"Куратор показывает каждый шаг — от запуска программы до готовой планировки квартиры.",
+    "prac.t2":"Практика на объекте","prac.h2":"Выезд на замер с куратором",
+    "prac.d2":"Студенты выезжают на реальный объект — учатся снимать размеры и фиксировать особенности помещения.",
+    "prac.chip2":"ОБЪЕКТ · 0:22",
+    "prac.al1":"Воспроизвести: Изнутри урока в Revit",
+    "prac.al2":"Воспроизвести: Выезд на замер с куратором",
+
+    "sal.title":"Сколько вы будете зарабатывать после курса",
+    "sal.lead":"Цифры — на основе вакансий HeadHunter UZ, Glassdoor и Upwork (апрель 2026).",
+    "sal.j":"0–6 месяцев","sal.m":"6–18 месяцев","sal.s":"1.5+ лет",
+    "sal.uz":"В Узбекистане","sal.rem":"Удалёнка / зарубеж",
+    "sal.cta":"Хочу так же — записаться",
+
+    "case.title":"Студенты уже зарабатывают.","case.title2":"Реальные люди, реальные деньги.",
+    "c.before":"Было:","c.after":"Стало:","c.tglink":"Отзыв в Telegram →",
+    "c1.n":"Наргиза · выпускница","c2.n":"Раджони · выпускник","c3.n":"Джамшид · студент","c4.n":"Саня · @royal_shrimp",
+    "c1.b":"с нуля, без опыта в дизайне","c1.a":"первый проект в портфолио, переход на стажировку","c1.t":"сразу после курса",
+    "c1.q":"«Завершила курс, получила сертификат, защитила первый проект. Спасибо за знания, помощь и поддержку!»",
+    "c2.b":"никогда не работал в дизайне","c2.a":"$1000 за первого клиента","c2.t":"сразу после стажировки",
+    "c2.q":"«Закончил курс, прошёл стажировку в студии. Нашёл клиента — заработал $1000.»",
+    "c3.b":"без клиентов и портфолио","c3.a":"$500 ещё во время обучения","c3.t":"в процессе курса",
+    "c3.q":"«Заработал свои первые $500 параллельно с учёбой — куратор помог найти клиента.»",
+    "c4.b":"смена профессии","c4.a":"~$1000 за 3 месяца · средний чек $200","c4.t":"3+ месяца после курса",
+    "c4.q":"«Несколько клиентов в среднем по $200. Параллельно получил оффер в растущую компанию с крутой командой.»",
+    "rev.title":"Все отзывы выпускников — в Telegram-канале",
+    "rev.sub":"Десятки реальных историй с цифрами, скриншотами и контактами",
+    "rev.cta":"Открыть канал",
+
+    "works.title":"Работы выпускников",
+    "works.lead":"Все проекты сделаны студентами на 4-м месяце обучения.",
+    "works.cta":"Хочу так же — записаться",
+    "works.c1":"Алёна Е. · гостиная-неоклассика · Ташкент",
+    "works.c2":"Жасур Р. · спальня в светлых тонах · Самарканд",
+    "works.c3":"Карина В. · спальня с акцентом · Ташкент",
+    "works.c4":"Регина К. · спальня + гардероб · Фергана",
+    "works.c5":"Ашур Х. · спальня в классике · Ташкент",
+    "works.c6":"Анелия М. · ТВ-зона + туалетный столик · Самарканд",
+    "works.c7":"Нодира А. · ванная в тёмных тонах · Ташкент",
+    "works.c8":"Шахзод Б. · спальня-неоклассика · Бухара",
+    "works.c9":"Мадина Р. · ванная в классике · Ташкент",
+    "works.c10":"Дилноза К. · кухня в современном стиле · Наманган",
+
+    "prog.title":"Программа открытого урока","prog.mins":"· 60 мин",
+    "t1.t":"Знакомство и обзор профессии","t1.d":"Куратор расскажет о рынке Узбекистана в 2026 — куда идёт спрос и сколько платят.",
+    "t2.t":"Установка Revit и обзор интерфейса","t2.d":"Работаете на своём ноутбуке или нашем — мы обеспечим место.",
+    "t3.t":"Создаём планировку квартиры с нуля","t3.d":"Под руководством куратора. Унесёте готовый файл в портфолио.",
+    "t4.t":"Сколько ждать первого заказа","t4.d":"Разбор: где искать клиентов и какие цены ставить новичку.",
+    "t5.t":"Q&A — задаёте любые вопросы","t5.d":"Лично или через Zoom — для онлайн-формата.",
+    "prog.note":"📌 Возьмите ноутбук — Revit установим вместе. Если ноутбука нет — обеспечим компьютер на месте.",
+
+    "why.title":"Почему именно INTERNO",
+    "why.l1":"лет на рынке · с 2018 года",
+    "why.l2":"выпускников — крупнейшая школа дизайна в Узбекистане",
+    "why.l3":"выпускников работают в профессии — проверяем по соцсетям",
+    "why.l4":"города — Ташкент, Самарканд, Фергана",
+
+    "faq.title":"Частые вопросы",
+    "faq.q1":"Урок реально бесплатный? Будете продавать курс?",
+    "faq.a1":"Да, бесплатно. Продавать никто не будет — но если зацепит, расскажем как поступить на основной курс.",
+    "faq.q2":"А если я ничего не понимаю в дизайне и компьютерах?",
+    "faq.a2":"Урок построен с нуля. Куратор разберёт каждый шаг.",
+    "faq.q3":"Сколько стоит основной курс?",
+    "faq.a3":"Зависит от формата и города. Точную стоимость и рассрочку расскажем на уроке.",
+    "faq.q4":"Я живу в Самарканде/Фергане. Как мне попасть?",
+    "faq.a4":"Открытые уроки проводятся во всех 3 городах. Адрес в вашем городе пришлём при записи.",
+    "faq.q5":"Сколько длится основной курс?","faq.a5":"6 месяцев. 2 раза в неделю по 2 часа.",
+    "faq.q6":"Дадите ли диплом?","faq.a6":"Да, выдаём сертификат с QR-кодом, который проверяется на нашем сайте.",
+    "faq.q7":"Что если я запишусь и не приду?","faq.a7":"Просто напишите нам — перенесём на следующий урок. Без проблем.",
+    "faq.q8":"Помогаете ли с трудоустройством?","faq.a8":"Да, у нас есть карьерный центр. Помогаем собрать портфолио и найти первых клиентов.",
+
+    "cta.title":"Места заканчиваются",
+    "cd.d":"дней","cd.h":"часов","cd.m":"мин","cd.s":"сек",
+    "prog.of":"из","prog.spots":"мест занято",
+    "cta.b1":"✓ 1 час практики в Revit + Q&A","cta.b2":"✓ PDF-гайд + чек-лист в подарок","cta.b3":"✓ Скидка 20% на основной курс",
+    "form.name":"Имя","form.phone":"Телефон","form.city":"Город","form.lang":"Язык",
+    "form.opt1":"Русский","form.opt2":"Узбекский",
+    "form.consent":"Согласен на обработку персональных данных",
+    "form.submit":"Записаться на урок",
+    "form.policy":"Звоним только для подтверждения. Не спамим. Можно отписаться в любой момент.",
+    "form.phoneError":"Введите номер полностью — 9 цифр после +998",
+
+    "ftr.about":"Школа дизайна интерьера №1 в Узбекистане. С 2018 года.",
+    "ftr.contact":"Контакты","ftr.cities":"Адреса","ftr.social":"Соцсети",
+    "ftr.privacy":"Политика конфиденциальности",
+    "ftr.addr.tsh":"Ташкент · Мирзо-Улугбекский р-н, ул. Хирмонтепа, 34Б (м. Буюк Ипак Йули)",
+    "ftr.addr.smr":"Самарканд · ул. Давлатабад",
+    "ftr.addr.frg":"Фергана · ул. Комус, 40",
+    "sticky.text":"Записаться бесплатно",
+    "modal.eyebrow":"Бесплатный открытый урок",
+    "modal.title":"Запишитесь на ближайший урок",
+    "modal.lead":"Менеджер свяжется с вами в течение 15 минут — подтвердит место, дату и время.",
+    "modal.b1":"✓ 1 час практики в Revit + Q&A",
+    "modal.b2":"✓ PDF-гайд + чек-лист в подарок",
+    "modal.b3":"✓ Скидка 20% на основной курс",
+  },
+  uz: {
+    "nav.fear":"To‘g‘ri keladimi?","nav.program":"Dastur","nav.mentor":"Spiker","nav.cases":"Keyslar","nav.faq":"Savollar","nav.signup":"Yozilish",
+    "nav.cityAria":"Shahar",
+    "hero.eyebrow":"Bepul ochiq dars",
+    "hero.title1":"Interyer dizayneri kasbini","hero.title2":"bir oqshomda sinab ko‘ring.","hero.title3":"<em>Bepul.</em>",
+    "hero.subtitle":"Revitda birinchi loyihangizni yaratasiz, kasb sizga to‘g‘ri kelishini tushunasiz va sovg‘a sifatida qo‘llanma + chek-list olasiz.",
+    "hero.cta":"Bepul yozilish","hero.cta2":"Dars dasturi",
+    "hero.social":"2400+ bitiruvchi · 8 yil · 60% kasbda ishlaydi",
+    "hero.micro":"🔒 Spam yo‘q. Sana va vaqtni tasdiqlashda kelishamiz.",
+    "hero.alt":"Dizaynerlik interyerining 3D kompozitsiyasi",
+    "trust.t1":"Bozorda 8 yil","trust.t2":"2400+ bitiruvchi","trust.t3":"Amaliyotchi mentor","trust.t4":"O‘zbekistonning 3 shahri",
+    "mc.label":"Ochiq darsni o‘tkazadi","mc.name":"Asad Halimov","mc.role":"Bosh mentor · 7+ yil dizaynda",
+
+    "fear.kicker":"90%ni to‘xtatadigan 3 ta qo‘rquv",
+    "fear.title":"«Bu men uchun emas».",
+    "fear.title2":"Bir oqshomda 3 qo‘rquvni<br/>yopib beramiz.",
+    "fear.q1":"«Menda badiiy ta’lim yo‘q»",
+    "fear.a1":"Bitiruvchilarimizning <b>78%</b>i badiiy ta’limsiz keldi. Interyer dizayni — bu mantiq va vositalar, qo‘lda chizish emas.",
+    "fear.q2":"«Men dasturlarda yaxshi emasman»",
+    "fear.a2":"<b>1 soatlik</b> ochiq darsda Revitda birinchi loyihangizni qilasiz. Mentor har bir qadamni ko‘rsatadi.",
+    "fear.q3":"«Yoshim o‘tib ketgan»",
+    "fear.a3":"Talabalarimiz orasida 19 yoshli ham, 42 yoshli ham bor. Eng katta bitiruvchimiz <b>51</b> yoshda — oyiga $1200 topadi.",
+
+    "ben.title":"1 soatlik ochiq darsda siz",
+    "ben.b1":"Revitda kvartirangizning birinchi rejasini yaratasiz (portfolioga olib ketasiz)",
+    "ben.b2":"Kasb sizga to‘g‘ri kelishini tushunasiz — quruq gaplarsiz",
+    "ben.b3":"2026-yilda O‘zbekistonda boshlovchi dizaynerlar qancha topishini bilasiz",
+    "ben.b4":"Bosqichma-bosqich reja olasiz: 6 oyda birinchi buyurtmaga qanday chiqish",
+    "ben.b5":"Mentorga shaxsan yoki Zoom orqali barcha savollaringizni berasiz",
+    "ben.foot":"VA HAMMA ishtirokchilar 3 ta sovg‘a oladi ↓",
+
+    "gift.title":"Ro‘yxatdan o‘tganlar uchun sovg‘alar",
+    "gift.l1":"SOVG‘A 1","gift.l2":"SOVG‘A 2","gift.l3":"SOVG‘A 3",
+    "gift.t1":"PDF qo‘llanma «O‘zbekistonda interyer dizayneri kasbi 2026»",
+    "gift.d1":"32 sahifa amaliyot: bozor, vositalar, narxlar, portfolio.",
+    "gift.t2":"Chek-list «30 kunda birinchi 5 mijozni qanday topish»",
+    "gift.d2":"Instagram profilidan shartnomagacha 12 qadam.",
+    "gift.t3":"Asosiy kursga 20% chegirma promokodi",
+    "gift.d3":"Ochiq darsdan keyin 7 kun amal qiladi.",
+    "gift.note":"Barcha sovg‘alar ro‘yxatdan o‘tganingizdan keyin 5 daqiqa ichida WhatsAppga keladi.",
+    "gift.cta":"Sovg‘alarni olish va yozilish",
+
+    "quiz.title":"Bu kasb sizga to‘g‘ri keladimi?",
+    "quiz.lead":"5 ta qisqa savol · 30 soniya · mentordan shaxsiy xulosa",
+    "quiz.restart":"← Qaytadan o‘tish",
+    "q1.t":"Reality-shou yoki YouTube’da interyerlar qanday o‘zgarishini kuzatish sizga yoqadimi?",
+    "q1.a1":"Ha, juda","q1.a2":"Ba’zan","q1.a3":"Yo‘q",
+    "q2.t":"Kasbda sizni nima ko‘proq qiziqtiradi?",
+    "q2.a1":"Ijodkorlik va o‘zini ifodalash","q2.a2":"Barqaror daromad","q2.a3":"Masofadan ishlash","q2.a4":"Hammasi birga",
+    "q3.t":"O‘qishga qancha vaqt ajrata olasiz?",
+    "q3.a1":"Kuniga 1–2 soat","q3.a2":"Kuniga 3–4 soat","q3.a3":"Faqat dam olish kunlari",
+    "q4.t":"6 oydan keyin qanday natija olmoqchisiz?",
+    "q4.a1":"Birinchi mijoz va daromad","q4.a2":"Yangi kasb va portfolio","q4.a3":"O‘zimnikimi, shunchaki tushunish",
+    "q5.t":"Siz qaysi shahardasiz?",
+    "q5.a1":"Toshkent","q5.a2":"Samarqand","q5.a3":"Farg‘ona","q5.a4":"Boshqa shahar",
+    "verdict.high":"<b>A’lo natija:</b> javoblaringizga ko‘ra interyer dizayneri kasbi sizga mos — bepul darsga keling va buni amalda tekshirib ko‘ring.",
+    "verdict.mid":"<b>Yaxshi salohiyat:</b> sizda qiziqish va motivatsiya bor — ochiq dars bu kasb sizniki ekanini aniq tushunishga yordam beradi.",
+    "verdict.low":"<b>Siz hali ikkilanyapsiz</b> — bepul dars hech narsaga majburlamaydi va qaror qabul qilishga yordam beradi.",
+
+    "m.kicker":"Ochiq dars spikeri",
+    "m.role":"INTERNO School «Interyer dizayni» kursining bosh mentori",
+    "m.l1":"Turar-joy va tijorat interyerlarida 7+ yil amaliyot",
+    "m.l2":"Toshkent, Samarqand, Almatida 120+ amalga oshirilgan loyiha",
+    "m.l3":"800+ talabani o‘qitgan — 60%i kasb bo‘yicha ishlaydi",
+    "m.l4":"Revit va AutoCAD bo‘yicha ekspert",
+    "m.quote":"«Ochiq darsda men sizga kurs sotmayman. Mening vazifam — bir soatda sizga dizaynerning haqiqiy ishini ko‘rsatish. Yoqsa — birga o‘qiymiz. Yoqmasa — sizda Revitdagi birinchi loyiha va qayerga yurish kerakligi haqida tushuncha qoladi.»",
+    "m.ig":"Mentor Instagrami →","m.cta":"Asadga yozilish",
+
+    "prac.title":"O‘qish qanday o‘tadi",
+    "prac.lead":"darsdan va o‘lchovga chiqishdan haqiqiy kadrlar",
+    "prac.t1":"Ochiq dars","prac.h1":"Revitdagi darsning ichida",
+    "prac.d1":"Mentor har bir qadamni ko‘rsatadi — dasturni ishga tushirishdan tayyor kvartira rejasigacha.",
+    "prac.t2":"Obyektda amaliyot","prac.h2":"Mentor bilan o‘lchovga chiqish",
+    "prac.d2":"Talabalar haqiqiy obyektga chiqadi — o‘lchov olish va xona xususiyatlarini qayd etishni o‘rganadi.",
+    "prac.chip2":"OBYEKT · 0:22",
+    "prac.al1":"Ijro etish: Revitdagi darsning ichida",
+    "prac.al2":"Ijro etish: Mentor bilan o‘lchovga chiqish",
+
+    "sal.title":"Kursdan keyin qancha topasiz",
+    "sal.lead":"Raqamlar — HeadHunter UZ, Glassdoor va Upwork vakansiyalari asosida (2026-yil aprel).",
+    "sal.j":"0–6 oy","sal.m":"6–18 oy","sal.s":"1.5+ yil",
+    "sal.uz":"O‘zbekistonda","sal.rem":"Masofadan / xorij",
+    "sal.cta":"Men ham xohlayman — yozilish",
+
+    "case.title":"Talabalar allaqachon pul topishyapti.","case.title2":"Haqiqiy odamlar, haqiqiy pul.",
+    "c.before":"Avval:","c.after":"Endi:","c.tglink":"Telegramdagi fikr →",
+    "c1.n":"Nargiza · bitiruvchi","c2.n":"Rajoni · bitiruvchi","c3.n":"Jamshid · talaba","c4.n":"Sanya · @royal_shrimp",
+    "c1.b":"noldan, dizayn tajribasisiz","c1.a":"portfoliodagi birinchi loyiha, stajirovkaga o‘tish","c1.t":"kursdan so‘ng darhol",
+    "c1.q":"«Kursni tugatdim, sertifikat oldim, birinchi loyihani himoya qildim. Bilim, yordam va qo‘llab-quvvatlash uchun rahmat!»",
+    "c2.b":"hech qachon dizaynda ishlamagan","c2.a":"birinchi mijozdan $1000","c2.t":"stajirovkadan so‘ng darhol",
+    "c2.q":"«Kursni tugatdim, studiyada stajirovkadan o‘tdim. Mijoz topdim — $1000 ishlab topdim.»",
+    "c3.b":"mijozsiz va portfoliosiz","c3.a":"o‘qish davridayoq $500","c3.t":"kurs jarayonida",
+    "c3.q":"«O‘qish bilan birga birinchi $500 ni ishlab topdim — mentor mijoz topishga yordam berdi.»",
+    "c4.b":"kasbni almashtirish","c4.a":"3 oyda ~$1000 · o‘rtacha chek $200","c4.t":"kursdan 3+ oy keyin",
+    "c4.q":"«Bir nechta mijoz, har biri o‘rtacha $200. Bir vaqtning o‘zida zo‘r jamoali o‘sayotgan kompaniyadan taklif oldim.»",
+    "rev.title":"Bitiruvchilarning barcha fikrlari — Telegram-kanalda",
+    "rev.sub":"Raqamlar, skrinshotlar va kontaktlar bilan o‘nlab haqiqiy hikoyalar",
+    "rev.cta":"Kanalni ochish",
+
+    "works.title":"Bitiruvchilar ishlari",
+    "works.lead":"Barcha loyihalar talabalar tomonidan o‘qishning 4-oyida qilingan.",
+    "works.cta":"Men ham xohlayman — yozilish",
+    "works.c1":"Alyona E. · neoklassik mehmon xonasi · Toshkent",
+    "works.c2":"Jasur R. · och ranglardagi yotoqxona · Samarqand",
+    "works.c3":"Karina V. · aksentli yotoqxona · Toshkent",
+    "works.c4":"Regina K. · yotoqxona + garderob · Farg‘ona",
+    "works.c5":"Ashur X. · klassik uslubdagi yotoqxona · Toshkent",
+    "works.c6":"Aneliya M. · TV-zona + pardoz stoli · Samarqand",
+    "works.c7":"Nodira A. · to‘q ranglardagi hammom · Toshkent",
+    "works.c8":"Shahzod B. · neoklassik yotoqxona · Buxoro",
+    "works.c9":"Madina R. · klassik uslubdagi hammom · Toshkent",
+    "works.c10":"Dilnoza K. · zamonaviy uslubdagi oshxona · Namangan",
+
+    "prog.title":"Ochiq dars dasturi","prog.mins":"· 60 daqiqa",
+    "t1.t":"Tanishuv va kasb sharhi","t1.d":"Mentor 2026-yilda O‘zbekiston bozori haqida aytadi — talab qayerda va qancha to‘lashadi.",
+    "t2.t":"Revitni o‘rnatish va interfeys bilan tanishish","t2.d":"O‘z noutbukingizda yoki bizning kompyuterda ishlaysiz — joy bilan ta’minlaymiz.",
+    "t3.t":"Kvartira rejasini noldan yaratamiz","t3.d":"Mentor rahbarligida. Tayyor faylni portfolioga olib ketasiz.",
+    "t4.t":"Birinchi buyurtmani qancha kutish kerak","t4.d":"Tahlil: mijozlarni qayerdan topish va yangi boshlovchi qanday narx qo‘yishi kerak.",
+    "t5.t":"Q&A — istalgan savolingizni berasiz","t5.d":"Shaxsan yoki Zoom orqali — onlayn format uchun.",
+    "prog.note":"📌 Noutbukingizni olib keling — Revitni birga o‘rnatamiz. Noutbuk bo‘lmasa — joyida kompyuter beramiz.",
+
+    "why.title":"Nega aynan INTERNO",
+    "why.l1":"yil bozorda · 2018-yildan beri",
+    "why.l2":"bitiruvchi — O‘zbekistondagi eng yirik dizayn maktabi",
+    "why.l3":"bitiruvchi kasb bo‘yicha ishlaydi — ijtimoiy tarmoqlar orqali tekshiramiz",
+    "why.l4":"shahar — Toshkent, Samarqand, Farg‘ona",
+
+    "faq.title":"Ko‘p so‘raladigan savollar",
+    "faq.q1":"Dars haqiqatan bepulmi? Kurs sotasizmi?",
+    "faq.a1":"Ha, bepul. Hech kim hech narsa sotmaydi — lekin yoqsa, asosiy kursga qanday kirishni aytamiz.",
+    "faq.q2":"Agar dizayn va kompyuterni umuman tushunmasam-chi?",
+    "faq.a2":"Dars noldan qurilgan. Mentor har bir qadamni tushuntiradi.",
+    "faq.q3":"Asosiy kurs qancha turadi?","faq.a3":"Format va shaharga bog‘liq. Aniq narx va bo‘lib to‘lash shartlarini darsda aytamiz.",
+    "faq.q4":"Men Samarqand/Farg‘onada yashayman. Qanday qatnashsam bo‘ladi?",
+    "faq.a4":"Ochiq darslar 3 ta shaharning barchasida o‘tkaziladi. Shahringizdagi manzilni yozilganingizda yuboramiz.",
+    "faq.q5":"Asosiy kurs qancha davom etadi?","faq.a5":"6 oy. Haftada 2 marta, 2 soatdan.",
+    "faq.q6":"Diplom berasizmi?","faq.a6":"Ha, saytimizda tekshirsa bo‘ladigan QR-kodli sertifikat beramiz.",
+    "faq.q7":"Yozilib, kela olmasam-chi?","faq.a7":"Shunchaki bizga yozing — keyingi darsga ko‘chiramiz. Hech qanday muammosiz.",
+    "faq.q8":"Ish topishga yordam berasizmi?","faq.a8":"Ha, karyera markazimiz bor. Portfolio yig‘ish va birinchi mijozlarni topishda yordam beramiz.",
+
+    "cta.title":"Joylar tugayapti",
+    "cd.d":"kun","cd.h":"soat","cd.m":"daq","cd.s":"son",
+    "prog.of":"/","prog.spots":"joy band",
+    "cta.b1":"✓ 1 soat Revit amaliyoti + Q&A","cta.b2":"✓ Sovg‘aga PDF qo‘llanma + chek-list","cta.b3":"✓ Asosiy kursga 20% chegirma",
+    "form.name":"Ism","form.phone":"Telefon","form.city":"Shahar","form.lang":"Til",
+    "form.opt1":"Rus tili","form.opt2":"O‘zbek tili",
+    "form.consent":"Shaxsiy ma’lumotlarni qayta ishlashga roziman",
+    "form.submit":"Darsga yozilish",
+    "form.policy":"Faqat tasdiqlash uchun qo‘ng‘iroq qilamiz. Spam qilmaymiz. Istalgan vaqtda obunadan chiqsangiz bo‘ladi.",
+    "form.phoneError":"Raqamni to‘liq kiriting — +998 dan keyin 9 ta raqam",
+
+    "ftr.about":"O‘zbekistondagi №1 interyer dizayni maktabi. 2018-yildan beri.",
+    "ftr.contact":"Kontaktlar","ftr.cities":"Manzillar","ftr.social":"Ijtimoiy tarmoqlar",
+    "ftr.privacy":"Maxfiylik siyosati",
+    "ftr.addr.tsh":"Toshkent · Mirzo Ulug‘bek tumani, Xirmontepa ko‘chasi, 34B (Buyuk Ipak Yo‘li metrosi)",
+    "ftr.addr.smr":"Samarqand · Davlatobod ko‘chasi",
+    "ftr.addr.frg":"Farg‘ona · Komus ko‘chasi, 40",
+    "sticky.text":"Bepul yozilish",
+    "modal.eyebrow":"Bepul ochiq dars",
+    "modal.title":"Eng yaqin darsga yoziling",
+    "modal.lead":"Menejer 15 daqiqa ichida siz bilan bog‘lanadi — joy, sana va vaqtni tasdiqlaydi.",
+    "modal.b1":"✓ 1 soat Revit amaliyoti + Q&A",
+    "modal.b2":"✓ Sovg‘aga PDF qo‘llanma + chek-list",
+    "modal.b3":"✓ Asosiy kursga 20% chegirma",
+  }
+};
+
+const cityNames = {
+  ru: {tsh:"Ташкент",smr:"Самарканд",frg:"Фергана"},
+  uz: {tsh:"Toshkent",smr:"Samarqand",frg:"Farg‘ona"},
+};
+
+// Resolve lang + city synchronously: URL → localStorage → navigator.language → uz.
+(function(){
+  var p = new URLSearchParams(location.search);
+  var qLang = p.get('lang');
+  var qCity = p.get('city');
+  if(qCity === 'fer') qCity = 'frg'; // ad-campaign alias for Fergana
+  var lang = (qLang === 'ru' || qLang === 'uz') ? qLang : null;
+  var city = (qCity === 'tsh' || qCity === 'smr' || qCity === 'frg') ? qCity : null;
+  try {
+    if(lang) localStorage.setItem('interno_lang', lang); else lang = localStorage.getItem('interno_lang');
+    if(city) localStorage.setItem('interno_city', city); else city = localStorage.getItem('interno_city');
+  } catch(_) {}
+  if(lang !== 'ru' && lang !== 'uz') lang = /^ru/i.test(navigator.language || '') ? 'ru' : 'uz';
+  if(city !== 'tsh' && city !== 'smr' && city !== 'frg') city = 'tsh';
+  document.documentElement.lang = lang;
+  document.documentElement.setAttribute('data-city', city);
+
+  var META = {
+    ru: {
+      title: 'Открытый урок по дизайну интерьера · INTERNO School · Ташкент / Самарканд / Фергана',
+      desc: 'Бесплатный открытый урок INTERNO School. Сделайте свой первый проект в Revit за 1 час. Куратор Асад Халимов · 7+ лет в дизайне.'
+    },
+    uz: {
+      title: 'Interyer dizayni bo‘yicha ochiq dars · INTERNO School · Toshkent / Samarqand / Farg‘ona',
+      desc: 'INTERNO School’ning bepul ochiq darsi. 1 soatda Revitda birinchi loyihangizni yarating. Mentor Asad Halimov · dizaynda 7+ yil.'
+    }
+  };
+  document.title = META[lang].title;
+  var md = document.querySelector('meta[name="description"]');
+  if(md) md.setAttribute('content', META[lang].desc);
+})();
+
+// «Ближайший урок: 17 июля, 19:00 · осталось 7 мест» / «Yaqin dars: 17-iyul, 19:00 · 7 ta joy qoldi»
+const I18N_MONTHS = {
+  ru: ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
+  uz: ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'],
+};
+function ruPlural(n, one, few, many){
+  n = Math.abs(n) % 100;
+  if(n > 10 && n < 20) return many;
+  var d = n % 10;
+  if(d === 1) return one;
+  if(d > 1 && d < 5) return few;
+  return many;
+}
+function lessonLineText(lang){
+  var L = window.NEXT_LESSON;
+  var d = new Date(L.date + 'T00:00:00');
+  var day = d.getDate(), m = I18N_MONTHS[lang][d.getMonth()];
+  if(lang === 'uz') return 'Yaqin dars: ' + day + '-' + m + ', ' + L.time + ' · ' + L.seatsLeft + ' ta joy qoldi';
+  return 'Ближайший урок: ' + day + ' ' + m + ', ' + L.time + ' · осталось ' + L.seatsLeft + ' ' + ruPlural(L.seatsLeft, 'место', 'места', 'мест');
+}
+
+// Applies translations to every parsed node. Safe to call on a partially
+// parsed DOM — it is invoked right after the hero markup and again at the end
+// of <body>, so above-the-fold content is localized before first paint.
+function applyLang(lang){
+  const city = document.documentElement.getAttribute('data-city') || 'tsh';
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v = dict[lang]?.[el.getAttribute('data-i18n')];
+    if(v!==undefined) el.innerHTML = v;
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach(el=>{
+    const v = dict[lang]?.[el.getAttribute('data-i18n-alt')];
+    if(v!==undefined) el.alt = v.replace(/<[^>]*>/g,'');
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el=>{
+    const v = dict[lang]?.[el.getAttribute('data-i18n-aria')];
+    if(v!==undefined) el.setAttribute('aria-label', v.replace(/<[^>]*>/g,''));
+  });
+  document.querySelectorAll('.lang__btn').forEach(b=>{
+    b.classList.toggle('is-active', b.dataset.lang===lang);
+  });
+  // City names: hero badge, header switcher, city selects inside forms
+  document.querySelectorAll('.city-name').forEach(el=>{
+    el.textContent = cityNames[lang][city] || cityNames[lang].tsh;
+  });
+  const sel = document.getElementById('citySelect');
+  if(sel){
+    [...sel.options].forEach(o=>{ o.textContent = cityNames[lang][o.value]; });
+    sel.value = city;
+  }
+  document.querySelectorAll('form select[name="city"]').forEach(s=>{
+    [...s.options].forEach(o=>{
+      if(cityNames[lang][o.value]) o.textContent = cityNames[lang][o.value];
+    });
+    if([...s.options].some(o=>o.value===city)) s.value = city;
+  });
+  // Preselect the lesson-language <select> to match the page language
+  document.querySelectorAll('form select[name="lang"]').forEach(s=>{
+    if([...s.options].some(o=>o.value===lang)) s.value = lang;
+  });
+  // Next-lesson line (hero + forms)
+  document.querySelectorAll('[data-lesson-line]').forEach(el=>{
+    el.textContent = lessonLineText(lang);
+  });
+  // Footer: highlight the address of the selected city
+  document.querySelectorAll('[data-addr]').forEach(el=>{
+    el.classList.toggle('is-active', el.dataset.addr===city);
+  });
+  // Seats-taken progress derived from NEXT_LESSON
+  const L = window.NEXT_LESSON;
+  const taken = document.querySelector('[data-seats-taken]');
+  if(taken) taken.textContent = L.seatsTotal - L.seatsLeft;
+  const total = document.querySelector('[data-seats-total]');
+  if(total) total.textContent = L.seatsTotal;
+  const fill = document.querySelector('.progress__fill');
+  if(fill) fill.style.width = Math.round((L.seatsTotal - L.seatsLeft) / L.seatsTotal * 100) + '%';
+  try { localStorage.setItem('interno_lang', lang); } catch(_) {}
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://connect.facebook.net" />
-<link rel="preload" as="image" href="icons/hero-scene.webp" fetchpriority="high" />
+<link rel="preload" as="image" href="icons/hero-scene-1024.webp"
+  imagesrcset="icons/hero-scene-640.webp 640w, icons/hero-scene-1024.webp 1024w, icons/hero-scene.webp 1500w"
+  imagesizes="(max-width: 980px) 88vw, 46vw" fetchpriority="high" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 
@@ -63,7 +527,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
     <div class="nav__right">
-      <select class="city-select" id="citySelect" aria-label="Город">
+      <select class="city-select" id="citySelect" aria-label="Город" data-i18n-aria="nav.cityAria">
         <option value="tsh">Ташкент</option>
         <option value="smr">Самарканд</option>
         <option value="frg">Фергана</option>
@@ -93,6 +557,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <p class="hero__subtitle" data-i18n="hero.subtitle">
         Создадите свой первый проект в Revit, поймёте подходит ли вам профессия, и получите путеводитель + чек-лист в подарок.
       </p>
+      <p class="hero__lesson lesson-next" data-lesson-line></p>
 
       <div class="trust-chips">
         <span class="trust-chip liquid-glass" data-i18n="trust.t1">8 лет на рынке</span>
@@ -108,15 +573,23 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
         </button>
         <a href="#program" class="btn btn--ghost btn--lg" data-i18n="hero.cta2">Программа урока</a>
       </div>
+      <p class="hero__social" data-i18n="hero.social">2400+ выпускников · 8 лет · 60% в профессии</p>
       <p class="hero__microcopy" data-i18n="hero.micro">🔒 Без спама. Дату и время согласуем при подтверждении.</p>
     </div>
 
     <aside class="hero-visual" id="heroVisual">
       <div class="hero-visual__glow"></div>
-      <img class="hero-scene" src="icons/hero-scene.webp" alt="3D композиция дизайнерского интерьера" />
+      <img class="hero-scene" src="icons/hero-scene-1024.webp"
+        srcset="icons/hero-scene-640.webp 640w, icons/hero-scene-1024.webp 1024w, icons/hero-scene.webp 1500w"
+        sizes="(max-width: 980px) 88vw, 46vw"
+        width="1500" height="1353" fetchpriority="high" decoding="async"
+        alt="3D композиция дизайнерского интерьера" data-i18n-alt="hero.alt" />
     </aside>
   </div>
 </section>
+<!-- Localize header + hero immediately after they are parsed, before the rest
+     of the page (and before first paint on slow connections). -->
+<script>applyLang(document.documentElement.lang);</script>
 
 <!-- ===== BLOCK 2: CLOSING FEAR ===== -->
 <section class="fear" id="fear">
@@ -267,9 +740,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <div class="quiz__step" data-step="5">
         <h3 class="quiz__q" data-i18n="q5.t">В каком городе вы находитесь?</h3>
         <div class="quiz__opts">
-          <button class="quiz__opt" data-score="1" data-city="tsh">Ташкент</button>
-          <button class="quiz__opt" data-score="1" data-city="smr">Самарканд</button>
-          <button class="quiz__opt" data-score="1" data-city="frg">Фергана</button>
+          <button class="quiz__opt" data-score="1" data-city="tsh" data-i18n="q5.a1">Ташкент</button>
+          <button class="quiz__opt" data-score="1" data-city="smr" data-i18n="q5.a2">Самарканд</button>
+          <button class="quiz__opt" data-score="1" data-city="frg" data-i18n="q5.a3">Фергана</button>
           <button class="quiz__opt" data-score="0" data-i18n="q5.a4">Другой город</button>
         </div>
       </div>
@@ -278,7 +751,14 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
         <div class="quiz__verdict" id="quizVerdict"></div>
         <form class="quiz__form" id="quizForm">
           <label><span data-i18n="form.name">Имя</span><input type="text" name="name" required placeholder="Aziz" /></label>
-          <label><span data-i18n="form.phone">Телефон</span><input type="tel" name="phone" required placeholder="+998 (90) 000-00-00" /></label>
+          <label><span data-i18n="form.phone">Телефон</span>
+            <span class="phone-field">
+              <span class="phone-field__prefix">+998</span>
+              <input type="tel" name="phone" required inputmode="tel" autocomplete="tel-national" placeholder="90 123 45 67" maxlength="12" />
+            </span>
+            <span class="phone-error" data-i18n="form.phoneError">Введите номер полностью — 9 цифр после +998</span>
+          </label>
+          <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" />
           <button type="submit" class="btn btn--primary btn--lg btn--block"><span data-i18n="form.submit">Записаться на урок</span> <span class="arrow"></span></button>
         </form>
         <button class="quiz__back" id="quizRestart" data-i18n="quiz.restart">← Пройти заново</button>
@@ -293,7 +773,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
     <div class="mentor__photo"></div>
     <div class="mentor__info">
       <div class="muted small" data-i18n="m.kicker">Спикер открытого урока</div>
-      <h2 class="mentor__name">Асад Халимов</h2>
+      <h2 class="mentor__name" data-i18n="mc.name">Асад Халимов</h2>
       <p class="mentor__role" data-i18n="m.role">Старший куратор курса «Дизайн интерьера» в INTERNO School</p>
       <ul class="mentor__list">
         <li data-i18n="m.l1">7+ лет практики в дизайне жилых и коммерческих интерьеров</li>
@@ -321,7 +801,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 
     <div class="practice__grid">
       <article class="practice-card">
-        <button type="button" class="practice-card__player" data-video-src="lesson-process.mp4" aria-label="Воспроизвести: Изнутри урока в Revit">
+        <button type="button" class="practice-card__player" data-video-src="lesson-process.mp4" aria-label="Воспроизвести: Изнутри урока в Revit" data-i18n-aria="prac.al1">
           <span class="practice-card__poster practice-card__poster--lesson" aria-hidden="true">
             <span class="practice-card__plan">
               <svg viewBox="0 0 200 130" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
@@ -349,7 +829,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       </article>
 
       <article class="practice-card">
-        <button type="button" class="practice-card__player" data-video-src="practice-visit.mp4" aria-label="Воспроизвести: Выезд на замер с куратором">
+        <button type="button" class="practice-card__player" data-video-src="practice-visit.mp4" aria-label="Воспроизвести: Выезд на замер с куратором" data-i18n-aria="prac.al2">
           <span class="practice-card__poster practice-card__poster--visit" aria-hidden="true">
             <span class="practice-card__ruler">
               <svg viewBox="0 0 200 30" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
@@ -358,7 +838,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
               </svg>
             </span>
           </span>
-          <span class="practice-card__chip practice-card__chip--soft">ОБЪЕКТ · 0:22</span>
+          <span class="practice-card__chip practice-card__chip--soft" data-i18n="prac.chip2">ОБЪЕКТ · 0:22</span>
           <span class="practice-card__play" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
           </span>
@@ -412,7 +892,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <article class="case-card">
         <div class="case-card__photo case-card__photo--1"></div>
         <div class="case-card__body">
-          <div class="case-card__name">Наргиза · выпускница</div>
+          <div class="case-card__name" data-i18n="c1.n">Наргиза · выпускница</div>
           <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c1.b">с нуля, без опыта в дизайне</span></div>
           <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c1.a">первый проект в портфолио, переход на стажировку</span></div>
           <div class="case-card__time" data-i18n="c1.t">сразу после курса</div>
@@ -424,31 +904,31 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <article class="case-card">
         <div class="case-card__photo case-card__photo--2"></div>
         <div class="case-card__body">
-          <div class="case-card__name">Раджони · выпускник</div>
+          <div class="case-card__name" data-i18n="c2.n">Раджони · выпускник</div>
           <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c2.b">никогда не работал в дизайне</span></div>
           <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c2.a">$1000 за первого клиента</span></div>
           <div class="case-card__time" data-i18n="c2.t">сразу после стажировки</div>
           <p class="case-card__quote" data-i18n="c2.q">«Закончил курс, прошёл стажировку в студии. Нашёл клиента — заработал $1000.»</p>
-          <a href="https://t.me/reviewsinternoschool" target="_blank" rel="noopener" class="case-card__ig">Отзыв в Telegram →</a>
+          <a href="https://t.me/reviewsinternoschool" target="_blank" rel="noopener" class="case-card__ig" data-i18n="c.tglink">Отзыв в Telegram →</a>
         </div>
       </article>
 
       <article class="case-card">
         <div class="case-card__photo case-card__photo--3"></div>
         <div class="case-card__body">
-          <div class="case-card__name">Джамшид · студент</div>
+          <div class="case-card__name" data-i18n="c3.n">Джамшид · студент</div>
           <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c3.b">без клиентов и портфолио</span></div>
           <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c3.a">$500 ещё во время обучения</span></div>
           <div class="case-card__time" data-i18n="c3.t">в процессе курса</div>
           <p class="case-card__quote" data-i18n="c3.q">«Заработал свои первые $500 параллельно с учёбой — куратор помог найти клиента.»</p>
-          <a href="https://t.me/reviewsinternoschool" target="_blank" rel="noopener" class="case-card__ig">Отзыв в Telegram →</a>
+          <a href="https://t.me/reviewsinternoschool" target="_blank" rel="noopener" class="case-card__ig" data-i18n="c.tglink">Отзыв в Telegram →</a>
         </div>
       </article>
 
       <article class="case-card">
         <div class="case-card__photo case-card__photo--4"></div>
         <div class="case-card__body">
-          <div class="case-card__name">Саня · @royal_shrimp</div>
+          <div class="case-card__name" data-i18n="c4.n">Саня · @royal_shrimp</div>
           <div class="case-card__before"><b data-i18n="c.before">Было:</b> <span data-i18n="c4.b">смена профессии</span></div>
           <div class="case-card__after"><b data-i18n="c.after">Стало:</b> <span data-i18n="c4.a">~$1000 за 3 месяца · средний чек $200</span></div>
           <div class="case-card__time" data-i18n="c4.t">3+ месяца после курса</div>
@@ -463,10 +943,10 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
         <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
       </div>
       <div class="reviews-tg__body">
-        <div class="reviews-tg__title">Все отзывы выпускников — в Telegram-канале</div>
-        <div class="reviews-tg__sub">Десятки реальных историй с цифрами, скриншотами и контактами</div>
+        <div class="reviews-tg__title" data-i18n="rev.title">Все отзывы выпускников — в Telegram-канале</div>
+        <div class="reviews-tg__sub" data-i18n="rev.sub">Десятки реальных историй с цифрами, скриншотами и контактами</div>
       </div>
-      <span class="reviews-tg__cta">Открыть канал <span class="arrow"></span></span>
+      <span class="reviews-tg__cta"><span data-i18n="rev.cta">Открыть канал</span> <span class="arrow"></span></span>
     </a>
   </div>
 </section>
@@ -479,48 +959,48 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 
     <div class="works__grid">
       <figure class="work">
-        <img src="works/work-10.jpg" alt="ТВ-зона в неоклассике" loading="lazy" decoding="async" />
-        <figcaption>Алёна Е. · гостиная-неоклассика · Ташкент</figcaption>
+        <img src="works/work-10.jpg" alt="ТВ-зона в неоклассике" data-i18n-alt="works.c1" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c1">Алёна Е. · гостиная-неоклассика · Ташкент</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-11.jpg" alt="Спальня с пампасной травой" loading="lazy" decoding="async" />
-        <figcaption>Жасур Р. · спальня в светлых тонах · Самарканд</figcaption>
+        <img src="works/work-11.jpg" alt="Спальня с пампасной травой" data-i18n-alt="works.c2" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c2">Жасур Р. · спальня в светлых тонах · Самарканд</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-12.jpg" alt="Спальня с акцентной картиной" loading="lazy" decoding="async" />
-        <figcaption>Карина В. · спальня с акцентом · Ташкент</figcaption>
+        <img src="works/work-12.jpg" alt="Спальня с акцентной картиной" data-i18n-alt="works.c3" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c3">Карина В. · спальня с акцентом · Ташкент</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-13.jpg" alt="Спальня с гардеробной" loading="lazy" decoding="async" />
-        <figcaption>Регина К. · спальня + гардероб · Фергана</figcaption>
+        <img src="works/work-13.jpg" alt="Спальня с гардеробной" data-i18n-alt="works.c4" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c4">Регина К. · спальня + гардероб · Фергана</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-14.jpg" alt="Классическая спальня" loading="lazy" decoding="async" />
-        <figcaption>Ашур Х. · спальня в классике · Ташкент</figcaption>
+        <img src="works/work-14.jpg" alt="Классическая спальня" data-i18n-alt="works.c5" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c5">Ашур Х. · спальня в классике · Ташкент</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-1.jpg" alt="ТВ-зона с туалетным столиком" loading="lazy" decoding="async" />
-        <figcaption>Анелия М. · ТВ-зона + туалетный столик · Самарканд</figcaption>
+        <img src="works/work-1.jpg" alt="ТВ-зона с туалетным столиком" data-i18n-alt="works.c6" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c6">Анелия М. · ТВ-зона + туалетный столик · Самарканд</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-15.jpg" alt="Ванная с органическим зеркалом" loading="lazy" decoding="async" />
-        <figcaption>Нодира А. · ванная в тёмных тонах · Ташкент</figcaption>
+        <img src="works/work-15.jpg" alt="Ванная с органическим зеркалом" data-i18n-alt="works.c7" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c7">Нодира А. · ванная в тёмных тонах · Ташкент</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-16.jpg" alt="Спальня с ТВ-зоной в неоклассике" loading="lazy" decoding="async" />
-        <figcaption>Шахзод Б. · спальня-неоклассика · Бухара</figcaption>
+        <img src="works/work-16.jpg" alt="Спальня с ТВ-зоной в неоклассике" data-i18n-alt="works.c8" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c8">Шахзод Б. · спальня-неоклассика · Бухара</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-17.jpg" alt="Классическая ванная с золотом" loading="lazy" decoding="async" />
-        <figcaption>Мадина Р. · ванная в классике · Ташкент</figcaption>
+        <img src="works/work-17.jpg" alt="Классическая ванная с золотом" data-i18n-alt="works.c9" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c9">Мадина Р. · ванная в классике · Ташкент</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-18.jpg" alt="Классическая ванная — душевая зона" loading="lazy" decoding="async" />
-        <figcaption>Мадина Р. · ванная в классике · Ташкент</figcaption>
+        <img src="works/work-18.jpg" alt="Классическая ванная — душевая зона" data-i18n-alt="works.c9" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c9">Мадина Р. · ванная в классике · Ташкент</figcaption>
       </figure>
       <figure class="work">
-        <img src="works/work-19.jpg" alt="Современная кухня с рейками" loading="lazy" decoding="async" />
-        <figcaption>Дилноза К. · кухня в современном стиле · Наманган</figcaption>
+        <img src="works/work-19.jpg" alt="Современная кухня с рейками" data-i18n-alt="works.c10" loading="lazy" decoding="async" />
+        <figcaption data-i18n="works.c10">Дилноза К. · кухня в современном стиле · Наманган</figcaption>
       </figure>
     </div>
 
@@ -532,7 +1012,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 <section class="program" id="program" data-viewcontent="program">
   <div class="container">
     <div class="program__head">
-      <h2 class="display sm"><span data-i18n="prog.title">Программа открытого урока</span> <span class="muted">· 60 мин</span></h2>
+      <h2 class="display sm"><span data-i18n="prog.title">Программа открытого урока</span> <span class="muted" data-i18n="prog.mins">· 60 мин</span></h2>
       <img class="program__ico" src="icons/stopwatch.png" alt="" loading="lazy" />
     </div>
 
@@ -636,7 +1116,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 
         <div class="progress">
           <div class="progress__bar"><div class="progress__fill" style="width:72%"></div></div>
-          <div class="progress__lbl"><b>18</b> <span data-i18n="prog.of">из</span> <b>25</b> <span data-i18n="prog.spots">мест занято</span></div>
+          <div class="progress__lbl"><b data-seats-taken>18</b> <span data-i18n="prog.of">из</span> <b data-seats-total>25</b> <span data-i18n="prog.spots">мест занято</span></div>
         </div>
 
         <ul class="cta__bullets">
@@ -647,8 +1127,15 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       </div>
 
       <form class="cta__form" id="form">
+        <p class="lesson-next lesson-next--form" data-lesson-line></p>
         <label><span data-i18n="form.name">Имя</span><input type="text" name="name" required placeholder="Aziz" /></label>
-        <label><span data-i18n="form.phone">Телефон</span><input type="tel" name="phone" required placeholder="+998 (90) 000-00-00" /></label>
+        <label><span data-i18n="form.phone">Телефон</span>
+          <span class="phone-field">
+            <span class="phone-field__prefix">+998</span>
+            <input type="tel" name="phone" required inputmode="tel" autocomplete="tel-national" placeholder="90 123 45 67" maxlength="12" />
+          </span>
+          <span class="phone-error" data-i18n="form.phoneError">Введите номер полностью — 9 цифр после +998</span>
+        </label>
         <label><span data-i18n="form.city">Город</span>
           <select name="city">
             <option value="tsh">Ташкент</option>
@@ -662,6 +1149,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
             <option value="uz" data-i18n="form.opt2">Узбекский</option>
           </select>
         </label>
+        <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" />
         <label class="cta__check">
           <input type="checkbox" required />
           <span data-i18n="form.consent">Согласен на обработку персональных данных</span>
@@ -688,9 +1176,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       </div>
       <div class="footer__col">
         <h4 data-i18n="ftr.cities">Адреса</h4>
-        <p>Ташкент · Мирзо-Улугбекский р-н, ул. Хирмонтепа, 34Б (м. Буюк Ипак Йули)</p>
-        <p>Самарканд · ул. Давлатабад</p>
-        <p>Фергана · ул. Комус, 40</p>
+        <p data-addr="tsh" data-i18n="ftr.addr.tsh">Ташкент · Мирзо-Улугбекский р-н, ул. Хирмонтепа, 34Б (м. Буюк Ипак Йули)</p>
+        <p data-addr="smr" data-i18n="ftr.addr.smr">Самарканд · ул. Давлатабад</p>
+        <p data-addr="frg" data-i18n="ftr.addr.frg">Фергана · ул. Комус, 40</p>
       </div>
       <div class="footer__col">
         <h4 data-i18n="ftr.social">Соцсети</h4>
@@ -708,7 +1196,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </footer>
 
 <!-- ===== STICKY MOBILE CTA ===== -->
-<button type="button" class="sticky-cta" data-modal="signup">
+<button type="button" class="sticky-cta" id="stickyCta">
   <span data-i18n="sticky.text">Записаться бесплатно</span>
   <span class="arrow"></span>
 </button>
@@ -722,6 +1210,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <div class="modal__eyebrow" data-i18n="modal.eyebrow">Бесплатный открытый урок</div>
       <h2 class="modal__title" id="modalTitle" data-i18n="modal.title">Запишитесь на ближайший урок</h2>
       <p class="modal__lead" data-i18n="modal.lead">Менеджер свяжется с вами в течение 15 минут — подтвердит место, дату и время.</p>
+      <p class="lesson-next lesson-next--modal" data-lesson-line></p>
     </div>
 
     <ul class="modal__bullets">
@@ -732,7 +1221,13 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 
     <form class="modal__form" id="modalForm">
       <label><span data-i18n="form.name">Имя</span><input type="text" name="name" required placeholder="Aziz" /></label>
-      <label><span data-i18n="form.phone">Телефон</span><input type="tel" name="phone" required placeholder="+998 (90) 000-00-00" /></label>
+      <label><span data-i18n="form.phone">Телефон</span>
+        <span class="phone-field">
+          <span class="phone-field__prefix">+998</span>
+          <input type="tel" name="phone" required inputmode="tel" autocomplete="tel-national" placeholder="90 123 45 67" maxlength="12" />
+        </span>
+        <span class="phone-error" data-i18n="form.phoneError">Введите номер полностью — 9 цифр после +998</span>
+      </label>
       <label><span data-i18n="form.city">Город</span>
         <select name="city">
           <option value="tsh">Ташкент</option>
@@ -740,6 +1235,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
           <option value="frg">Фергана</option>
         </select>
       </label>
+      <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" />
       <label class="modal__check">
         <input type="checkbox" required />
         <span data-i18n="form.consent">Согласен на обработку персональных данных</span>
@@ -753,6 +1249,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
   </div>
 </div>
 
+<!-- Second synchronous i18n pass: localize everything below the hero that has
+     been parsed by now, without waiting for script.js to download. -->
+<script>applyLang(document.documentElement.lang);</script>
 <script src="script.js"></script>
 </body>
 </html>
