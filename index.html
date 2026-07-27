@@ -28,8 +28,24 @@
      Order: URL param → localStorage → navigator.language → default uz. -->
 <script>
 // Next open lesson — single source of truth for hero line, forms and countdown.
-// Countdown target is date+time in Tashkent (UTC+5).
-window.NEXT_LESSON = { date: '2026-07-17', time: '19:00', seatsLeft: 7, seatsTotal: 25 };
+// Lessons repeat weekly: the anchor date fixes the weekday and time (Tashkent,
+// UTC+5), the upcoming date is computed from it so the page never goes stale.
+window.LESSON_SCHEDULE = { anchor: '2026-07-17', time: '19:00', seatsLeft: 7, seatsTotal: 25 };
+window.nextLessonTarget = function(){
+  var S = window.LESSON_SCHEDULE, WEEK = 7 * 86400000;
+  var t = new Date(S.anchor + 'T' + S.time + ':00+05:00');
+  var now = new Date();
+  if(now > t) t = new Date(t.getTime() + Math.ceil((now - t) / WEEK) * WEEK);
+  return t;
+};
+window.lessonDateStr = function(target){
+  // Calendar date of the lesson in Tashkent: shift to UTC+5, read as UTC.
+  return new Date(target.getTime() + 5 * 3600000).toISOString().slice(0, 10);
+};
+window.NEXT_LESSON = (function(){
+  var S = window.LESSON_SCHEDULE;
+  return { date: lessonDateStr(nextLessonTarget()), time: S.time, seatsLeft: S.seatsLeft, seatsTotal: S.seatsTotal };
+})();
 
 const dict = {
   ru: {

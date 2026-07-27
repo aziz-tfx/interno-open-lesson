@@ -385,10 +385,31 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
   var addr = (ADDR[lang] && ADDR[lang][city]) || ADDR.ru.tsh;
   var addrEl = document.getElementById('metaAddr');
   if(addrEl) addrEl.innerHTML = '📍 ' + addr;
+
+  // Ближайший урок: еженедельный цикл, якорная дата задаёт день недели и
+  // время (Ташкент, UTC+5) — как в NEXT_LESSON на главной.
+  var LESSON = { anchor: '2026-07-17', time: '19:00' };
+  var WEEK = 7 * 86400000;
+  var target = new Date(LESSON.anchor + 'T' + LESSON.time + ':00+05:00');
+  var now = new Date();
+  if(now > target) target = new Date(target.getTime() + Math.ceil((now - target) / WEEK) * WEEK);
+  var tash = new Date(target.getTime() + 5 * 3600000); // время в Ташкенте, читаем как UTC
+  var MONTHS = {
+    ru: ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
+    uz: ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr']
+  };
+  var lessonRu = tash.getUTCDate() + ' ' + MONTHS.ru[tash.getUTCMonth()] + ', ' + LESSON.time;
+  var lessonUz = tash.getUTCDate() + '-' + MONTHS.uz[tash.getUTCMonth()] + ', ' + LESSON.time;
+  var metaEl = document.querySelector('[data-i18n="meta1"]');
+  if(metaEl) metaEl.innerHTML = '📅 <b>Ближайший урок:</b> ' + lessonRu;
+
+  function calStamp(d){
+    return new Date(d.getTime() + 5 * 3600000).toISOString().replace(/[-:]/g, '').slice(0, 15);
+  }
   var calEl = document.getElementById('calLink');
   if(calEl){
     var calLoc = (ADDR.ru[city] || ADDR.ru.tsh).replace(' · ', ', ');
-    calEl.href = 'https://calendar.google.com/calendar/u/0/r/eventedit?text=' + encodeURIComponent('Открытый урок INTERNO School') + '&dates=20260717T190000/20260717T200000&location=' + encodeURIComponent(calLoc) + '&details=' + encodeURIComponent('Бесплатный открытый урок по дизайну интерьера');
+    calEl.href = 'https://calendar.google.com/calendar/u/0/r/eventedit?text=' + encodeURIComponent('Открытый урок INTERNO School') + '&dates=' + calStamp(target) + '/' + calStamp(new Date(target.getTime() + 3600000)) + '&ctz=Asia/Tashkent&location=' + encodeURIComponent(calLoc) + '&details=' + encodeURIComponent('Бесплатный открытый урок по дизайну интерьера');
   }
 
   if(lang !== 'uz') return;
@@ -401,7 +422,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
     badge: 'Ariza qabul qilindi',
     title: 'Tayyor! Siz <em>ochiq darsga</em><br/>yozildingiz',
     lead: 'Menejer <b>15 daqiqa</b> ichida qoʻngʻiroq qilib joyni tasdiqlaydi va sizning shahringizdagi dars sanasi va vaqtini kelishadi.',
-    meta1: '📅 <b>Eng yaqin dars:</b> 17-iyul, 19:00',
+    meta1: '📅 <b>Eng yaqin dars:</b> ' + lessonUz,
     meta2: '📍 ' + addr,
     s1t: 'Telefonni oling — 15 daqiqa ichida qoʻngʻiroq qilamiz <span class="step__pill">hozir</span>',
     s1p: 'hozir',
