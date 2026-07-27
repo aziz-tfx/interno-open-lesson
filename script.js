@@ -104,11 +104,26 @@ document.getElementById('quizRestart')?.addEventListener('click',()=>{
   goQuizStep(1);
 });
 
-// ===== COUNTDOWN — counts down to NEXT_LESSON (Tashkent time, UTC+5) =====
-const target = new Date(NEXT_LESSON.date + 'T' + NEXT_LESSON.time + ':00+05:00');
+// ===== COUNTDOWN — weekly cycle, counts down to the next lesson (Tashkent, UTC+5) =====
+let target = nextLessonTarget();
 
 function tick(){
   const now = new Date();
+  let render = false;
+  if(target - now <= 0){
+    // Lesson time passed while the page was open — roll to next week's lesson.
+    target = new Date(target.getTime() + 7*86400000);
+    NEXT_LESSON.date = lessonDateStr(target);
+    render = true;
+  }
+  // Места «заполняются» в течение недели; перерисовываем страницу только
+  // когда число реально изменилось (несколько раз в сутки).
+  const seats = lessonSeatsLeft(target);
+  if(seats !== NEXT_LESSON.seatsLeft){
+    NEXT_LESSON.seatsLeft = seats;
+    render = true;
+  }
+  if(render) applyLang(document.documentElement.lang);
   let diff = Math.max(0,target-now);
   const d = Math.floor(diff/86400000); diff%=86400000;
   const h = Math.floor(diff/3600000); diff%=3600000;
