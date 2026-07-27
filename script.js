@@ -109,13 +109,21 @@ let target = nextLessonTarget();
 
 function tick(){
   const now = new Date();
+  let render = false;
   if(target - now <= 0){
-    // Lesson time passed while the page was open — roll to next week's lesson
-    // and refresh every date-dependent line on the page.
+    // Lesson time passed while the page was open — roll to next week's lesson.
     target = new Date(target.getTime() + 7*86400000);
     NEXT_LESSON.date = lessonDateStr(target);
-    applyLang(document.documentElement.lang);
+    render = true;
   }
+  // Места «заполняются» в течение недели; перерисовываем страницу только
+  // когда число реально изменилось (несколько раз в сутки).
+  const seats = lessonSeatsLeft(target);
+  if(seats !== NEXT_LESSON.seatsLeft){
+    NEXT_LESSON.seatsLeft = seats;
+    render = true;
+  }
+  if(render) applyLang(document.documentElement.lang);
   let diff = Math.max(0,target-now);
   const d = Math.floor(diff/86400000); diff%=86400000;
   const h = Math.floor(diff/3600000); diff%=3600000;

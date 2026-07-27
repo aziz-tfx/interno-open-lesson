@@ -30,7 +30,9 @@
 // Next open lesson — single source of truth for hero line, forms and countdown.
 // Lessons repeat weekly: the anchor date fixes the weekday and time (Tashkent,
 // UTC+5), the upcoming date is computed from it so the page never goes stale.
-window.LESSON_SCHEDULE = { anchor: '2026-07-17', time: '19:00', seatsLeft: 7, seatsTotal: 25 };
+// seatsMax/seatsMin: свободные места в начале и в конце недельного цикла —
+// seatsLeft считается от времени до урока, одинаково у всех посетителей.
+window.LESSON_SCHEDULE = { anchor: '2026-07-17', time: '19:00', seatsTotal: 25, seatsMax: 12, seatsMin: 2 };
 window.nextLessonTarget = function(){
   var S = window.LESSON_SCHEDULE, WEEK = 7 * 86400000;
   var t = new Date(S.anchor + 'T' + S.time + ':00+05:00');
@@ -42,9 +44,18 @@ window.lessonDateStr = function(target){
   // Calendar date of the lesson in Tashkent: shift to UTC+5, read as UTC.
   return new Date(target.getTime() + 5 * 3600000).toISOString().slice(0, 10);
 };
+window.lessonSeatsLeft = function(target){
+  var S = window.LESSON_SCHEDULE, WEEK = 7 * 86400000;
+  // Доля недели, прошедшая с прошлого урока: 0 — запись только открылась,
+  // 1 — урок вот-вот начнётся.
+  var f = Math.min(1, Math.max(0, 1 - (target - new Date()) / WEEK));
+  // Smoothstep: заполнение ускоряется к середине недели и к концу.
+  var eased = f * f * (3 - 2 * f);
+  return S.seatsMin + Math.round((S.seatsMax - S.seatsMin) * (1 - eased));
+};
 window.NEXT_LESSON = (function(){
-  var S = window.LESSON_SCHEDULE;
-  return { date: lessonDateStr(nextLessonTarget()), time: S.time, seatsLeft: S.seatsLeft, seatsTotal: S.seatsTotal };
+  var S = window.LESSON_SCHEDULE, t = nextLessonTarget();
+  return { date: lessonDateStr(t), time: S.time, seatsLeft: lessonSeatsLeft(t), seatsTotal: S.seatsTotal };
 })();
 
 const dict = {
