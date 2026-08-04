@@ -208,18 +208,46 @@ html[lang="uz"] .logo__img--uz{display:block}
   display:flex;align-items:center;justify-content:center;
   padding:32px;
 }
-.hero-scene{
-  width:100%;height:auto;max-height:100%;
-  object-fit:contain;object-position:center;
-  filter:drop-shadow(0 30px 60px rgba(0,0,0,.5));
-  animation:sceneFloat 8s ease-in-out infinite;
-  transform-origin:center;
-  --px:0px;--py:0px;
-  transform:translate(var(--px),var(--py));
+/* Многослойная парящая сцена: вход каскадом (layerIn), собственное парение
+   каждого слоя (layerFloat на <img>, чтобы не конфликтовать с параллаксом
+   на обёртке) и мышиный параллакс через --px/--py. */
+.hero-stage{
+  position:relative;height:100%;max-height:100%;aspect-ratio:1;max-width:100%;
+  display:flex;align-items:center;justify-content:center;
 }
-@keyframes sceneFloat{
-  0%,100%{transform:translate(var(--px,0),calc(var(--py,0px) - 0px))}
-  50%{transform:translate(var(--px,0),calc(var(--py,0px) - 8px))}
+.hero-layer{
+  position:absolute;
+  transform:translate(var(--px,0px),var(--py,0px));
+  animation:layerIn .9s cubic-bezier(.22,.9,.32,1.25) var(--d,0s) backwards;
+}
+.hero-layer img{
+  width:100%;height:auto;display:block;
+  filter:drop-shadow(0 24px 44px rgba(0,0,0,.45));
+  animation:layerFloat var(--fd,7s) ease-in-out calc(var(--d,0s) + .9s) infinite alternate;
+}
+.hero-layer--main{position:relative;width:88%}
+.hero-layer--main img{filter:drop-shadow(0 34px 64px rgba(0,0,0,.55))}
+.hero-layer--pillow{width:20%;left:1%;top:13%}
+.hero-layer--plant{width:19%;right:0;bottom:9%}
+.hero-layer--frame{width:21%;right:2%;top:5%}
+.hero-layer--plan{width:24%;left:0;bottom:13%}
+@keyframes layerIn{
+  from{opacity:0;transform:translate(var(--px,0px),calc(var(--py,0px) + 40px)) scale(.66)}
+  to{opacity:1;transform:translate(var(--px,0px),var(--py,0px)) scale(1)}
+}
+@keyframes layerFloat{
+  from{transform:translateY(0) rotate(0deg)}
+  to{transform:translateY(-11px) rotate(1.4deg)}
+}
+.hero-spark{
+  position:absolute;left:var(--sx);top:var(--sy);width:9px;height:9px;border-radius:50%;
+  background:radial-gradient(circle,#FFD98A 0%,#F5A623 55%,transparent 75%);
+  opacity:0;
+  animation:sparkTwinkle 2.8s ease-in-out var(--sd,0s) infinite;
+}
+@keyframes sparkTwinkle{
+  0%,100%{opacity:0;transform:scale(.35)}
+  50%{opacity:1;transform:scale(1.35)}
 }
 .hero-visual__glow{
   position:absolute;inset:10%;
@@ -232,10 +260,11 @@ html[lang="uz"] .logo__img--uz{display:block}
   50%{opacity:1;transform:scale(1.1)}
 }
 
-.hero-visual.is-parallax .hero-scene{transition:transform .4s cubic-bezier(.2,.8,.3,1)}
+.hero-visual.is-parallax .hero-layer{transition:transform .5s cubic-bezier(.2,.8,.3,1)}
 
 @media (prefers-reduced-motion:reduce){
-  .hero-scene,.hero-visual__glow{animation:none !important}
+  .hero-layer,.hero-layer img,.hero-spark,.hero-visual__glow{animation:none !important}
+  .hero-spark{opacity:.6}
 }
 
 section{position:relative}
@@ -809,7 +838,7 @@ body.modal-open .sticky-cta{opacity:0;transform:translateY(calc(100% + 16px));po
   .city-select{padding:6px 24px 6px 10px;font-size:11px;background-position:right 8px center}
 
   .hero{padding:8px}
-  .hero__content{padding:22px 18px 250px;border-radius:20px;overflow:hidden}
+  .hero__content{padding:22px 18px 300px;border-radius:20px;overflow:hidden}
   .hero-visual{width:100%;right:0;bottom:0;height:280px;left:0;justify-content:center;padding:0 18px}
   .hero__badge{margin-bottom:18px;font-size:10px;padding:6px 12px}
   .hero__title{font-size:clamp(28px,7.5vw,44px);margin-bottom:14px;letter-spacing:-.02em;line-height:1.05}
