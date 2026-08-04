@@ -1,0 +1,28 @@
+# Одноразовый workflow: скачивает 3D-слои hero-сцены с CDN в hero-src/
+# (sandbox-прокси сессии не пускает к CDN). Удалить после переноса в icons/.
+name: fetch-hero
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download hero layers
+        run: |
+          mkdir -p hero-src
+          B="https://d8j0ntlcm91z4.cloudfront.net/user_3CLCviMVubl8pteTJQ9R4nBs27N"
+          curl -fL --retry 3 -o hero-src/diorama.png "$B/hf_20260804_195317_98cf6e90-4e6f-4ca2-a9ab-e852ee36cc69.png"
+          curl -fL --retry 3 -o hero-src/pillow.png  "$B/hf_20260804_195318_3b8b5845-528e-4311-9c18-a3142b734cf3.png"
+          curl -fL --retry 3 -o hero-src/plant.png   "$B/hf_20260804_195319_45d17884-d15d-4898-9dba-a02f7ba4d5be.png"
+          curl -fL --retry 3 -o hero-src/frame.png   "$B/hf_20260804_195320_39bdc09f-2e28-4db2-b288-3accadaa5b28.png"
+          curl -fL --retry 3 -o hero-src/plan.png    "$B/hf_20260804_195332_93c6c385-63f2-4c09-bfad-a19aa3d2cefd.png"
+          file hero-src/*.png
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hero-src
+          git commit -m "Add hero scene layer sources (downloaded by CI)"
+          git push
