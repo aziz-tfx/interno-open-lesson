@@ -1280,5 +1280,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
      been parsed by now, without waiting for script.js to download. -->
 <script>applyLang(document.documentElement.lang);</script>
 <script src="script.js"></script>
+<!-- Акция «3 курса по цене одного» — монтируется после логики lang/city;
+     после дедлайна (константа в PromoBanner.js) не рендерится вовсе. -->
+<script src="PromoBanner.js"></script>
+<script src="PromoOffer.js"></script>
 </body>
 </html>
