@@ -336,6 +336,20 @@ img.gift__icon{font-size:0}
 /* WHY icons */
 .why__ico{width:72px;height:72px;object-fit:contain;display:block;margin-bottom:8px}
 
+/* Section 3D icons — inline beside headings, visible on mobile too */
+.sec-ico{
+  width:88px;height:88px;object-fit:contain;
+  display:inline-block;vertical-align:middle;margin-left:6px;
+  animation:secFloat 3.5s ease-in-out infinite alternate;
+}
+.sec-ico--sm{width:64px;height:64px}
+@keyframes secFloat{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.sec-ico{animation:none}}
+@media (max-width:720px){
+  .sec-ico{width:64px;height:64px}
+  .sec-ico--sm{width:52px;height:52px}
+}
+
 /* PROGRAM head */
 .program__head{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:32px}
 .program__head .display{margin-bottom:0}
