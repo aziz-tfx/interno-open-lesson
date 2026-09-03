@@ -1129,3 +1129,10 @@ label.has-error .phone-error{display:block}
   [data-variant="b"] .hero__subtitle{font-size:13px;margin-bottom:14px}
   [data-variant="b"] .hero__form{padding:16px;gap:9px}
 }
+
+/* ===== Кнопка записи в конце секций, у которых своего CTA не было =====
+   (у подарков, спикера, зарплат и работ он уже есть — их не трогаем). */
+.section-cta{margin-top:36px}
+@media (max-width:720px){
+  .section-cta{width:100%;margin-top:28px}
+}
