@@ -7,7 +7,7 @@
 // Optional:
 //   TG_TOPIC_ID   — Thread/topic ID for forum-style groups.
 //
-// The client posts JSON: { name, phone, city, lang, source, url, referrer, utm }
+// The client posts JSON: { name, phone, city, lang, source, variant, url, referrer, utm }
 // We never echo the bot token back. CORS is permissive (same Vercel project).
 
 export default async function handler(req, res) {
@@ -45,6 +45,7 @@ export default async function handler(req, res) {
     `🗣 <b>Язык:</b> ${esc(body.lang) || '—'}`,
     `📍 <b>Источник:</b> ${esc(body.source) || 'form'}`,
   ];
+  if (body.variant) lines.push(`🧪 <b>Вариант героя:</b> ${esc(body.variant)}`);
   if (body.utm && Object.keys(body.utm).length) {
     const utmStr = Object.entries(body.utm)
       .map(([k,v]) => `${k}=${esc(v)}`).join(' · ');

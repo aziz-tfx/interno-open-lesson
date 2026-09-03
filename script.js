@@ -42,13 +42,14 @@ function getUtm(){
   });
   return utm;
 }
-// Hidden utm_* inputs inside each form — sent along with the lead.
+// Hidden utm_* + ab_variant inputs inside each form — sent along with the lead.
 (function(){
   const utm = getUtm();
   document.querySelectorAll('form').forEach(f=>{
     UTM_KEYS.forEach(k=>{
       if(f.elements[k] && utm[k]) f.elements[k].value = utm[k];
     });
+    if(f.elements.ab_variant) f.elements.ab_variant.value = window.AB_HERO || '';
   });
 })();
 
@@ -204,6 +205,7 @@ function buildAmoNote(form, meta){
     `🏙 Город: ${meta.cityLabel}   ·   🗣 Язык: ${meta.langLabel}`,
     '—',
     `Источник: ${form.id || 'form'}`,
+    `Вариант героя (A/B): ${window.AB_HERO || '—'}`,
     `URL: ${location.href}`,
   ];
   if(document.referrer) parts.push(`Referrer: ${document.referrer}`);
@@ -256,6 +258,7 @@ async function sendToTelegram(form){
     city: meta.cityLabel,
     lang: meta.langLabel,
     source: form.id || 'form',
+    variant: window.AB_HERO || '',
     url: location.href,
     referrer: document.referrer || '',
     utm: getUtm(),
@@ -296,12 +299,14 @@ function fireLeadAnalytics(form, meta, eventId){
       currency: 'USD',
       value: 1,
       form_id: form.id || 'form',
+      variant: window.AB_HERO || '',
       city: meta.cityCode,
       lang: meta.langCode,
     }, utm));
   }
   ymReachGoal('lead', Object.assign({
     form: form.id || 'form',
+    variant: window.AB_HERO || '',
     city: meta.cityCode,
     lang: meta.langCode,
   }, utm));
@@ -334,6 +339,24 @@ function handleForm(form){
 handleForm(document.getElementById('form'));
 handleForm(document.getElementById('quizForm'));
 handleForm(document.getElementById('modalForm'));
+handleForm(document.getElementById('heroForm'));
+
+// Вариант B открывает форму сразу в герое, минуя модалку, — InitiateCheckout
+// шлём на первом касании полей, иначе воронка A и B несопоставима.
+(function(){
+  const hero = document.getElementById('heroForm');
+  if(!hero) return;
+  let fired = false;
+  hero.addEventListener('focusin', ()=>{
+    if(fired) return;
+    fired = true;
+    if(window.fbq) window.fbq('track','InitiateCheckout', {
+      content_name: 'open_lesson_hero',
+      currency: 'USD',
+      value: 1,
+    });
+  });
+})();
 
 // ===== MODAL =====
 const modal = document.getElementById('signupModal');

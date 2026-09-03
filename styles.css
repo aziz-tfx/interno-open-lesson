@@ -1005,3 +1005,124 @@ label.has-error .phone-error{display:block}
 /* ===== FOOTER: address of the selected city is highlighted ===== */
 .footer__col p[data-addr]{opacity:.5;transition:opacity .2s ease}
 .footer__col p[data-addr].is-active{opacity:1;font-weight:600}
+
+/* ===== HERO A/B: вариант B — оффер и форма в первом экране =====
+   Разметка обоих вариантов лежит в DOM; какой показывать, решает
+   data-variant на <html> (ставится синхронно в <head>, до первой
+   отрисовки — мигания нет). Вариант A ниже не трогается. */
+.hero__proof,.hero__proof-note,.hero__form{display:none}
+[data-variant="b"] .hero__lesson,
+[data-variant="b"] .trust-chips,
+[data-variant="b"] .hero__actions,
+[data-variant="b"] .hero__social,
+[data-variant="b"] .hero__microcopy{display:none}
+
+/* Порядок первого экрана в B: оффер → форма → доказательства.
+   Чипы уходят ПОД кнопку, чтобы форма попадала в первый экран и работала
+   как подтверждение уже после призыва. (.hero__main — flex-колонка.) */
+[data-variant="b"] .hero__badge{order:1}
+[data-variant="b"] .hero__title{order:2}
+[data-variant="b"] .hero__subtitle{order:3}
+[data-variant="b"] .hero__form{order:4}
+[data-variant="b"] .hero__proof{order:5}
+[data-variant="b"] .hero__proof-note{order:6}
+
+/* Заголовок B длиннее и информативнее — набираем его мельче, иначе форма
+   уезжает за фолд. */
+[data-variant="b"] .hero__badge{margin-bottom:20px}
+[data-variant="b"] .hero__title{
+  font-size:clamp(28px,2.9vw,46px);line-height:1.06;margin-bottom:16px;
+}
+[data-variant="b"] .hero__subtitle{margin-bottom:20px;max-width:540px}
+
+[data-variant="b"] .hero__proof{
+  display:flex;flex-wrap:wrap;gap:8px;
+  list-style:none;margin:18px 0 8px;padding:0;
+}
+[data-variant="b"] .hero__proof li{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 14px;border-radius:999px;
+  background:var(--panel2);border:1px solid var(--line);
+  font-size:12px;font-weight:600;color:#e6e6e6;letter-spacing:.01em;
+}
+[data-variant="b"] .hero__proof li::before{content:"●";color:var(--orange);font-size:8px}
+[data-variant="b"] .hero__proof-note{
+  display:block;margin:0;max-width:480px;
+  font-size:11px;line-height:1.45;color:#7d7d84;
+}
+[data-variant="b"] .hero__proof-note:empty{display:none}
+
+[data-variant="b"] .hero__form{
+  display:flex;flex-direction:column;gap:12px;
+  width:100%;max-width:460px;
+  background:var(--panel2);border:1px solid var(--line);
+  border-radius:20px;padding:22px;
+}
+[data-variant="b"] .lesson-next--hero{
+  margin:0;padding:9px 13px;border-radius:12px;
+  background:rgba(247,107,43,.12);font-size:12.5px;
+}
+[data-variant="b"] .hero__gifts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+[data-variant="b"] .hero__gifts li{font-size:12.5px;line-height:1.35;color:#cfcfcf;font-weight:500}
+[data-variant="b"] .hero__form-title{
+  margin:2px 0 -2px;font-size:11px;font-weight:600;
+  color:#8a8a92;text-transform:uppercase;letter-spacing:.08em;
+}
+[data-variant="b"] .hero__fields{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:10px}
+[data-variant="b"] .hero__form label{
+  display:flex;flex-direction:column;gap:6px;
+  font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.08em;font-weight:600;
+}
+/* tel живёт внутри .phone-field со своим фоном — его не переопределяем */
+[data-variant="b"] .hero__form input[type="text"]{
+  width:100%;background:var(--paper);border:none;
+  padding:13px 16px;border-radius:14px;
+  color:var(--ink);font-size:15px;font-family:inherit;outline:none;
+}
+[data-variant="b"] .hero__form input[type="text"]:focus{box-shadow:0 0 0 2px var(--orange)}
+/* специфичнее правила [data-variant] .hero__form label выше */
+[data-variant="b"] .hero__form label.hero__check{
+  flex-direction:row;align-items:flex-start;gap:8px;
+  font-size:11px;line-height:1.35;color:#888;font-weight:500;
+  text-transform:none;letter-spacing:0;
+}
+[data-variant="b"] .hero__check input{width:auto;margin-top:1px;padding:0;background:transparent}
+[data-variant="b"] .hero__form .btn--primary{background:var(--orange);color:var(--ink);font-weight:700}
+[data-variant="b"] .hero__form .btn--primary:hover{background:var(--orange-light)}
+[data-variant="b"] .hero__policy{margin:0;font-size:11px;line-height:1.4;color:#666;text-align:center}
+[data-variant="b"] .hero__proglink{
+  align-self:center;font-size:12px;color:#9a9aa2;
+  text-decoration:underline;text-underline-offset:3px;
+}
+[data-variant="b"] .hero__proglink:hover{color:var(--paper)}
+
+@media (max-width:720px){
+  /* Первый экран на мобиле должен доносить оффер и показывать первое поле:
+     подарки и пояснение к цифрам уводим из-под заголовка, поля — в колонку. */
+  [data-variant="b"] .hero__form{max-width:none;padding:18px;gap:10px}
+  [data-variant="b"] .hero__fields{grid-template-columns:1fr}
+  /* Подарки уводим под кнопку: на узком экране они отодвигали поля за фолд,
+     а как подкрепление после CTA работают не хуже. */
+  [data-variant="b"] .lesson-next--hero{order:1}
+  [data-variant="b"] .hero__form-title{order:2}
+  [data-variant="b"] .hero__fields{order:3}
+  [data-variant="b"] .hero__check{order:4}
+  [data-variant="b"] .hero__form .btn{order:5}
+  [data-variant="b"] .hero__gifts{order:6;padding-top:4px;border-top:1px solid var(--line)}
+  [data-variant="b"] .hero__gifts li{font-size:11.5px}
+  [data-variant="b"] .hero__policy{order:7}
+  [data-variant="b"] .hero__proglink{order:8}
+  [data-variant="b"] .hero__title{margin-bottom:12px}
+  [data-variant="b"] .hero__subtitle{margin-bottom:16px}
+  [data-variant="b"] .hero__proof{gap:6px;margin:14px 0 8px}
+  [data-variant="b"] .hero__proof li{padding:6px 11px;font-size:11px}
+  [data-variant="b"] .hero__proof-note{margin-bottom:16px;font-size:10.5px}
+}
+
+@media (max-width:380px){
+  /* На узких экранах заголовок B разбивается на 5–6 строк и выталкивает
+     форму — уменьшаем набор. */
+  [data-variant="b"] .hero__title{font-size:23px}
+  [data-variant="b"] .hero__subtitle{font-size:13px;margin-bottom:14px}
+  [data-variant="b"] .hero__form{padding:16px;gap:9px}
+}
