@@ -836,7 +836,10 @@ body.modal-open .sticky-cta{opacity:0;transform:translateY(calc(100% + 16px));po
   .works__grid{grid-template-columns:repeat(2,1fr)}
   .why__grid{grid-template-columns:repeat(2,1fr)}
   .mentor__inner{grid-template-columns:1fr;gap:24px;padding:32px}
-  .mentor__photo{height:380px}
+  /* В одну колонку карточка широкая и низкая: при 18% сверху срезалась
+     макушка — прижимаем кадр к верху, тогда работает собственный
+     запас над головой в самом снимке. */
+  .mentor__photo{height:380px;background-position:50% 0}
   .cta__inner{grid-template-columns:1fr;padding:32px}
   .footer__top{grid-template-columns:1fr 1fr;gap:24px}
 }
