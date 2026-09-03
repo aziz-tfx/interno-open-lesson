@@ -1,6 +1,8 @@
 /* ===== RESET ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;overflow-x:hidden}
+/* scroll-padding — чтобы якорные переходы (#cta, #program, #faq…) не
+   уводили заголовок секции под липкую шапку высотой ~80px. */
+html{scroll-behavior:smooth;overflow-x:hidden;scroll-padding-top:92px}
 body{
   font-family:'Inter',sans-serif;
   background:var(--orange);
@@ -1128,4 +1130,11 @@ label.has-error .phone-error{display:block}
   [data-variant="b"] .hero__title{font-size:23px}
   [data-variant="b"] .hero__subtitle{font-size:13px;margin-bottom:14px}
   [data-variant="b"] .hero__form{padding:16px;gap:9px}
+}
+
+/* ===== Кнопка записи в конце секций, у которых своего CTA не было =====
+   (у подарков, спикера, зарплат и работ он уже есть — их не трогаем). */
+.section-cta{margin-top:36px}
+@media (max-width:720px){
+  .section-cta{width:100%;margin-top:28px}
 }
