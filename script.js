@@ -389,28 +389,6 @@ document.addEventListener('keydown', e=>{
   if(e.key==='Escape' && modal?.classList.contains('is-open')) closeModal();
 });
 
-// ===== HERO PARALLAX (depth-aware mouse-follow across scene layers) =====
-// Каждый .hero-layer смещается пропорционально своему data-depth: передние
-// слои (спутники) двигаются сильнее главной диорамы — даёт объём сцене.
-const heroVisual = document.getElementById('heroVisual');
-if(heroVisual && window.matchMedia('(hover:hover) and (min-width:980px)').matches){
-  const layers = heroVisual.querySelectorAll('.hero-layer');
-  heroVisual.classList.add('is-parallax');
-  let rect = heroVisual.getBoundingClientRect();
-  window.addEventListener('resize', ()=>{ rect = heroVisual.getBoundingClientRect(); });
-  document.addEventListener('mousemove', e=>{
-    const cx = rect.left + rect.width/2;
-    const cy = rect.top + rect.height/2;
-    const dx = (e.clientX - cx) / window.innerWidth;
-    const dy = (e.clientY - cy) / window.innerHeight;
-    layers.forEach(l=>{
-      const depth = parseFloat(l.dataset.depth || '16');
-      l.style.setProperty('--px', (dx * depth) + 'px');
-      l.style.setProperty('--py', (dy * depth * .72) + 'px');
-    });
-  });
-}
-
 // ===== STICKY MOBILE CTA =====
 // Appears after scrolling one viewport height; hidden while the modal is open
 // (CSS: body.modal-open) or while the quiz / bottom-form sections are in

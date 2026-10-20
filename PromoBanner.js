@@ -8,7 +8,7 @@ window.INTERNO_PROMO = {
   nav: '.nav',          // шапка, которую баннер сдвигает вниз
   target: '#cta',       // куда плавно скроллим по клику
   offerBefore: '#cta',  // перед каким блоком PromoOffer.js вставит карточку
-  displayFont: "'Unbounded',sans-serif"
+  displayFont: "'Oswald',sans-serif"
 };
 
 (function(){
@@ -30,13 +30,13 @@ window.INTERNO_PROMO = {
 
   var style = document.createElement('style');
   style.textContent = [
-    '.promo-banner{position:sticky;top:0;z-index:1500;background:#EA5101;color:#F2EFE9}',
+    '.promo-banner{position:sticky;top:0;z-index:1500;background:#5B2BE0;color:#F3EEE6}',
     '.promo-banner__inner{position:relative;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:14px;padding:9px 48px;white-space:nowrap;overflow:hidden;cursor:pointer}',
     '.promo-banner__text{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis}',
     '.promo-banner__text--short{display:none}',
     '.promo-banner__timer{display:inline-flex;align-items:baseline;gap:3px;flex:none;font-weight:700;font-size:13px;font-variant-numeric:tabular-nums;background:rgba(16,16,18,.28);border-radius:999px;padding:3px 11px}',
     '.promo-banner__timer i{font-style:normal;font-weight:500;font-size:11px;opacity:.8}',
-    '.promo-banner__close{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:32px;height:32px;padding:0;background:none;border:0;cursor:pointer;font-family:inherit;font-size:20px;line-height:1;color:#F2EFE9;opacity:.85;border-radius:50%}',
+    '.promo-banner__close{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:32px;height:32px;padding:0;background:none;border:0;cursor:pointer;font-family:inherit;font-size:20px;line-height:1;color:#F3EEE6;opacity:.85;border-radius:50%}',
     '.promo-banner__close:hover{opacity:1;background:rgba(16,16,18,.28)}',
     '@media(max-width:640px){',
     ' .promo-banner__text--full{display:none}',
