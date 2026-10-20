@@ -479,11 +479,13 @@ img.gift__icon{font-size:0}
   border-radius:var(--r);overflow:hidden;transition:border-color .3s;
 }
 .case-card:hover{border-color:rgba(91,43,224,.6)}
-.case-card__photo{background:#2a2830 center/cover;filter:saturate(.85)}
-.case-card__photo--1{background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80')}
-.case-card__photo--2{background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80')}
-.case-card__photo--3{background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80')}
-.case-card__photo--4{background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80')}
+/* Сюжетные кадры без лиц (Higgsfield, gpt_image_2_5) — иллюстрируют историю,
+   а не изображают выпускника. Появятся настоящие фото — заменить cases/case-N.jpg. */
+.case-card__photo{background:#2a2830 center/cover}
+.case-card__photo--1{background-image:url('cases/case-1.jpg')}
+.case-card__photo--2{background-image:url('cases/case-2.jpg')}
+.case-card__photo--3{background-image:url('cases/case-3.jpg')}
+.case-card__photo--4{background-image:url('cases/case-4.jpg')}
 .case-card__body{padding:24px;display:flex;flex-direction:column;gap:7px}
 .case-card__name{font-family:var(--font-display);font-weight:600;text-transform:uppercase;font-size:22px;line-height:1.05;margin-bottom:6px}
 .case-card__before,.case-card__after{font-size:13.5px;color:var(--muted-d);line-height:1.45}
@@ -822,7 +824,7 @@ body.modal-open .sticky-cta{opacity:0;transform:translateY(calc(100% + 16px));po
   .salary__row b{font-size:20px}
 
   .case-card{grid-template-columns:1fr}
-  .case-card__photo{height:200px}
+  .case-card__photo{height:240px}
   .case-card__body{padding:20px}
   .reviews-tg{flex-direction:column;align-items:flex-start;padding:22px 20px;gap:14px}
 
