@@ -11,7 +11,7 @@
 <meta property="og:description" content="За 1 час — первый проект в Revit + 3 подарка в подарок." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://interno.school/" />
-<meta property="og:image" content="https://interno.school/icons/hero-scene.webp" />
+<meta property="og:image" content="https://interno.school/hero/interior-d.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="ru_RU" />
@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Открытый урок по дизайну интерьера — INTERNO School" />
 <meta name="twitter:description" content="За 1 час — первый проект в Revit + 3 подарка в подарок." />
-<meta name="twitter:image" content="https://interno.school/icons/hero-scene.webp" />
+<meta name="twitter:image" content="https://interno.school/hero/interior-d.jpg" />
 
 <!-- ===== BOOT + I18N =====
      Inlined in <head> so ?lang=uz|ru and ?city=tsh|smr|fer apply synchronously,
@@ -215,6 +215,9 @@ const dict = {
     "cd.d":"дней","cd.h":"часов","cd.m":"мин","cd.s":"сек",
     "prog.of":"из","prog.spots":"мест занято",
     "cta.section":"Записаться на открытый урок",
+    "tag.lesson":"Что вы получите","tag.gifts":"Бонусы","tag.quiz":"Тест · 30 секунд","tag.practice":"Практика",
+    "tag.salary":"Доход","tag.cases":"Истории выпускников","tag.works":"Портфолио","tag.program":"Программа",
+    "tag.why":"О школе","tag.faq":"Вопросы","tag.cta":"Последний шаг",
     "cta.b1":"✓ 1 час практики в Revit + Q&A","cta.b2":"✓ PDF-гайд + чек-лист в подарок","cta.b3":"✓ Скидка 20% на основной курс",
     "form.name":"Имя","form.phone":"Телефон","form.city":"Город","form.lang":"Язык",
     "form.opt1":"Русский","form.opt2":"Узбекский",
@@ -391,6 +394,9 @@ const dict = {
     "cd.d":"kun","cd.h":"soat","cd.m":"daq","cd.s":"son",
     "prog.of":"/","prog.spots":"joy band",
     "cta.section":"Ochiq darsga yozilish",
+    "tag.lesson":"Nima olasiz","tag.gifts":"Bonuslar","tag.quiz":"Test · 30 soniya","tag.practice":"Amaliyot",
+    "tag.salary":"Daromad","tag.cases":"Bitiruvchilar tarixi","tag.works":"Portfolio","tag.program":"Dastur",
+    "tag.why":"Maktab haqida","tag.faq":"Savollar","tag.cta":"So‘nggi qadam",
     "cta.b1":"✓ 1 soat Revit amaliyoti + Q&A","cta.b2":"✓ Sovg‘aga PDF qo‘llanma + chek-list","cta.b3":"✓ Asosiy kursga 20% chegirma",
     "form.name":"Ism","form.phone":"Telefon","form.city":"Shahar","form.lang":"Til",
     "form.opt1":"Rus tili","form.opt2":"O‘zbek tili",
@@ -566,10 +572,9 @@ function applyLang(lang){
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://connect.facebook.net" />
-<link rel="preload" as="image" href="icons/hero-diorama-1024.webp"
-  imagesrcset="icons/hero-diorama-640.webp 640w, icons/hero-diorama-1024.webp 1024w"
-  imagesizes="(max-width: 980px) 88vw, 46vw" fetchpriority="high" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="hero/interior-d.jpg" media="(min-aspect-ratio: 4/5)" fetchpriority="high" />
+<link rel="preload" as="image" href="hero/interior-m.jpg" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 
 <!-- Meta Pixel Code -->
@@ -622,10 +627,18 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </header>
 
 <!-- ===== BLOCK 1: HERO ===== -->
-<section class="hero">
-  <div class="hero__content">
+<section class="hero s-dark">
+  <!-- Та же интерьерная сцена, что и в hero главной (interno-homepage, s1):
+       -d — горизонтальная 16:9, -m — вертикальная 9:16 для телефонов. -->
+  <div class="hero__bg" aria-hidden="true">
+    <picture>
+      <source media="(max-aspect-ratio: 4/5)" srcset="hero/interior-m.jpg" />
+      <img src="hero/interior-d.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" />
+    </picture>
+  </div>
+  <div class="container hero__content">
     <div class="hero__main">
-      <div class="hero__badge liquid-glass">
+      <div class="hero__badge">
         <span class="dot"></span>
         <span><span data-i18n="hero.eyebrow">Бесплатный открытый урок</span> · <span class="city-name">Ташкент</span></span>
       </div>
@@ -640,10 +653,10 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <p class="hero__lesson lesson-next" data-lesson-line></p>
 
       <div class="trust-chips">
-        <span class="trust-chip liquid-glass" data-i18n="trust.t1">8 лет на рынке</span>
-        <span class="trust-chip liquid-glass" data-i18n="trust.t2">2400+ выпускников</span>
-        <span class="trust-chip liquid-glass" data-i18n="trust.t3">Куратор-практик</span>
-        <span class="trust-chip liquid-glass" data-i18n="trust.t4">3 города Узбекистана</span>
+        <span class="trust-chip" data-i18n="trust.t1">8 лет на рынке</span>
+        <span class="trust-chip" data-i18n="trust.t2">2400+ выпускников</span>
+        <span class="trust-chip" data-i18n="trust.t3">Куратор-практик</span>
+        <span class="trust-chip" data-i18n="trust.t4">3 города Узбекистана</span>
       </div>
 
       <div class="hero__actions">
@@ -698,36 +711,6 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       </form>
     </div>
 
-    <aside class="hero-visual" id="heroVisual">
-      <div class="hero-visual__glow"></div>
-      <!-- Многослойная парящая сцена: главная диорама + спутники на разных
-           глубинах (data-depth управляет силой мышиного параллакса). -->
-      <div class="hero-stage">
-        <div class="hero-layer hero-layer--main" data-depth="10" style="--d:0s;--fd:8s">
-          <img src="icons/hero-diorama-1024.webp"
-            srcset="icons/hero-diorama-640.webp 640w, icons/hero-diorama-1024.webp 1024w"
-            sizes="(max-width: 980px) 88vw, 46vw"
-            width="1024" height="1024" fetchpriority="high" decoding="async"
-            alt="3D композиция дизайнерского интерьера" data-i18n-alt="hero.alt" />
-        </div>
-        <div class="hero-layer hero-layer--pillow" data-depth="34" style="--d:.25s;--fd:5.2s">
-          <img src="icons/hero-pillow.png" alt="" aria-hidden="true" width="200" height="200" loading="lazy" decoding="async" />
-        </div>
-        <div class="hero-layer hero-layer--plant" data-depth="24" style="--d:.4s;--fd:6.4s">
-          <img src="icons/hero-plant.png" alt="" aria-hidden="true" width="200" height="200" loading="lazy" decoding="async" />
-        </div>
-        <div class="hero-layer hero-layer--frame" data-depth="18" style="--d:.55s;--fd:7.2s">
-          <img src="icons/hero-frame.png" alt="" aria-hidden="true" width="200" height="200" loading="lazy" decoding="async" />
-        </div>
-        <div class="hero-layer hero-layer--plan" data-depth="28" style="--d:.7s;--fd:5.8s">
-          <img src="icons/hero-plan.png" alt="" aria-hidden="true" width="200" height="200" loading="lazy" decoding="async" />
-        </div>
-        <span class="hero-spark" style="--sx:10%;--sy:20%;--sd:0s"></span>
-        <span class="hero-spark" style="--sx:84%;--sy:32%;--sd:1.1s"></span>
-        <span class="hero-spark" style="--sx:68%;--sy:80%;--sd:2.2s"></span>
-        <span class="hero-spark" style="--sx:30%;--sy:6%;--sd:1.7s"></span>
-      </div>
-    </aside>
   </div>
 </section>
 <!-- Localize header + hero immediately after they are parsed, before the rest
@@ -735,10 +718,10 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 <script>applyLang(document.documentElement.lang);</script>
 
 <!-- ===== BLOCK 2: CLOSING FEAR ===== -->
-<section class="fear" id="fear">
+<section class="fear s-light" id="fear">
   <div class="container">
     <div class="fear__head">
-      <span class="fear__kicker" data-i18n="fear.kicker">3 страха, которые останавливают 90% людей</span>
+      <span class="tag fear__kicker" data-i18n="fear.kicker">3 страха, которые останавливают 90% людей</span>
       <h2 class="fear__title">
         <span data-i18n="fear.title">«Это не для меня».</span>
         <span class="accent" data-i18n="fear.title2">Закроем все 3 страха<br/>за 1 вечер.</span>
@@ -787,8 +770,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 3: WHAT YOU'LL GET ===== -->
-<section class="benefits" id="lesson">
+<section class="benefits s-dark" id="lesson">
   <div class="container">
+    <span class="tag" data-i18n="tag.lesson">Что вы получите</span>
     <h2 class="display"><span data-i18n="ben.title">За 1 час на открытом уроке</span> <span class="accent">↓</span> <img class="sec-ico" src="icons/laptop.png" alt="" aria-hidden="true" width="88" height="88" loading="lazy" /></h2>
 
     <ol class="benefits__list">
@@ -805,8 +789,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 4: GIFTS ===== -->
-<section class="gifts">
+<section class="gifts s-light">
   <div class="container">
+    <span class="tag" data-i18n="tag.gifts">Бонусы</span>
     <h2 class="display sm"><span data-i18n="gift.title">Подарки за регистрацию</span></h2>
     <div class="gifts__grid">
       <article class="gift">
@@ -834,9 +819,10 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 5: QUIZ ===== -->
-<section class="quiz" id="quiz" data-viewcontent="quiz">
+<section class="quiz s-dark" id="quiz" data-viewcontent="quiz">
   <div class="container">
     <div class="quiz__head">
+      <span class="tag" data-i18n="tag.quiz">Тест · 30 секунд</span>
       <h2 class="display sm"><span data-i18n="quiz.title">Подходит ли вам профессия?</span> <img class="sec-ico sec-ico--sm" src="icons/bulb.png" alt="" aria-hidden="true" width="64" height="64" loading="lazy" /></h2>
       <p class="quiz__lead" data-i18n="quiz.lead">5 коротких вопросов · 30 секунд · персональный вердикт от куратора</p>
     </div>
@@ -913,11 +899,11 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 6: SPEAKER ===== -->
-<section class="mentor" id="mentor">
+<section class="mentor s-light" id="mentor">
   <div class="container mentor__inner">
     <div class="mentor__photo"></div>
     <div class="mentor__info">
-      <div class="muted small" data-i18n="m.kicker">Спикер открытого урока</div>
+      <span class="tag" data-i18n="m.kicker">Спикер открытого урока</span>
       <h2 class="mentor__name" data-i18n="mc.name">Асад Халимов</h2>
       <p class="mentor__role" data-i18n="m.role">Старший куратор курса «Дизайн интерьера» в INTERNO School</p>
       <ul class="mentor__list">
@@ -938,11 +924,11 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 6.5: PRACTICE VIDEOS ===== -->
-<section class="practice">
+<section class="practice s-dark">
   <div class="container">
-    <h2 class="display sm">
-      <span data-i18n="prac.title">Как проходит обучение</span> <span class="accent">·</span> <span class="muted small" data-i18n="prac.lead">реальные кадры с урока и выезда на замер</span>
-    </h2>
+    <span class="tag" data-i18n="tag.practice">Практика</span>
+    <h2 class="display sm" data-i18n="prac.title">Как проходит обучение</h2>
+    <p class="practice__lead" data-i18n="prac.lead">реальные кадры с урока и выезда на замер</p>
 
     <div class="practice__grid">
       <article class="practice-card">
@@ -1000,8 +986,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 7: SALARIES ===== -->
-<section class="salary">
+<section class="salary s-light">
   <div class="container">
+    <span class="tag" data-i18n="tag.salary">Доход</span>
     <h2 class="display sm"><span data-i18n="sal.title">Сколько вы будете зарабатывать после курса</span> <img class="sec-ico" src="icons/money.png" alt="" aria-hidden="true" width="88" height="88" loading="lazy" /></h2>
     <p class="muted" data-i18n="sal.lead">Цифры — на основе вакансий HeadHunter UZ, Glassdoor и Upwork (апрель 2026).</p>
 
@@ -1030,8 +1017,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 8: CASES ===== -->
-<section class="cases" id="cases" data-viewcontent="cases">
+<section class="cases s-dark" id="cases" data-viewcontent="cases">
   <div class="container">
+    <span class="tag" data-i18n="tag.cases">Истории выпускников</span>
     <h2 class="display"><span data-i18n="case.title">Студенты уже зарабатывают.</span> <span class="accent" data-i18n="case.title2">Реальные люди, реальные деньги.</span></h2>
 
     <div class="cases__grid">
@@ -1099,8 +1087,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 9: WORKS GALLERY ===== -->
-<section class="works">
+<section class="works s-light">
   <div class="container">
+    <span class="tag" data-i18n="tag.works">Портфолио</span>
     <h2 class="display sm"><span data-i18n="works.title">Работы выпускников</span></h2>
     <p class="muted" data-i18n="works.lead">Все проекты сделаны студентами на 4-м месяце обучения.</p>
 
@@ -1156,10 +1145,13 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 10: PROGRAM TIMELINE ===== -->
-<section class="program" id="program" data-viewcontent="program">
+<section class="program s-dark" id="program" data-viewcontent="program">
   <div class="container">
     <div class="program__head">
-      <h2 class="display sm"><span data-i18n="prog.title">Программа открытого урока</span> <span class="muted" data-i18n="prog.mins">· 60 мин</span></h2>
+      <div>
+        <span class="tag" data-i18n="tag.program">Программа</span>
+        <h2 class="display sm"><span data-i18n="prog.title">Программа открытого урока</span> <span class="muted" data-i18n="prog.mins">· 60 мин</span></h2>
+      </div>
       <img class="program__ico" src="icons/stopwatch.png" alt="" loading="lazy" />
     </div>
 
@@ -1177,8 +1169,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 11: WHY INTERNO ===== -->
-<section class="why">
+<section class="why s-light">
   <div class="container">
+    <span class="tag" data-i18n="tag.why">О школе</span>
     <h2 class="display sm"><span data-i18n="why.title">Почему именно INTERNO</span></h2>
     <div class="why__grid">
       <div class="why__card">
@@ -1207,8 +1200,9 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 12: FAQ ===== -->
-<section class="faq" id="faq">
+<section class="faq s-dark" id="faq">
   <div class="container">
+    <span class="tag" data-i18n="tag.faq">Вопросы</span>
     <h2 class="display sm" data-i18n="faq.title">Частые вопросы</h2>
     <div class="faq__list">
       <details class="faq__item" open>
@@ -1249,10 +1243,11 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 </section>
 
 <!-- ===== BLOCK 13: FINAL FORM ===== -->
-<section class="cta" id="cta" data-viewcontent="cta-form">
+<section class="cta s-light" id="cta" data-viewcontent="cta-form">
   <div class="container">
     <div class="cta__inner">
       <div class="cta__left">
+        <span class="tag" data-i18n="tag.cta">Последний шаг</span>
         <h2 class="display sm">
           <span data-i18n="cta.title">Места заканчиваются</span>
           <img class="sec-ico sec-ico--sm" src="icons/bolt.png" alt="" aria-hidden="true" width="64" height="64" loading="lazy" />
@@ -1316,8 +1311,11 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
   <div class="container">
     <div class="footer__top">
       <div class="footer__brand">
-        <div class="logo"><span class="logo__mark">◉</span><span class="logo__text">INTERNO<span class="muted">.school</span></span></div>
-        <p class="muted small" data-i18n="ftr.about">Школа дизайна интерьера №1 в Узбекистане. С 2018 года.</p>
+        <a class="logo" href="#">
+          <img src="logo-ru.svg" alt="INTERNO School" class="logo__img logo__img--ru" loading="lazy" />
+          <img src="logo-uz.svg" alt="INTERNO School" class="logo__img logo__img--uz" loading="lazy" />
+        </a>
+        <p class="muted" data-i18n="ftr.about">Школа дизайна интерьера №1 в Узбекистане. С 2018 года.</p>
       </div>
       <div class="footer__col">
         <h4 data-i18n="ftr.contact">Контакты</h4>
@@ -1354,7 +1352,7 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
 <!-- ===== SIGNUP MODAL ===== -->
 <div class="modal" id="signupModal" aria-hidden="true">
   <div class="modal__backdrop" data-modal-close></div>
-  <div class="modal__panel liquid-glass" role="dialog" aria-labelledby="modalTitle">
+  <div class="modal__panel" role="dialog" aria-labelledby="modalTitle">
     <button type="button" class="modal__close" data-modal-close aria-label="Close">×</button>
     <div class="modal__head">
       <div class="modal__eyebrow" data-i18n="modal.eyebrow">Бесплатный открытый урок</div>
