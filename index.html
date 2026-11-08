@@ -243,7 +243,7 @@
 <!-- ===== BOOT + I18N =====
      Inlined in <head> so ?lang=uz|ru and ?city=tsh|smr|fer apply synchronously,
      before the hero is painted (no flash of Russian text on ?lang=uz).
-     Order: URL param → localStorage → navigator.language → default uz. -->
+     Order: URL param (?lang, /uz/) → localStorage → language of the page itself. -->
 <script>
 // Next open lesson — single source of truth for hero line, forms and countdown.
 // Lessons repeat weekly: the anchor date fixes the weekday and time (Tashkent,
@@ -652,7 +652,7 @@ const cityNames = {
   uz: {tsh:"Toshkent",smr:"Samarqand",frg:"Farg‘ona"},
 };
 
-// Resolve lang + city synchronously: URL → localStorage → navigator.language → uz.
+// Resolve lang + city synchronously: URL (?lang, /uz/) → localStorage → язык страницы.
 (function(){
   var p = new URLSearchParams(location.search);
   var qLang = p.get('lang');
@@ -667,10 +667,10 @@ const cityNames = {
     if(lang) localStorage.setItem('interno_lang', lang); else lang = localStorage.getItem('interno_lang');
     if(city) localStorage.setItem('interno_city', city); else city = localStorage.getItem('interno_city');
   } catch(_) {}
-  // Поисковые роботы видят язык самого URL (на / — русский, как в HTML),
-  // а не язык браузера: иначе Googlebot (en-US) индексировал бы / по-узбекски.
-  var isBot = /bot|crawl|spider|slurp/i.test(navigator.userAgent || '');
-  if(lang !== 'ru' && lang !== 'uz') lang = isBot ? 'ru' : /^ru/i.test(navigator.language || '') ? 'ru' : 'uz';
+  // Без ?lang= и сохранённого выбора — язык самой страницы (/ — русский, /uz/ — узбекский),
+  // одинаково для людей и поисковиков: подмена языка по браузеру или User-Agent
+  // ломает индексацию, а показ ботам другого текста Google считает клоакингом.
+  if(lang !== 'ru' && lang !== 'uz') lang = document.documentElement.lang === 'uz' ? 'uz' : 'ru';
   if(city !== 'tsh' && city !== 'smr' && city !== 'frg') city = 'tsh';
   document.documentElement.lang = lang;
   document.documentElement.setAttribute('data-city', city);
