@@ -3,8 +3,22 @@
 // resolution and applyLang() live in an inline <head> script in index.html so
 // localization applies synchronously before the hero is painted.
 
+// RU/UZ — настоящие ссылки на / и /uz/ (их видят поисковики). На / язык, как и
+// раньше, переключается на месте; на /uz/ выбор RU ведёт на / с сохранением
+// query (UTM, city, v) и якоря.
 document.querySelectorAll('.lang__btn').forEach(b=>{
-  b.addEventListener('click',()=>applyLang(b.dataset.lang));
+  b.addEventListener('click',e=>{
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    e.preventDefault();
+    const urlLang = /^\/uz(\/|\/index\.html)?$/.test(location.pathname) ? 'uz' : null;
+    const href = b.getAttribute('href');
+    if(!urlLang || !href || b.dataset.lang === urlLang){ applyLang(b.dataset.lang); return; }
+    try { localStorage.setItem('interno_lang', b.dataset.lang); } catch(_) {}
+    const p = new URLSearchParams(location.search);
+    p.delete('lang');
+    const q = p.toString();
+    location.href = href + (q ? '?' + q : '') + location.hash;
+  });
 });
 
 // City switcher
@@ -333,7 +347,7 @@ function handleForm(form){
     // Fire amoCRM + Telegram in parallel; navigate as soon as both settle.
     // keepalive on the TG fetch ensures it survives the redirect even if slow.
     await Promise.allSettled([ sendToAmo(form), sendToTelegram(form) ]);
-    window.location.href = 'thanks.html';
+    window.location.href = '/thanks.html';
   });
 }
 handleForm(document.getElementById('form'));
