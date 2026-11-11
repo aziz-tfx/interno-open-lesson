@@ -103,6 +103,11 @@ document.querySelectorAll('.quiz__opt').forEach(opt=>{
     if(opt.dataset.city){
       setCity(opt.dataset.city);
     }
+    // Ответ на вопрос «В каком городе?» уходит в заявку квиз-формы.
+    if(opt.dataset.leadCity){
+      const qf = document.getElementById('quizForm');
+      if(qf && qf.elements.city) qf.elements.city.value = opt.dataset.leadCity;
+    }
     if(quizStep < 5){
       quizStep++;
       goQuizStep(quizStep);
@@ -116,6 +121,8 @@ document.querySelectorAll('.quiz__opt').forEach(opt=>{
 document.getElementById('quizRestart')?.addEventListener('click',()=>{
   quizScore = 0;
   quizStep = 1;
+  const qf = document.getElementById('quizForm');
+  if(qf && qf.elements.city) qf.elements.city.value = '';
   goQuizStep(1);
 });
 
@@ -188,7 +195,14 @@ const AMOCRM_FORM = {
     note: 'fields[note_2]',
   },
 };
-const CITY_LABEL = { tsh:'Ташкент', smr:'Самарканд', frg:'Фергана' };
+const CITY_LABEL = {
+  tsh:'Ташкент', tso:'Ташкентская обл.', smr:'Самарканд', frg:'Фергана', oth:'Другой регион',
+};
+// В воронку amoCRM попадают только лиды из городов с филиалами школы.
+// Ташкентская область и другие регионы не теряются — приходят в Telegram
+// с пометкой «не отправлено в amoCRM».
+const AMO_CITIES = ['tsh', 'smr', 'frg'];
+function isAmoLead(meta){ return AMO_CITIES.includes(meta.cityCode); }
 const LANG_LABEL = { ru:'Русский', uz:'Oʻzbek' };
 
 // Yandex.Metrika counter id — set window.YM_COUNTER_ID (or hardcode here) once
@@ -205,11 +219,13 @@ function ymReachGoal(goal, params){
 }
 
 function detectLeadMeta(form){
-  const cityCode = form.elements.city?.value || localStorage.getItem('interno_city') || 'tsh';
+  // Город берём только из явного ответа в форме — без подстановки Ташкента
+  // по умолчанию, иначе областные лиды попадали в воронку как ташкентские.
+  const cityCode = form.elements.city?.value || 'unknown';
   const langCode = (form.elements.lang?.value) || document.documentElement.lang || localStorage.getItem('interno_lang') || 'ru';
   return {
     cityCode, langCode,
-    cityLabel: CITY_LABEL[cityCode] || cityCode,
+    cityLabel: CITY_LABEL[cityCode] || 'Город не указан',
     langLabel: LANG_LABEL[langCode] || langCode,
   };
 }
@@ -272,6 +288,7 @@ async function sendToTelegram(form){
     city: meta.cityLabel,
     lang: meta.langLabel,
     source: form.id || 'form',
+    amo: isAmoLead(meta),
     variant: window.AB_HERO || '',
     url: location.href,
     referrer: document.referrer || '',
@@ -298,7 +315,13 @@ function fireLeadAnalytics(form, meta, eventId){
   const utm = getUtm();
   const digits = '998' + phoneDigits(form);
   const name = (form.elements.name?.value || '').trim().toLowerCase();
-  if(window.fbq){
+  // Meta получает Lead только по целевым заявкам (города с филиалами), чтобы
+  // алгоритм рекламы учился на них, а не на областных.
+  const qualified = isAmoLead(meta);
+  if(window.fbq && !qualified){
+    window.fbq('trackCustom','LeadOutOfArea', { city: meta.cityCode });
+  }
+  if(window.fbq && qualified){
     // Re-init with Advanced Matching parameters (fbq hashes them client-side)
     try { window.fbq('init', '4251277901808457', { ph: digits, fn: name, ct: meta.cityLabel, country: 'uz' }); } catch(_){}
     window.fbq('track','Lead', {
@@ -316,9 +339,10 @@ function fireLeadAnalytics(form, meta, eventId){
       variant: window.AB_HERO || '',
       city: meta.cityCode,
       lang: meta.langCode,
+      qualified: qualified ? 1 : 0,
     }, utm));
   }
-  ymReachGoal('lead', Object.assign({
+  ymReachGoal(qualified ? 'lead' : 'lead_out_of_area', Object.assign({
     form: form.id || 'form',
     variant: window.AB_HERO || '',
     city: meta.cityCode,
@@ -342,11 +366,16 @@ function handleForm(form){
     sessionStorage.setItem('interno_last_lead_eid', eventId);
     sessionStorage.setItem('interno_last_lead_ph', '998' + digits);
     sessionStorage.setItem('interno_last_lead_fn', (form.elements.name?.value || '').trim().toLowerCase());
+    sessionStorage.setItem('interno_last_lead_q', isAmoLead(meta) ? '1' : '0');
 
     fireLeadAnalytics(form, meta, eventId);
     // Fire amoCRM + Telegram in parallel; navigate as soon as both settle.
     // keepalive on the TG fetch ensures it survives the redirect even if slow.
-    await Promise.allSettled([ sendToAmo(form), sendToTelegram(form) ]);
+    // В amoCRM — только целевые города (AMO_CITIES); Telegram получает все.
+    await Promise.allSettled([
+      isAmoLead(meta) ? sendToAmo(form) : Promise.resolve(),
+      sendToTelegram(form),
+    ]);
     window.location.href = '/thanks.html';
   });
 }

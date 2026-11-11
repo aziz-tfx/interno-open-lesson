@@ -27,8 +27,9 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 (function(){
-  var ph = '', fn = '', eid = '';
+  var ph = '', fn = '', eid = '', q = '';
   try {
+    q   = sessionStorage.getItem('interno_last_lead_q') || '';
     ph  = sessionStorage.getItem('interno_last_lead_ph') || '';
     fn  = sessionStorage.getItem('interno_last_lead_fn') || '';
     eid = sessionStorage.getItem('interno_last_lead_eid') || '';
@@ -38,7 +39,9 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
   if(fn) advanced.fn = fn;
   fbq('init', '4251277901808457', advanced);
   fbq('track', 'PageView');
-  fbq('track', 'CompleteRegistration', {
+  // Нецелевой город (не Ташкент/Самарканд/Фергана) — без CompleteRegistration, чтобы реклама
+  // не оптимизировалась на областные заявки.
+  if(q !== '0') fbq('track', 'CompleteRegistration', {
     content_name: 'open_lesson',
     currency: 'USD',
     value: 1,
