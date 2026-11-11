@@ -7,7 +7,8 @@
 // Optional:
 //   TG_TOPIC_ID   — Thread/topic ID for forum-style groups.
 //
-// The client posts JSON: { name, phone, city, lang, source, variant, url, referrer, utm }
+// The client posts JSON: { name, phone, city, lang, source, amo, variant, url, referrer, utm }
+// amo=false — лид не из целевого города, в amoCRM его не отправляли.
 // We never echo the bot token back. CORS is permissive (same Vercel project).
 
 export default async function handler(req, res) {
@@ -36,8 +37,9 @@ export default async function handler(req, res) {
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
   const cityFlag = { 'Ташкент':'🟢', 'Самарканд':'🔵', 'Фергана':'🟣' }[body.city] || '⚪';
+  const toAmo = body.amo !== false;
   const lines = [
-    `🔔 <b>Новая заявка</b>`,
+    toAmo ? `🔔 <b>Новая заявка</b>` : `⛔ <b>Заявка не из Ташкента — в amoCRM не отправлена</b>`,
     ``,
     `👤 <b>Имя:</b> ${esc(body.name) || '—'}`,
     `📞 <b>Телефон:</b> ${esc(body.phone) || '—'}`,

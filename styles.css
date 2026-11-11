@@ -199,21 +199,24 @@ html[lang="uz"] .logo__img--uz{display:block}
   display:flex;flex-direction:column;gap:7px;
   font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted-d);
 }
-.quiz__form input,.cta__form input,.cta__form select,.modal__form input,.modal__form select,.hero__form input[type="text"]{
+.quiz__form input,.cta__form input,.cta__form select,.modal__form input,.modal__form select,.hero__form input[type="text"],.hero__form select{
   width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line-d);border-radius:6px;
   padding:13px 16px;color:var(--cream);font-family:var(--font-body);font-size:15px;font-weight:600;
   outline:none;transition:border-color .2s,box-shadow .2s;
 }
 .quiz__form input::placeholder,.cta__form input::placeholder,.modal__form input::placeholder,.hero__form input::placeholder{color:rgba(255,255,255,.25)}
-.quiz__form input:focus,.cta__form input:focus,.cta__form select:focus,.modal__form input:focus,.modal__form select:focus,.hero__form input[type="text"]:focus{
+.quiz__form input:focus,.cta__form input:focus,.cta__form select:focus,.modal__form input:focus,.modal__form select:focus,.hero__form input[type="text"]:focus,.hero__form select:focus{
   border-color:var(--lime);box-shadow:0 0 0 3px rgba(214,242,59,.15);
 }
-.cta__form select,.modal__form select{
+.cta__form select,.modal__form select,.hero__form select{
   appearance:none;-webkit-appearance:none;cursor:pointer;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D6F23B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 16px center;padding-right:38px;
 }
-.cta__form select option,.modal__form select option{background:#1c1b22;color:var(--cream)}
+.cta__form select option,.modal__form select option,.hero__form select option{background:#1c1b22;color:var(--cream)}
+/* пока город не выбран — плейсхолдер приглушён */
+.cta__form select:invalid,.modal__form select:invalid,.hero__form select:invalid{color:rgba(255,255,255,.4)}
+.hero__fields .hero__city{grid-column:1/-1}
 .cta__check,.modal__check,.hero__form label.hero__check{
   display:flex !important;flex-direction:row !important;align-items:flex-start;gap:9px;
   font-size:12px;line-height:1.4;color:var(--muted-d);font-weight:500;

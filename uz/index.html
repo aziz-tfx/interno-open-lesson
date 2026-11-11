@@ -145,7 +145,7 @@
    "breadcrumb": {
     "@id": "https://interior.internoedu.uz/uz/#breadcrumb"
    },
-   "dateModified": "2026-11-08"
+   "dateModified": "2026-11-11"
   },
   {
    "@type": "BreadcrumbList",
@@ -343,7 +343,7 @@ const dict = {
     "q4.t":"Какой результат хотите получить через 6 месяцев?",
     "q4.a1":"Первый клиент и доход","q4.a2":"Новая профессия и портфолио","q4.a3":"Просто разобраться, моё ли это",
     "q5.t":"В каком городе вы находитесь?",
-    "q5.a1":"Ташкент","q5.a2":"Самарканд","q5.a3":"Фергана","q5.a4":"Другой город",
+    "q5.a1":"Ташкент","q5.a2":"Самарканд","q5.a3":"Фергана","q5.a4":"Другой город","q5.a5":"Ташкентская область",
     "verdict.high":"<b>Отличный результат:</b> по вашим ответам профессия дизайнера интерьера подходит вам — приходите на бесплатный урок и убедитесь на практике.",
     "verdict.mid":"<b>Хороший потенциал:</b> у вас есть интерес и мотивация — открытый урок поможет окончательно понять, ваше ли это.",
     "verdict.low":"<b>Вы пока сомневаетесь</b> — бесплатный урок ни к чему не обязывает и поможет принять решение.",
@@ -440,6 +440,8 @@ const dict = {
     "cta.b1":"✓ 1 час практики в Revit + Q&A","cta.b2":"✓ PDF-гайд + чек-лист в подарок","cta.b3":"✓ Скидка 20% на основной курс",
     "form.name":"Имя","form.phone":"Телефон","form.city":"Город","form.lang":"Язык",
     "form.opt1":"Русский","form.opt2":"Узбекский",
+    "form.cityPick":"Где вы живёте?",
+    "form.c.tsh":"Ташкент","form.c.tso":"Ташкентская область","form.c.smr":"Самарканд","form.c.frg":"Фергана","form.c.oth":"Другой город / регион",
     "form.consent":"Согласен на обработку персональных данных",
     "form.submit":"Записаться на урок",
     "form.policy":"Звоним только для подтверждения. Не спамим. Можно отписаться в любой момент.",
@@ -527,7 +529,7 @@ const dict = {
     "q4.t":"6 oydan keyin qanday natija olmoqchisiz?",
     "q4.a1":"Birinchi mijoz va daromad","q4.a2":"Yangi kasb va portfolio","q4.a3":"O‘zimnikimi, shunchaki tushunish",
     "q5.t":"Siz qaysi shahardasiz?",
-    "q5.a1":"Toshkent","q5.a2":"Samarqand","q5.a3":"Farg‘ona","q5.a4":"Boshqa shahar",
+    "q5.a1":"Toshkent","q5.a2":"Samarqand","q5.a3":"Farg‘ona","q5.a4":"Boshqa shahar","q5.a5":"Toshkent viloyati",
     "verdict.high":"<b>A’lo natija:</b> javoblaringizga ko‘ra interyer dizayneri kasbi sizga mos — bepul darsga keling va buni amalda tekshirib ko‘ring.",
     "verdict.mid":"<b>Yaxshi salohiyat:</b> sizda qiziqish va motivatsiya bor — ochiq dars bu kasb sizniki ekanini aniq tushunishga yordam beradi.",
     "verdict.low":"<b>Siz hali ikkilanyapsiz</b> — bepul dars hech narsaga majburlamaydi va qaror qabul qilishga yordam beradi.",
@@ -623,6 +625,8 @@ const dict = {
     "cta.b1":"✓ 1 soat Revit amaliyoti + Q&A","cta.b2":"✓ Sovg‘aga PDF qo‘llanma + chek-list","cta.b3":"✓ Asosiy kursga 20% chegirma",
     "form.name":"Ism","form.phone":"Telefon","form.city":"Shahar","form.lang":"Til",
     "form.opt1":"Rus tili","form.opt2":"O‘zbek tili",
+    "form.cityPick":"Qayerda yashaysiz?",
+    "form.c.tsh":"Toshkent","form.c.tso":"Toshkent viloyati","form.c.smr":"Samarqand","form.c.frg":"Farg‘ona","form.c.oth":"Boshqa shahar / viloyat",
     "form.consent":"Shaxsiy ma’lumotlarni qayta ishlashga roziman",
     "form.submit":"Darsga yozilish",
     "form.policy":"Faqat tasdiqlash uchun qo‘ng‘iroq qilamiz. Spam qilmaymiz. Istalgan vaqtda obunadan chiqsangiz bo‘ladi.",
@@ -778,12 +782,8 @@ function applyLang(lang){
     [...sel.options].forEach(o=>{ o.textContent = cityNames[lang][o.value]; });
     sel.value = city;
   }
-  document.querySelectorAll('form select[name="city"]').forEach(s=>{
-    [...s.options].forEach(o=>{
-      if(cityNames[lang][o.value]) o.textContent = cityNames[lang][o.value];
-    });
-    if([...s.options].some(o=>o.value===city)) s.value = city;
-  });
+  // Form city selects are NOT preselected from the site city: the visitor must
+  // pick it explicitly — only Tashkent leads go to amoCRM (see script.js).
   // Preselect the lesson-language <select> to match the page language
   document.querySelectorAll('form select[name="lang"]').forEach(s=>{
     if([...s.options].some(o=>o.value===lang)) s.value = lang;
@@ -932,6 +932,16 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
               <input type="tel" name="phone" required inputmode="tel" autocomplete="tel-national" placeholder="90 123 45 67" maxlength="12" />
             </span>
             <span class="phone-error" data-i18n="form.phoneError">Raqamni to‘liq kiriting — +998 dan keyin 9 ta raqam</span>
+          </label>
+          <label class="hero__city"><span data-i18n="form.city">Shahar</span>
+            <select name="city" required>
+              <option value="" disabled selected data-i18n="form.cityPick">Qayerda yashaysiz?</option>
+              <option value="tsh" data-i18n="form.c.tsh">Toshkent</option>
+              <option value="tso" data-i18n="form.c.tso">Toshkent viloyati</option>
+              <option value="smr" data-i18n="form.c.smr">Samarqand</option>
+              <option value="frg" data-i18n="form.c.frg">Farg‘ona</option>
+              <option value="oth" data-i18n="form.c.oth">Boshqa shahar / viloyat</option>
+            </select>
           </label>
         </div>
         <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="ab_variant" />
@@ -1108,16 +1118,18 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
       <div class="quiz__step" data-step="5">
         <h3 class="quiz__q" data-i18n="q5.t">Siz qaysi shahardasiz?</h3>
         <div class="quiz__opts">
-          <button class="quiz__opt" data-score="1" data-city="tsh" data-i18n="q5.a1">Toshkent</button>
-          <button class="quiz__opt" data-score="1" data-city="smr" data-i18n="q5.a2">Samarqand</button>
-          <button class="quiz__opt" data-score="1" data-city="frg" data-i18n="q5.a3">Farg‘ona</button>
-          <button class="quiz__opt" data-score="0" data-i18n="q5.a4">Boshqa shahar</button>
+          <button class="quiz__opt" data-score="1" data-city="tsh" data-lead-city="tsh" data-i18n="q5.a1">Toshkent</button>
+          <button class="quiz__opt" data-score="1" data-lead-city="tso" data-i18n="q5.a5">Toshkent viloyati</button>
+          <button class="quiz__opt" data-score="1" data-city="smr" data-lead-city="smr" data-i18n="q5.a2">Samarqand</button>
+          <button class="quiz__opt" data-score="1" data-city="frg" data-lead-city="frg" data-i18n="q5.a3">Farg‘ona</button>
+          <button class="quiz__opt" data-score="0" data-lead-city="oth" data-i18n="q5.a4">Boshqa shahar</button>
         </div>
       </div>
 
       <div class="quiz__step quiz__final" data-step="final">
         <div class="quiz__verdict" id="quizVerdict"></div>
         <form class="quiz__form" id="quizForm">
+          <input type="hidden" name="city" />
           <label><span data-i18n="form.name">Ism</span><input type="text" name="name" required placeholder="Aziz" /></label>
           <label><span data-i18n="form.phone">Telefon</span>
             <span class="phone-field">
@@ -1517,10 +1529,13 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
           <span class="phone-error" data-i18n="form.phoneError">Raqamni to‘liq kiriting — +998 dan keyin 9 ta raqam</span>
         </label>
         <label><span data-i18n="form.city">Shahar</span>
-          <select name="city">
-            <option value="tsh">Toshkent</option>
-            <option value="smr">Samarqand</option>
-            <option value="frg">Farg‘ona</option>
+          <select name="city" required>
+            <option value="" disabled selected data-i18n="form.cityPick">Qayerda yashaysiz?</option>
+            <option value="tsh" data-i18n="form.c.tsh">Toshkent</option>
+            <option value="tso" data-i18n="form.c.tso">Toshkent viloyati</option>
+            <option value="smr" data-i18n="form.c.smr">Samarqand</option>
+            <option value="frg" data-i18n="form.c.frg">Farg‘ona</option>
+            <option value="oth" data-i18n="form.c.oth">Boshqa shahar / viloyat</option>
           </select>
         </label>
         <label><span data-i18n="form.lang">Til</span>
@@ -1622,10 +1637,13 @@ src="https://www.facebook.com/tr?id=4251277901808457&ev=PageView&noscript=1"
         <span class="phone-error" data-i18n="form.phoneError">Raqamni to‘liq kiriting — +998 dan keyin 9 ta raqam</span>
       </label>
       <label><span data-i18n="form.city">Shahar</span>
-        <select name="city">
-          <option value="tsh">Toshkent</option>
-          <option value="smr">Samarqand</option>
-          <option value="frg">Farg‘ona</option>
+        <select name="city" required>
+          <option value="" disabled selected data-i18n="form.cityPick">Qayerda yashaysiz?</option>
+          <option value="tsh" data-i18n="form.c.tsh">Toshkent</option>
+          <option value="tso" data-i18n="form.c.tso">Toshkent viloyati</option>
+          <option value="smr" data-i18n="form.c.smr">Samarqand</option>
+          <option value="frg" data-i18n="form.c.frg">Farg‘ona</option>
+          <option value="oth" data-i18n="form.c.oth">Boshqa shahar / viloyat</option>
         </select>
       </label>
       <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" /><input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" /><input type="hidden" name="ab_variant" />
