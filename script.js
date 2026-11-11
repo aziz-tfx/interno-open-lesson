@@ -198,10 +198,10 @@ const AMOCRM_FORM = {
 const CITY_LABEL = {
   tsh:'Ташкент', tso:'Ташкентская обл.', smr:'Самарканд', frg:'Фергана', oth:'Другой регион',
 };
-// В воронку amoCRM попадают только лиды из этих городов. Остальные заявки
-// не теряются — приходят в Telegram с пометкой «не отправлено в amoCRM».
-// Чтобы снова принимать Самарканд/Фергану — добавить 'smr' / 'frg'.
-const AMO_CITIES = ['tsh'];
+// В воронку amoCRM попадают только лиды из городов с филиалами школы.
+// Ташкентская область и другие регионы не теряются — приходят в Telegram
+// с пометкой «не отправлено в amoCRM».
+const AMO_CITIES = ['tsh', 'smr', 'frg'];
 function isAmoLead(meta){ return AMO_CITIES.includes(meta.cityCode); }
 const LANG_LABEL = { ru:'Русский', uz:'Oʻzbek' };
 
@@ -315,7 +315,7 @@ function fireLeadAnalytics(form, meta, eventId){
   const utm = getUtm();
   const digits = '998' + phoneDigits(form);
   const name = (form.elements.name?.value || '').trim().toLowerCase();
-  // Meta получает Lead только по целевым (ташкентским) заявкам, чтобы
+  // Meta получает Lead только по целевым заявкам (города с филиалами), чтобы
   // алгоритм рекламы учился на них, а не на областных.
   const qualified = isAmoLead(meta);
   if(window.fbq && !qualified){

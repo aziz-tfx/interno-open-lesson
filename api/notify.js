@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   const cityFlag = { 'Ташкент':'🟢', 'Самарканд':'🔵', 'Фергана':'🟣' }[body.city] || '⚪';
   const toAmo = body.amo !== false;
   const lines = [
-    toAmo ? `🔔 <b>Новая заявка</b>` : `⛔ <b>Заявка не из Ташкента — в amoCRM не отправлена</b>`,
+    toAmo ? `🔔 <b>Новая заявка</b>` : `⛔ <b>Нецелевой регион — в amoCRM не отправлена</b>`,
     ``,
     `👤 <b>Имя:</b> ${esc(body.name) || '—'}`,
     `📞 <b>Телефон:</b> ${esc(body.phone) || '—'}`,
